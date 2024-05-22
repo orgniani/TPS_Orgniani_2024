@@ -46,6 +46,7 @@ public class ShooterController : MonoBehaviour
             thirdPersonController.SetSensitivity(aimSensitivity);
             thirdPersonController.SetRotateOnMove(false);
             thirdPersonController.SetSprintOnAim(false);
+            thirdPersonController.SetStrafeOnAim(true);
 
             animator.SetLayerWeight(1, Mathf.Lerp(animator.GetLayerWeight(1), 1f, Time.deltaTime * 10f));
             aimRigWeight = 1f;
@@ -62,10 +63,10 @@ public class ShooterController : MonoBehaviour
             aimVirtualCamera.gameObject.SetActive(false);
             thirdPersonController.SetSensitivity(normalSensitivity);
             thirdPersonController.SetRotateOnMove(true);
-
-            aimRigWeight = 0f;
+            thirdPersonController.SetStrafeOnAim(false);
 
             animator.SetLayerWeight(1, Mathf.Lerp(animator.GetLayerWeight(1), 0f, Time.deltaTime * 10f));
+            aimRigWeight = 0f;
         }
 
         if(starterAssetInputs.shoot)

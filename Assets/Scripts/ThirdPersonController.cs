@@ -83,7 +83,8 @@ namespace StarterAssets
 
         // player
         private float _speed;
-        private float _animationBlend;
+        private float _animationSpeedBlend;
+        private float _animationSidesBlend;
         private float _targetRotation = 0.0f;
         private float _rotationVelocity;
         private float _verticalVelocity;
@@ -95,6 +96,7 @@ namespace StarterAssets
 
         // animation IDs
         private int _animIDSpeed;
+        private int _animIDSides;
         private int _animIDGrounded;
         private int _animIDJump;
         private int _animIDFreeFall;
@@ -107,7 +109,9 @@ namespace StarterAssets
         private CharacterController _controller;
         private StarterAssetsInputs _input;
         private GameObject _mainCamera;
+
         private bool _rotateOnMove = true;
+        private bool _strafeOnAim = false;
 
         private const float _threshold = 0.01f;
 
@@ -172,6 +176,7 @@ namespace StarterAssets
         private void AssignAnimationIDs()
         {
             _animIDSpeed = Animator.StringToHash("Speed");
+            _animIDSides = Animator.StringToHash("Sides");
             _animIDGrounded = Animator.StringToHash("Grounded");
             _animIDJump = Animator.StringToHash("Jump");
             _animIDFreeFall = Animator.StringToHash("FreeFall");
@@ -248,8 +253,8 @@ namespace StarterAssets
                 _speed = targetSpeed;
             }
 
-            _animationBlend = Mathf.Lerp(_animationBlend, targetSpeed, Time.deltaTime * SpeedChangeRate);
-            if (_animationBlend < 0.01f) _animationBlend = 0f;
+            _animationSpeedBlend = Mathf.Lerp(_animationSpeedBlend, targetSpeed, Time.deltaTime * SpeedChangeRate);
+            if (_animationSpeedBlend < 0.01f) _animationSpeedBlend = 0f;
 
             // normalise input direction
             Vector3 inputDirection = new Vector3(_input.move.x, 0.0f, _input.move.y).normalized;
@@ -270,18 +275,28 @@ namespace StarterAssets
                 }
             }
 
-
             Vector3 targetDirection = Quaternion.Euler(0.0f, _targetRotation, 0.0f) * Vector3.forward;
 
             // move the player
             _controller.Move(targetDirection.normalized * (_speed * Time.deltaTime) +
                              new Vector3(0.0f, _verticalVelocity, 0.0f) * Time.deltaTime);
 
+            _animationSidesBlend = Mathf.Lerp(_animationSidesBlend, inputDirection.x, Time.deltaTime * SpeedChangeRate);
+            if (inputDirection.z < 0) _animationSidesBlend = Mathf.Lerp(_animationSidesBlend, -4f, Time.deltaTime * 5f);
+
             // update animator if using character
             if (_hasAnimator)
             {
-                _animator.SetFloat(_animIDSpeed, _animationBlend);
+                _animator.SetFloat(_animIDSpeed, _animationSpeedBlend);
                 _animator.SetFloat(_animIDMotionSpeed, inputMagnitude);
+
+                Debug.Log(_animationSidesBlend);
+
+                if (_strafeOnAim)
+                    _animator.SetFloat(_animIDSides, _animationSidesBlend);
+
+                else
+                    _animator.SetFloat(_animIDSides, 0f);
             }
         }
 
@@ -388,6 +403,11 @@ namespace StarterAssets
         public void SetSprintOnAim(bool newSprintOnAim)
         {
             _input.sprint = newSprintOnAim;
+        }
+
+        public void SetStrafeOnAim(bool newStrafeOnAim)
+        {
+            _strafeOnAim = newStrafeOnAim;
         }
 
         private void OnFootstep(AnimationEvent animationEvent)
