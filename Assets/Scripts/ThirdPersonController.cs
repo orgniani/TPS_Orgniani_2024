@@ -83,12 +83,15 @@ namespace StarterAssets
 
         // player
         private float _speed;
-        private float _animationSpeedBlend;
-        private float _animationSidesBlend;
         private float _targetRotation = 0.0f;
         private float _rotationVelocity;
         private float _verticalVelocity;
         private float _terminalVelocity = 53.0f;
+
+        //animator blends
+        private float _animationSpeedBlend;
+        private float _animationInputXBlend;
+        private float _animationInputZBlend;
 
         // timeout deltatime
         private float _jumpTimeoutDelta;
@@ -96,7 +99,9 @@ namespace StarterAssets
 
         // animation IDs
         private int _animIDSpeed;
-        private int _animIDSides;
+        private int _animIDInputX;
+        private int _animIDInputZ;
+        private int _animIDAim;
         private int _animIDGrounded;
         private int _animIDJump;
         private int _animIDFreeFall;
@@ -176,7 +181,9 @@ namespace StarterAssets
         private void AssignAnimationIDs()
         {
             _animIDSpeed = Animator.StringToHash("Speed");
-            _animIDSides = Animator.StringToHash("Sides");
+            _animIDInputX = Animator.StringToHash("InputX");
+            _animIDInputZ = Animator.StringToHash("InputZ");
+            _animIDAim = Animator.StringToHash("Aim");
             _animIDGrounded = Animator.StringToHash("Grounded");
             _animIDJump = Animator.StringToHash("Jump");
             _animIDFreeFall = Animator.StringToHash("FreeFall");
@@ -281,8 +288,8 @@ namespace StarterAssets
             _controller.Move(targetDirection.normalized * (_speed * Time.deltaTime) +
                              new Vector3(0.0f, _verticalVelocity, 0.0f) * Time.deltaTime);
 
-            _animationSidesBlend = Mathf.Lerp(_animationSidesBlend, inputDirection.x, Time.deltaTime * SpeedChangeRate);
-            if (inputDirection.z < 0) _animationSidesBlend = Mathf.Lerp(_animationSidesBlend, -4f, Time.deltaTime * 5f);
+            _animationInputXBlend = Mathf.Lerp(_animationInputXBlend, inputDirection.x, Time.deltaTime * SpeedChangeRate);
+            _animationInputZBlend = Mathf.Lerp(_animationInputZBlend, inputDirection.z, Time.deltaTime * SpeedChangeRate);
 
             // update animator if using character
             if (_hasAnimator)
@@ -290,13 +297,18 @@ namespace StarterAssets
                 _animator.SetFloat(_animIDSpeed, _animationSpeedBlend);
                 _animator.SetFloat(_animIDMotionSpeed, inputMagnitude);
 
-                Debug.Log(_animationSidesBlend);
-
                 if (_strafeOnAim)
-                    _animator.SetFloat(_animIDSides, _animationSidesBlend);
+                {
+                    _animator.SetBool(_animIDAim, true);
+
+                    _animator.SetFloat(_animIDInputX, _animationInputXBlend);
+                    _animator.SetFloat(_animIDInputZ, _animationInputZBlend);
+                }
 
                 else
-                    _animator.SetFloat(_animIDSides, 0f);
+                {
+                    _animator.SetBool(_animIDAim, false);
+                }
             }
         }
 
