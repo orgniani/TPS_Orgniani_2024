@@ -14,15 +14,10 @@ public class ShooterController : MonoBehaviour
     [SerializeField] private LayerMask aimColliderLayerMask = new LayerMask();
     [SerializeField] private Transform debugTransform;
 
-    [SerializeField] private ShotFeedback shotPrefab;
-
-    [SerializeField] private float gunDamage = 10f;
-    [SerializeField] private float gunRange = 10f;
     [SerializeField] private LayerMask enemies;
 
-
     [SerializeField] private Transform gunTip;
-    [SerializeField] private Transform midOfScreen;
+    [SerializeField] private Transform bulletPrefab;
 
     private StarterAssetsInputs starterAssetInputs;
     private ThirdPersonController thirdPersonController;
@@ -123,22 +118,7 @@ public class ShooterController : MonoBehaviour
         //shotSound.Play();
 
         Vector3 aimDirection = (mouseWorldPosition - gunTip.position).normalized;
-        ShotFeedback shotFeedback = Instantiate(shotPrefab, gunTip.position, Quaternion.LookRotation(aimDirection, Vector3.up));
-
-        Vector3 endPosition = gunTip.position + mouseWorldPosition * gunRange;
-
-        if (IsPointingAtEnemy)
-        {
-            //targetHP.ReceiveDamage(gunDamage, hitPoint);
-            //shotFeedback.ShowShotDirection(hitPoint);
-
-            shotFeedback.ShowShotDirection(endPosition);
-        }
-
-        else
-        {
-            shotFeedback.ShowShotDirection(endPosition);
-        }
+        Instantiate(bulletPrefab, gunTip.position, Quaternion.LookRotation(aimDirection, Vector3.up));
 
         starterAssetInputs.shoot = false;
     }
