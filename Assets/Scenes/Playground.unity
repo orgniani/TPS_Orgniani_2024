@@ -581,6 +581,36 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 252263398052033562, guid: 0850bf85ffdd9294b808264dd01bc3bf,
+        type: 3}
+      propertyPath: clickButton
+      value: 
+      objectReference: {fileID: 8300000, guid: 047280d175c149941b2e898c3caee1c9, type: 3}
+    - target: {fileID: 252263398052033562, guid: 0850bf85ffdd9294b808264dd01bc3bf,
+        type: 3}
+      propertyPath: hoverButton
+      value: 
+      objectReference: {fileID: 8300000, guid: dd9fe687e3c7c9344ae49f68cdea98ba, type: 3}
+    - target: {fileID: 282063393662966052, guid: 0850bf85ffdd9294b808264dd01bc3bf,
+        type: 3}
+      propertyPath: clickButton
+      value: 
+      objectReference: {fileID: 8300000, guid: 047280d175c149941b2e898c3caee1c9, type: 3}
+    - target: {fileID: 282063393662966052, guid: 0850bf85ffdd9294b808264dd01bc3bf,
+        type: 3}
+      propertyPath: hoverButton
+      value: 
+      objectReference: {fileID: 8300000, guid: dd9fe687e3c7c9344ae49f68cdea98ba, type: 3}
+    - target: {fileID: 345367671171826509, guid: 0850bf85ffdd9294b808264dd01bc3bf,
+        type: 3}
+      propertyPath: clickButton
+      value: 
+      objectReference: {fileID: 8300000, guid: 047280d175c149941b2e898c3caee1c9, type: 3}
+    - target: {fileID: 345367671171826509, guid: 0850bf85ffdd9294b808264dd01bc3bf,
+        type: 3}
+      propertyPath: hoverButton
+      value: 
+      objectReference: {fileID: 8300000, guid: dd9fe687e3c7c9344ae49f68cdea98ba, type: 3}
     - target: {fileID: 593718770015935370, guid: 0850bf85ffdd9294b808264dd01bc3bf,
         type: 3}
       propertyPath: m_AnchorMax.y
@@ -674,6 +704,16 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 21300000, guid: a60fb8f0fb18f4b4fb292c970ae60b32,
         type: 3}
+    - target: {fileID: 1277983840762135034, guid: 0850bf85ffdd9294b808264dd01bc3bf,
+        type: 3}
+      propertyPath: clickButton
+      value: 
+      objectReference: {fileID: 8300000, guid: 047280d175c149941b2e898c3caee1c9, type: 3}
+    - target: {fileID: 1277983840762135034, guid: 0850bf85ffdd9294b808264dd01bc3bf,
+        type: 3}
+      propertyPath: hoverButton
+      value: 
+      objectReference: {fileID: 8300000, guid: dd9fe687e3c7c9344ae49f68cdea98ba, type: 3}
     - target: {fileID: 1511330494738386308, guid: 0850bf85ffdd9294b808264dd01bc3bf,
         type: 3}
       propertyPath: m_Type
@@ -1171,6 +1211,16 @@ PrefabInstance:
       propertyPath: m_Color.r
       value: 0.8980393
       objectReference: {fileID: 0}
+    - target: {fileID: 5820926203058165802, guid: 0850bf85ffdd9294b808264dd01bc3bf,
+        type: 3}
+      propertyPath: clickButton
+      value: 
+      objectReference: {fileID: 8300000, guid: 047280d175c149941b2e898c3caee1c9, type: 3}
+    - target: {fileID: 5820926203058165802, guid: 0850bf85ffdd9294b808264dd01bc3bf,
+        type: 3}
+      propertyPath: hoverButton
+      value: 
+      objectReference: {fileID: 8300000, guid: dd9fe687e3c7c9344ae49f68cdea98ba, type: 3}
     - target: {fileID: 5830611581211154372, guid: 0850bf85ffdd9294b808264dd01bc3bf,
         type: 3}
       propertyPath: m_Type
@@ -1247,6 +1297,16 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
+    - target: {fileID: 7045734522877291975, guid: 0850bf85ffdd9294b808264dd01bc3bf,
+        type: 3}
+      propertyPath: clickButton
+      value: 
+      objectReference: {fileID: 8300000, guid: 047280d175c149941b2e898c3caee1c9, type: 3}
+    - target: {fileID: 7045734522877291975, guid: 0850bf85ffdd9294b808264dd01bc3bf,
+        type: 3}
+      propertyPath: hoverButton
+      value: 
+      objectReference: {fileID: 8300000, guid: dd9fe687e3c7c9344ae49f68cdea98ba, type: 3}
     - target: {fileID: 7333097448850766269, guid: 0850bf85ffdd9294b808264dd01bc3bf,
         type: 3}
       propertyPath: m_IsActive
@@ -1298,6 +1358,16 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgument
       value: 
       objectReference: {fileID: 1947254537}
+    - target: {fileID: 7890085102405918505, guid: 0850bf85ffdd9294b808264dd01bc3bf,
+        type: 3}
+      propertyPath: clickButton
+      value: 
+      objectReference: {fileID: 8300000, guid: 047280d175c149941b2e898c3caee1c9, type: 3}
+    - target: {fileID: 7890085102405918505, guid: 0850bf85ffdd9294b808264dd01bc3bf,
+        type: 3}
+      propertyPath: hoverButton
+      value: 
+      objectReference: {fileID: 8300000, guid: dd9fe687e3c7c9344ae49f68cdea98ba, type: 3}
     - target: {fileID: 7986664132952192045, guid: 0850bf85ffdd9294b808264dd01bc3bf,
         type: 3}
       propertyPath: m_Type
@@ -1625,7 +1695,7 @@ GameObject:
   m_Component:
   - component: {fileID: 405768038}
   m_Layer: 0
-  m_Name: ----- Managers -----
+  m_Name: ----- MANAGERS -----
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3200,7 +3270,7 @@ Transform:
   m_GameObject: {fileID: 1012084268}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -7.44, y: 0, z: -1.5}
+  m_LocalPosition: {x: -6.3, y: 0, z: -1.72}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3798,8 +3868,8 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: ffb159a21c8a04135a5616979c828fab, type: 3}
-  m_PlayOnAwake: 1
+  m_audioClip: {fileID: 8300000, guid: 047280d175c149941b2e898c3caee1c9, type: 3}
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
@@ -3953,7 +4023,7 @@ Animator:
   m_Controller: {fileID: 9100000, guid: ee6eb1aa9fee7ae40a7f0e74c27d865a, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
-  m_ApplyRootMotion: 0
+  m_ApplyRootMotion: 1
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
   m_WarningMessage: 
@@ -3985,7 +4055,9 @@ MonoBehaviour:
   offset: 2.5
   proximityRadius: 2
   fieldOfViewAngle: 90
-  SpeedChangeRate: 10
+  SpeedChangeRate: 5
+  patrolSpeed: 0.5
+  chaseSpeed: 2
 --- !u!195 &1305813180
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -4006,7 +4078,7 @@ NavMeshAgent:
   m_AutoRepath: 1
   m_Height: 2
   m_BaseOffset: 0.85
-  m_WalkableMask: 4294967295
+  m_WalkableMask: 3
   m_ObstacleAvoidanceType: 4
 --- !u!4 &1315750520 stripped
 Transform:

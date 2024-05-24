@@ -242,9 +242,9 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: 29ce8e943e292634d9a6b809493ec2a4, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.5
+  m_Volume: 0.2
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -496,6 +496,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: HowToPlay
       objectReference: {fileID: 0}
+    - target: {fileID: 8773943788798729917, guid: 78a1519d7d7589f42a6208c52647e68f,
+        type: 3}
+      propertyPath: clickButton
+      value: 
+      objectReference: {fileID: 8300000, guid: 047280d175c149941b2e898c3caee1c9, type: 3}
+    - target: {fileID: 8773943788798729917, guid: 78a1519d7d7589f42a6208c52647e68f,
+        type: 3}
+      propertyPath: hoverButton
+      value: 
+      objectReference: {fileID: 8300000, guid: dd9fe687e3c7c9344ae49f68cdea98ba, type: 3}
     - target: {fileID: 9144634488491402778, guid: 78a1519d7d7589f42a6208c52647e68f,
         type: 3}
       propertyPath: m_text
@@ -581,7 +591,7 @@ MonoBehaviour:
   m_text: 'PROGRAMMER            Orgniani
 
 
-    CHARACTERS               --
+    CHARACTERS               Mixamo
 
     ENVIRONMENT          
     --
@@ -590,9 +600,9 @@ MonoBehaviour:
 
 
     MUSIC                        
-    --
+    Cathran
 
-    SOUND EFFECTS         --
+    SOUND EFFECTS         Sounds4U
 
 
     USER INTERFACE        Prinbles'
@@ -942,8 +952,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   audioSource: {fileID: 265328852}
-  hoverButton: {fileID: 8300000, guid: 19f89c6e740e7447f9e12a8310d3e973, type: 3}
-  clickButton: {fileID: 8300000, guid: ffb159a21c8a04135a5616979c828fab, type: 3}
+  hoverButton: {fileID: 8300000, guid: dd9fe687e3c7c9344ae49f68cdea98ba, type: 3}
+  clickButton: {fileID: 8300000, guid: 047280d175c149941b2e898c3caee1c9, type: 3}
 --- !u!82 &265328852
 AudioSource:
   m_ObjectHideFlags: 0
@@ -2076,7 +2086,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &2142781957
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3337,6 +3347,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: Exit
       objectReference: {fileID: 0}
+    - target: {fileID: 8773943788798729917, guid: 78a1519d7d7589f42a6208c52647e68f,
+        type: 3}
+      propertyPath: clickButton
+      value: 
+      objectReference: {fileID: 8300000, guid: 047280d175c149941b2e898c3caee1c9, type: 3}
+    - target: {fileID: 8773943788798729917, guid: 78a1519d7d7589f42a6208c52647e68f,
+        type: 3}
+      propertyPath: hoverButton
+      value: 
+      objectReference: {fileID: 8300000, guid: dd9fe687e3c7c9344ae49f68cdea98ba, type: 3}
     - target: {fileID: 9144634488491402778, guid: 78a1519d7d7589f42a6208c52647e68f,
         type: 3}
       propertyPath: m_text
@@ -3569,6 +3589,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: Credits
       objectReference: {fileID: 0}
+    - target: {fileID: 8773943788798729917, guid: 78a1519d7d7589f42a6208c52647e68f,
+        type: 3}
+      propertyPath: clickButton
+      value: 
+      objectReference: {fileID: 8300000, guid: 047280d175c149941b2e898c3caee1c9, type: 3}
+    - target: {fileID: 8773943788798729917, guid: 78a1519d7d7589f42a6208c52647e68f,
+        type: 3}
+      propertyPath: hoverButton
+      value: 
+      objectReference: {fileID: 8300000, guid: dd9fe687e3c7c9344ae49f68cdea98ba, type: 3}
     - target: {fileID: 9144634488491402778, guid: 78a1519d7d7589f42a6208c52647e68f,
         type: 3}
       propertyPath: m_text
@@ -3752,6 +3782,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: Options
       objectReference: {fileID: 0}
+    - target: {fileID: 8773943788798729917, guid: 78a1519d7d7589f42a6208c52647e68f,
+        type: 3}
+      propertyPath: clickButton
+      value: 
+      objectReference: {fileID: 8300000, guid: 047280d175c149941b2e898c3caee1c9, type: 3}
+    - target: {fileID: 8773943788798729917, guid: 78a1519d7d7589f42a6208c52647e68f,
+        type: 3}
+      propertyPath: hoverButton
+      value: 
+      objectReference: {fileID: 8300000, guid: dd9fe687e3c7c9344ae49f68cdea98ba, type: 3}
     - target: {fileID: 9144634488491402778, guid: 78a1519d7d7589f42a6208c52647e68f,
         type: 3}
       propertyPath: m_text
@@ -4339,11 +4379,41 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2145835289548975239, guid: 3fd33ab319130e142bea10a2a75431c6,
+        type: 3}
+      propertyPath: clickButton
+      value: 
+      objectReference: {fileID: 8300000, guid: 047280d175c149941b2e898c3caee1c9, type: 3}
+    - target: {fileID: 2145835289548975239, guid: 3fd33ab319130e142bea10a2a75431c6,
+        type: 3}
+      propertyPath: hoverButton
+      value: 
+      objectReference: {fileID: 8300000, guid: dd9fe687e3c7c9344ae49f68cdea98ba, type: 3}
     - target: {fileID: 4231563665556810463, guid: 3fd33ab319130e142bea10a2a75431c6,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1522062540}
+    - target: {fileID: 4246233721143907010, guid: 3fd33ab319130e142bea10a2a75431c6,
+        type: 3}
+      propertyPath: clickButton
+      value: 
+      objectReference: {fileID: 8300000, guid: 047280d175c149941b2e898c3caee1c9, type: 3}
+    - target: {fileID: 4246233721143907010, guid: 3fd33ab319130e142bea10a2a75431c6,
+        type: 3}
+      propertyPath: hoverButton
+      value: 
+      objectReference: {fileID: 8300000, guid: dd9fe687e3c7c9344ae49f68cdea98ba, type: 3}
+    - target: {fileID: 5455760961403396652, guid: 3fd33ab319130e142bea10a2a75431c6,
+        type: 3}
+      propertyPath: clickButton
+      value: 
+      objectReference: {fileID: 8300000, guid: 047280d175c149941b2e898c3caee1c9, type: 3}
+    - target: {fileID: 5455760961403396652, guid: 3fd33ab319130e142bea10a2a75431c6,
+        type: 3}
+      propertyPath: hoverButton
+      value: 
+      objectReference: {fileID: 8300000, guid: dd9fe687e3c7c9344ae49f68cdea98ba, type: 3}
     - target: {fileID: 6268615981910505714, guid: 3fd33ab319130e142bea10a2a75431c6,
         type: 3}
       propertyPath: m_Name
@@ -4697,6 +4767,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: Play
       objectReference: {fileID: 0}
+    - target: {fileID: 8773943788798729917, guid: 78a1519d7d7589f42a6208c52647e68f,
+        type: 3}
+      propertyPath: clickButton
+      value: 
+      objectReference: {fileID: 8300000, guid: 047280d175c149941b2e898c3caee1c9, type: 3}
+    - target: {fileID: 8773943788798729917, guid: 78a1519d7d7589f42a6208c52647e68f,
+        type: 3}
+      propertyPath: hoverButton
+      value: 
+      objectReference: {fileID: 8300000, guid: dd9fe687e3c7c9344ae49f68cdea98ba, type: 3}
     - target: {fileID: 9144634488491402778, guid: 78a1519d7d7589f42a6208c52647e68f,
         type: 3}
       propertyPath: m_text
@@ -4818,8 +4898,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   audioSource: {fileID: 7378032116645123789}
-  hoverButton: {fileID: 8300000, guid: 19f89c6e740e7447f9e12a8310d3e973, type: 3}
-  clickButton: {fileID: 8300000, guid: ffb159a21c8a04135a5616979c828fab, type: 3}
+  hoverButton: {fileID: 8300000, guid: dd9fe687e3c7c9344ae49f68cdea98ba, type: 3}
+  clickButton: {fileID: 8300000, guid: 047280d175c149941b2e898c3caee1c9, type: 3}
 --- !u!82 &7378032116645123789
 AudioSource:
   m_ObjectHideFlags: 0
@@ -4999,7 +5079,6 @@ GameObject:
   - component: {fileID: 6827028917273459068}
   - component: {fileID: 6596958685268514167}
   - component: {fileID: 3680714054332703050}
-  - component: {fileID: 8047097533764743556}
   m_Layer: 5
   m_Name: Canvas - Menu
   m_TagString: Untagged
@@ -5007,102 +5086,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!82 &8047097533764743556
-AudioSource:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8047097533764743555}
-  m_Enabled: 1
-  serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 7bd6b897eb5ca4b7d88a205c4a51640c, type: 3}
-  m_PlayOnAwake: 1
-  m_Volume: 1
-  m_Pitch: 1
-  Loop: 0
-  Mute: 0
-  Spatialize: 0
-  SpatializePostEffects: 0
-  Priority: 128
-  DopplerLevel: 1
-  MinDistance: 1
-  MaxDistance: 500
-  Pan2D: 0
-  rolloffMode: 0
-  BypassEffects: 0
-  BypassListenerEffects: 0
-  BypassReverbZones: 0
-  rolloffCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 1
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  panLevelCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  spreadCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  reverbZoneMixCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
 --- !u!114 &8070061046238299018
 MonoBehaviour:
   m_ObjectHideFlags: 0

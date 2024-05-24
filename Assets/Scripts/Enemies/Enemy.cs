@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.InputSystem.XR;
 
 public class Enemy : MonoBehaviour
 {
@@ -21,6 +22,9 @@ public class Enemy : MonoBehaviour
 
     [SerializeField] private float SpeedChangeRate = 10.0f;
 
+    [SerializeField] private float patrolSpeed = 0.5f;
+    [SerializeField] private float chaseSpeed = 2f;
+
     private NavMeshAgent agent;
     private HealthController playerHP;
 
@@ -29,10 +33,8 @@ public class Enemy : MonoBehaviour
     private enum MovementState { PATROL = 0, FOLLOWTARGET }
     private MovementState movementState;
 
-    // animation IDs
+    // animation
     private int _animIDSpeed;
-
-    //animator blends
     private float _animationSpeedBlend;
 
     private Animator _animator;
@@ -47,7 +49,6 @@ public class Enemy : MonoBehaviour
         playerHP = target.gameObject.GetComponent<HealthController>();
 
         movementState = MovementState.PATROL;
-        StartCoroutine(PatrolRoutine());
     }
 
     private void Update()
@@ -64,13 +65,15 @@ public class Enemy : MonoBehaviour
         switch (movementState)
         {
             case MovementState.PATROL:
-                agent.speed = 1;
-                agent.isStopped = false;
+                agent.speed = patrolSpeed;
+
                 Patrol();
                 break;
 
             case MovementState.FOLLOWTARGET:
-                agent.speed = 2;
+                agent.speed = chaseSpeed;
+                agent.isStopped = false;
+
                 if (playerHP.Health <= 0) return;
 
                 //attack.AttackNow(target, playerHP);
@@ -94,8 +97,6 @@ public class Enemy : MonoBehaviour
 
     private void CheckIfPlayerSpotted()
     {
-        agent.isStopped = false;
-
         bool playerIsTooClose = Physics.CheckSphere(transform.position, proximityRadius, playerLayer);
 
         Vector3 spherePosition = transform.position + transform.forward * offset;
@@ -147,24 +148,19 @@ public class Enemy : MonoBehaviour
         currentPatrolPointIndex = (currentPatrolPointIndex + 1) % patrolPoints.Length;
     }
 
-    private IEnumerator PatrolRoutine()
+    public void OnStopMoving(AnimationEvent animationEvent)
     {
-        while (true)
+        if (animationEvent.animatorClipInfo.weight > 0.5f)
         {
-            if (movementState == MovementState.PATROL)
-            {
-                agent.isStopped = false;
+            agent.isStopped = true;
+        }
+    }
 
-                yield return new WaitForSeconds(1f);
-
-                agent.isStopped = true;
-
-                yield return new WaitForSeconds(1f);
-            }
-            else
-            {
-                yield return null;
-            }
+    public void OnStartMoving(AnimationEvent animationEvent)
+    {
+        if (animationEvent.animatorClipInfo.weight > 0.5f)
+        {
+            agent.isStopped = false;
         }
     }
 
