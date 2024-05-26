@@ -594,7 +594,7 @@ MonoBehaviour:
     CHARACTERS               Mixamo
 
     ENVIRONMENT          
-    --
+    DNK_DEV
 
     ITEMS                          --
 
@@ -2086,7 +2086,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &2142781957
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2894,15 +2894,20 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5962848163563568096, guid: e7d3cf7f9f55fb646ade7ee06751a3d8,
+        type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 16777215
+      objectReference: {fileID: 0}
     - target: {fileID: 6484291163738869192, guid: e7d3cf7f9f55fb646ade7ee06751a3d8,
         type: 3}
       propertyPath: m_AnchorMax.x
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6484291163738869192, guid: e7d3cf7f9f55fb646ade7ee06751a3d8,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6594359326308269567, guid: e7d3cf7f9f55fb646ade7ee06751a3d8,
         type: 3}
@@ -2913,6 +2918,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7941777723398838399, guid: e7d3cf7f9f55fb646ade7ee06751a3d8,
+        type: 3}
+      propertyPath: m_SortingOrder
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

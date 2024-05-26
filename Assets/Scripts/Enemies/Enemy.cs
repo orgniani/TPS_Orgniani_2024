@@ -148,6 +148,7 @@ public class Enemy : MonoBehaviour
         currentPatrolPointIndex = (currentPatrolPointIndex + 1) % patrolPoints.Length;
     }
 
+    //zombie-walk animation event
     public void OnStopMoving(AnimationEvent animationEvent)
     {
         if (animationEvent.animatorClipInfo.weight > 0.5f)
@@ -156,6 +157,7 @@ public class Enemy : MonoBehaviour
         }
     }
 
+    //zombie-walk animation event
     public void OnStartMoving(AnimationEvent animationEvent)
     {
         if (animationEvent.animatorClipInfo.weight > 0.5f)

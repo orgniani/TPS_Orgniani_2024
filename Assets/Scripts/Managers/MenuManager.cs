@@ -24,11 +24,13 @@ public class MenuManager : MonoBehaviour
 
     private void Update()
     {
-        if (!starterAssetInputs) return;
-        if(starterAssetInputs.pause)
+        if(starterAssetInputs != null)
         {
-            PauseAndUnpauseGame();
-            starterAssetInputs.pause = false;
+            if (starterAssetInputs.pause)
+            {
+                PauseAndUnpauseGame();
+                starterAssetInputs.pause = false;
+            }
         }
 
         if (!loadBar) return;
