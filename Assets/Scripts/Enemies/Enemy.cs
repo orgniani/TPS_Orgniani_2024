@@ -1,12 +1,11 @@
-using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.InputSystem.XR;
 
 public class Enemy : MonoBehaviour
 {
     [Header("References")]
-    //[SerializeField] private MeleeAttack attack;
+    [SerializeField] private Collider enemyCollider;
+    [SerializeField] private GameObject healthBar;
 
     [SerializeField] private Transform[] patrolPoints;
     [SerializeField] private Transform target;
@@ -26,6 +25,8 @@ public class Enemy : MonoBehaviour
     [SerializeField] private float chaseSpeed = 2f;
 
     private NavMeshAgent agent;
+    private EnemyAttack attack;
+    private HealthController HP;
     private HealthController playerHP;
 
     private int currentPatrolPointIndex = 0;
@@ -35,10 +36,31 @@ public class Enemy : MonoBehaviour
 
     // animation
     private int _animIDSpeed;
+    private int _animIDDeath;
+    private int _animIDHurt;
+    private int _animIDAttack;
     private float _animationSpeedBlend;
 
     private Animator _animator;
     private bool _hasAnimator;
+
+    private void Awake()
+    {
+        attack = GetComponent<EnemyAttack>();
+        HP = GetComponent<HealthController>();
+    }
+
+    private void OnEnable()
+    {
+        HP.onHurt += HandleHurt;
+        HP.onDead += HandleDeath;
+    }
+
+    private void OnDisable()
+    {
+        HP.onHurt -= HandleHurt;
+        HP.onDead -= HandleDeath;
+    }
 
     private void Start()
     {
@@ -46,6 +68,7 @@ public class Enemy : MonoBehaviour
         AssignAnimationIDs();
 
         agent = GetComponent<NavMeshAgent>();
+
         playerHP = target.gameObject.GetComponent<HealthController>();
 
         movementState = MovementState.PATROL;
@@ -56,6 +79,9 @@ public class Enemy : MonoBehaviour
         _hasAnimator = TryGetComponent(out _animator);
 
         CheckIfPlayerSpotted();
+
+        attack.CheckIfShouldAttack(playerHP);
+        HandleAttackAnimation();
 
         var speed = agent.velocity.magnitude;
 
@@ -72,11 +98,9 @@ public class Enemy : MonoBehaviour
 
             case MovementState.FOLLOWTARGET:
                 agent.speed = chaseSpeed;
-                agent.isStopped = false;
 
                 if (playerHP.Health <= 0) return;
 
-                //attack.AttackNow(target, playerHP);
                 agent.SetDestination(target.position);
                 break;
 
@@ -93,6 +117,9 @@ public class Enemy : MonoBehaviour
     private void AssignAnimationIDs()
     {
         _animIDSpeed = Animator.StringToHash("Speed");
+        _animIDDeath = Animator.StringToHash("Death");
+        _animIDHurt = Animator.StringToHash("Hurt");
+        _animIDAttack = Animator.StringToHash("Attack");
     }
 
     private void CheckIfPlayerSpotted()
@@ -146,6 +173,37 @@ public class Enemy : MonoBehaviour
     {
         agent.SetDestination(patrolPoints[currentPatrolPointIndex].position);
         currentPatrolPointIndex = (currentPatrolPointIndex + 1) % patrolPoints.Length;
+    }
+
+    private void HandleHurt()
+    {
+        if (_hasAnimator)
+        {
+            _animator.SetTrigger(_animIDHurt);
+        }
+
+        agent.isStopped = true;
+    }
+
+    private void HandleDeath()
+    {
+        if (_hasAnimator)
+        {
+            _animator.SetTrigger(_animIDDeath);
+        }
+
+        enabled = false;
+        enemyCollider.enabled = false;
+        healthBar.SetActive(false);
+    }
+
+
+    private void HandleAttackAnimation()
+    {
+        if (_hasAnimator)
+        {
+            _animator.SetBool(_animIDAttack, attack.IsAttacking);
+        }
     }
 
     //zombie-walk animation event

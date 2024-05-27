@@ -1,4 +1,5 @@
 using StarterAssets;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,10 +9,24 @@ public class UIHUD : MonoBehaviour
     [Header("Gun")]
     [SerializeField] private Image crossHair;
 
+    [Header("Health")]
+    [SerializeField] private TMP_Text HPText;
+    [SerializeField] private Image healthBar;
+
     [Header("Player References")]
+    [SerializeField] private HealthController playerHP;
     [SerializeField] private ShooterController shootController;
     [SerializeField] private StarterAssetsInputs starterAssetInputs;
 
+    private void OnEnable()
+    {
+        playerHP.onHurt += HandleHPBar;
+    }
+
+    private void OnDisable()
+    {
+        playerHP.onHurt -= HandleHPBar;
+    }
     private void Update()
     {
         CrossHairAppear();
@@ -42,5 +57,13 @@ public class UIHUD : MonoBehaviour
         {
             crossHair.gameObject.SetActive(false);
         }
+    }
+
+    private void HandleHPBar()
+    {
+        if (!HPText || !healthBar) return;
+
+        HPText.text = playerHP.Health + "%";
+        healthBar.fillAmount = 1.0f * playerHP.Health / playerHP.MaxHealth;
     }
 }

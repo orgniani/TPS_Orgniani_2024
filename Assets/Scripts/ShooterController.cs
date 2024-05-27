@@ -5,27 +5,37 @@ using UnityEngine.Animations.Rigging;
 
 public class ShooterController : MonoBehaviour
 {
+    [Header("Aiming")]
+
+    [Header("References")]
     [SerializeField] private Rig aimRig;
     [SerializeField] private CinemachineVirtualCamera aimVirtualCamera;
+    [SerializeField] private Transform debugTransform;
 
+    [Header("Parameters")]
     [SerializeField] private float normalSensitivity;
     [SerializeField] private float aimSensitivity;
 
     [SerializeField] private LayerMask aimColliderLayerMask = new LayerMask();
-    [SerializeField] private Transform debugTransform;
-
     [SerializeField] private LayerMask enemies;
 
+    [Header("Shooting")]
+    [Header("References")]
     [SerializeField] private Transform gunTip;
     [SerializeField] private Transform bulletPrefab;
+
+    [Header("Parameters")]
+    [SerializeField] private float gunDamage = 10f;
 
     private StarterAssetsInputs starterAssetInputs;
     private ThirdPersonController thirdPersonController;
     private Animator animator;
 
     private Vector3 mouseWorldPosition;
-
     private float aimRigWeight;
+
+    private HealthController targetHP;
+    private Vector3 hitPoint;
 
     public bool IsPointingAtEnemy { get; private set; }
 
@@ -96,6 +106,8 @@ public class ShooterController : MonoBehaviour
 
     private void UpdateGunSightColor()
     {
+        if (Cursor.lockState != CursorLockMode.Locked) return;
+
         RaycastHit hit;
 
         Vector3 cameraForward = Camera.main.transform.forward;
@@ -103,6 +115,9 @@ public class ShooterController : MonoBehaviour
 
         if (Physics.Raycast(sourcePos, cameraForward, out hit, Mathf.Infinity, enemies))
         {
+            targetHP = hit.transform.GetComponentInParent<HealthController>();
+            hitPoint = hit.point;
+
             IsPointingAtEnemy = true;
         }
         else
@@ -113,12 +128,21 @@ public class ShooterController : MonoBehaviour
 
     public void Shoot()
     {
-        if (!starterAssetInputs.aim) return;
+        if (!starterAssetInputs.aim)
+        {
+            starterAssetInputs.shoot = false;
+            return;
+        }
         //gunSmoke.Play();
         //shotSound.Play();
 
         Vector3 aimDirection = (mouseWorldPosition - gunTip.position).normalized;
         Instantiate(bulletPrefab, gunTip.position, Quaternion.LookRotation(aimDirection, Vector3.up));
+
+        if (IsPointingAtEnemy)
+        {
+            targetHP.ReceiveDamage(gunDamage, hitPoint);
+        }
 
         starterAssetInputs.shoot = false;
     }
