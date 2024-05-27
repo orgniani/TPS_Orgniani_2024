@@ -23,6 +23,7 @@ public class ShooterController : MonoBehaviour
     [Header("References")]
     [SerializeField] private Transform gunTip;
     [SerializeField] private Transform bulletPrefab;
+    [SerializeField] private ParticleSystem gunSmoke;
 
     [Header("Parameters")]
     [SerializeField] private float gunDamage = 10f;
@@ -133,7 +134,8 @@ public class ShooterController : MonoBehaviour
             starterAssetInputs.shoot = false;
             return;
         }
-        //gunSmoke.Play();
+
+        gunSmoke.Play();
         //shotSound.Play();
 
         Vector3 aimDirection = (mouseWorldPosition - gunTip.position).normalized;

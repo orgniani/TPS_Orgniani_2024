@@ -9,7 +9,7 @@ public class MenuManager : MonoBehaviour
     [SerializeField] private LevelManager levelManager;
     [SerializeField] private GameObject pauseScreen;
     [SerializeField] private Slider loadBar;
-    //[SerializeField] private HealthController playerHP;
+    [SerializeField] private HealthController playerHP;
 
     [SerializeField] private StarterAssetsInputs starterAssetInputs;
 
@@ -108,10 +108,10 @@ public class MenuManager : MonoBehaviour
 
         yield return new WaitForSeconds(screenAnimationDuration);
 
-        //if(playerHP != null)
-        //{
-        //    if (playerHP.Health <= 0) yield break;
-        //}
+        if (playerHP != null)
+        {
+            if (playerHP.Health <= 0) yield break;
+        }
 
         canPause = true;
         Time.timeScale = 0;

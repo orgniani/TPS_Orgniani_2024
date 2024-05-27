@@ -43,7 +43,12 @@ public class EnemyAttack : MonoBehaviour
     {
         playerHP = targetHP;
 
-        if (playerHP.Health <= 0) return;
+        if (playerHP.Health <= 0)
+        {
+            IsAttacking = false;
+            enabled = false;
+            return;
+        }
 
         CheckIfPlayerInAttackRange();
     }
@@ -52,6 +57,7 @@ public class EnemyAttack : MonoBehaviour
     public void OnSwipe()
     {
         RaycastHit hit;
+
         Vector3 sourcePos = transform.position;
 
         Physics.Raycast(sourcePos, transform.forward, out hit, attackProximity, playerLayer);
