@@ -5,13 +5,14 @@ public class UIHowToPlayMenu : MonoBehaviour
 {
     [Header("Text")]
     [SerializeField] private TextMeshProUGUI instructionText;
-    private string[] instructions = new string[]
+    [SerializeField] private string[] instructions = new string[]
     {
-        "INSTRUCTION 1",
-        "INSTRUCTION 2",
-        "INSTRUCTION 3",
-        "INSTRUCTION 4",
-        "INSTRUCTION 5"
+        "1. Combat the Goblins!\n\nThe forest (and you) are under attack by goblins! Use your tranquilizer gun to make them fall asleep.",
+        "2. Secure the Goblins!\n\nOnce a goblin is asleep, disarm and drag it to the nearest cabin to trap it inside!",
+        "3. Act Quickly!\n\nThe tranquilizer effect is short-lived, so move fast! Trap the goblin before it wakes up again.",
+        "4. Make each shot count! \n\n You have limited tranquilizer darts. Look for crates to replenish your ammunition and first aid kits to restore your health.",
+        "5. Extinguish Fires!\n\nUse the fire extinguisher to put out any fires before the forest is destroyed.",
+        "6. Win!\n\nTrap all the goblins before you or the forest are destroyed to win!"
     };
 
     private int currentInstructionIndex = 0;

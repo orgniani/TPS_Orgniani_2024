@@ -1,6 +1,4 @@
-using StarterAssets;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -9,7 +7,10 @@ public class GameManager : MonoBehaviour
 {
     [Header("References")]
     [SerializeField] private HealthController playerHP;
-    [SerializeField] private LayerMask playerLayer;
+
+    [Header("Lists")]
+    [SerializeField] private List<Enemy> enemies;
+    public List<FlammableObject> flammables;
 
     [Header("Audio")]
     [SerializeField] private AudioSource winGameSoundEffect;
@@ -19,41 +20,84 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject gameOverScreen;
     [SerializeField] private GameObject levelCompletedScreen;
 
-    [SerializeField] private float waitForLoseScreen = 3f;
+    [Header("Text")]
+    [SerializeField] private UITimeCounter timeCounter;
+    [SerializeField] private TextMeshProUGUI gameOverText;
+
+    public int flammablesTotal;
+
+    public event Action onNewDeadTree = delegate { };
 
     private void OnEnable()
     {
         playerHP.onDead += LoseGame;
+
+        Enemy.onSpawn += SpawnedEnemy;
+        Enemy.onTrapped += KillCounter;
+
+        FlammableObject.onSpawn += SpawnedFlammable;
+        FlammableObject.onDeath += DeadNatureCounter;
     }
 
     private void OnDisable()
     {
         playerHP.onDead -= LoseGame;
+
+        Enemy.onSpawn -= SpawnedEnemy;
+        Enemy.onTrapped -= KillCounter;
+
+        FlammableObject.onSpawn -= SpawnedFlammable;
+        FlammableObject.onDeath -= DeadNatureCounter;
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void KillCounter(Enemy obj)
     {
-        if (playerLayer == (playerLayer | (1 << other.gameObject.layer)))
+        enemies.Remove(obj);
+
+        if (enemies.Count == 0)
         {
-            StartCoroutine(StopGameAndOpenScreens(levelCompletedScreen, winGameSoundEffect, 0f));
-            playerHP.gameObject.SetActive(false);
+            StopGameAndOpenScreens(levelCompletedScreen, winGameSoundEffect);
         }
+    }
+
+    private void DeadNatureCounter(FlammableObject obj)
+    {
+        flammables.Remove(obj);
+        onNewDeadTree?.Invoke();
+
+        if (flammables.Count == 0)
+        {
+            LoseGame();
+            gameOverText.text = "THE FOREST WAS DESTROYED!";
+        }
+    }
+
+    private void SpawnedEnemy(Enemy obj)
+    {
+        enemies.Add(obj);
+    }
+
+    private void SpawnedFlammable(FlammableObject obj)
+    {
+        flammables.Add(obj);
+        flammablesTotal++;
     }
 
     private void LoseGame()
     {
-        StartCoroutine(StopGameAndOpenScreens(gameOverScreen, loseGameSoundEffect, waitForLoseScreen));
+        StopGameAndOpenScreens(gameOverScreen, loseGameSoundEffect);
+        gameOverText.text = "YOU DIED!";
     }
 
-    private IEnumerator StopGameAndOpenScreens(GameObject screen, AudioSource soundEffect, float waitForScreen)
+    private void StopGameAndOpenScreens(GameObject screen, AudioSource soundEffect)
     {
         Cursor.lockState = CursorLockMode.None;
 
-        if(soundEffect) soundEffect.Play();
-
-        yield return new WaitForSeconds(waitForScreen);
-
+        soundEffect.Play();
         screen.SetActive(true);
+
+        timeCounter.StopCounting();
+
         enabled = false;
     }
 }

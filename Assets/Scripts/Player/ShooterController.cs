@@ -2,11 +2,11 @@ using UnityEngine;
 using Cinemachine;
 using StarterAssets;
 using UnityEngine.Animations.Rigging;
+using System;
 
 public class ShooterController : MonoBehaviour
 {
     [Header("Aiming")]
-
     [Header("References")]
     [SerializeField] private Rig aimRig;
     [SerializeField] private CinemachineVirtualCamera aimVirtualCamera;
@@ -21,12 +21,17 @@ public class ShooterController : MonoBehaviour
 
     [Header("Shooting")]
     [Header("References")]
+    [SerializeField] private ShotFeedback shotPrefab;
     [SerializeField] private Transform gunTip;
-    [SerializeField] private Transform bulletPrefab;
     [SerializeField] private ParticleSystem gunSmoke;
 
     [Header("Parameters")]
     [SerializeField] private float gunDamage = 10f;
+
+    [Header("Ammo")]
+    [Header("Parameters")]
+    [SerializeField] private float ammoAmount = 2f;
+    [SerializeField] private float maxAmmoAmount = 5f;
 
     private StarterAssetsInputs starterAssetInputs;
     private ThirdPersonController thirdPersonController;
@@ -38,6 +43,10 @@ public class ShooterController : MonoBehaviour
     private HealthController targetHP;
     private Vector3 hitPoint;
 
+    public event Action onAmmoChange = delegate { };
+
+    public float AmmoAmount => ammoAmount;
+    public float MaxAmmoAmount => maxAmmoAmount;
     public bool IsPointingAtEnemy { get; private set; }
 
     private void Awake()
@@ -49,7 +58,9 @@ public class ShooterController : MonoBehaviour
 
     private void Update()
     {
-        UpdateGunSightColor();
+        if (!enabled) return;
+
+        CheckIfPointingAtEnemy();
         HandlePlayerAiming();
 
         if(starterAssetInputs.shoot)
@@ -105,7 +116,7 @@ public class ShooterController : MonoBehaviour
         }
     }
 
-    private void UpdateGunSightColor()
+    private void CheckIfPointingAtEnemy()
     {
         if (Cursor.lockState != CursorLockMode.Locked) return;
 
@@ -135,17 +146,37 @@ public class ShooterController : MonoBehaviour
             return;
         }
 
+        if (Cursor.lockState != CursorLockMode.Locked) return;
+
+        if (ammoAmount <= 0) return;
+
+        ammoAmount--;
+        onAmmoChange?.Invoke();
+
         gunSmoke.Play();
         //shotSound.Play();
 
-        Vector3 aimDirection = (mouseWorldPosition - gunTip.position).normalized;
-        Instantiate(bulletPrefab, gunTip.position, Quaternion.LookRotation(aimDirection, Vector3.up));
+        ShotFeedback shotFeedback = Instantiate(shotPrefab, gunTip.position, Quaternion.identity);
+
+        Vector3 cameraForward = Camera.main.transform.forward;
 
         if (IsPointingAtEnemy)
         {
             targetHP.ReceiveDamage(gunDamage, hitPoint);
+            shotFeedback.ShowShotDirection(hitPoint);
+        }
+
+        else
+        {
+            shotFeedback.ShowShotDirection(debugTransform.position);
         }
 
         starterAssetInputs.shoot = false;
+    }
+
+    public void ReplenishAmmo()
+    {
+        ammoAmount = maxAmmoAmount;
+        onAmmoChange?.Invoke();
     }
 }

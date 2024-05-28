@@ -9,8 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2174936259168010062}
+  - component: {fileID: 454321359987494590}
   - component: {fileID: 4810680200407860798}
-  - component: {fileID: 1691490028578655382}
   m_Layer: 8
   m_Name: ShotFeedback
   m_TagString: Untagged
@@ -33,6 +33,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: -2.5, z: 0}
+--- !u!114 &454321359987494590
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7937895989016890107}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0626135744ee70246a11d0f546690f92, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gunRange: 0
 --- !u!120 &4810680200407860798
 LineRenderer:
   serializedVersion: 2
@@ -51,6 +64,8 @@ LineRenderer:
   m_ReflectionProbeUsage: 0
   m_RayTracingMode: 0
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -137,15 +152,3 @@ LineRenderer:
   m_UseWorldSpace: 0
   m_Loop: 0
   m_ApplyActiveColorSpace: 1
---- !u!114 &1691490028578655382
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7937895989016890107}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5e34620573ed90a448e59826ddd84378, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

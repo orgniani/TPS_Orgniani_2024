@@ -24,7 +24,7 @@ public class MenuManager : MonoBehaviour
 
     private void Update()
     {
-        if(starterAssetInputs != null)
+        if (starterAssetInputs != null)
         {
             if (starterAssetInputs.pause)
             {
@@ -108,7 +108,7 @@ public class MenuManager : MonoBehaviour
 
         yield return new WaitForSeconds(screenAnimationDuration);
 
-        if (playerHP != null)
+        if(playerHP != null)
         {
             if (playerHP.Health <= 0) yield break;
         }

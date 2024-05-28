@@ -95,3 +95,10 @@ ModelImporter:
   userData: 
   assetBundleName: 
   assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 185080
+  packageName: Battle Royale Duo Polyart PBR
+  packageVersion: 1.1
+  assetPath: Assets/Art/Models/Weapon/AssaultRiflePBR.fbx
+  uploadId: 419573
