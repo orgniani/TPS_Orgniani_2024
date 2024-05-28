@@ -1,9 +1,13 @@
+using StarterAssets;
 using System.Collections;
 using UnityEngine;
 
 public class AttackSwapController : MonoBehaviour
 {
     [Header("Controllers")]
+    [SerializeField] private StarterAssetsInputs starterAssetsInputs;
+    [SerializeField] private WeaponController weaponController;
+
     [SerializeField] private ShooterController gunController;
     [SerializeField] private FireExtinguisherController fireExtinguisherController;
     [SerializeField] private HandController handController;
@@ -35,6 +39,38 @@ public class AttackSwapController : MonoBehaviour
         extinguisherInitialPosition = fireExtinguisher.transform.localPosition;
 
         audioSource = GetComponent<AudioSource>();
+    }
+
+    private void Update()
+    {
+        if(starterAssetsInputs.gun)
+        {
+            SwapToGun();
+            starterAssetsInputs.gun = false;
+        }
+
+        if(starterAssetsInputs.fireExtinguisher)
+        {
+            SwapToFireExtinguisher();
+            starterAssetsInputs.fireExtinguisher = false;
+        }
+
+        if (starterAssetsInputs.hands)
+        {
+            starterAssetsInputs.aim = false;
+            weaponController.HandlePlayerAiming();
+            SwapToHands();
+            StartCoroutine(WaitToDisableInput());
+        }
+    }
+
+    /// <summary>
+    /// Waiting time so the masks weight in the Animator can reset to their default state properly, masks weight are handled by the WeaponController.
+    /// </summary>
+    public IEnumerator WaitToDisableInput()
+    {
+        yield return new WaitForSeconds(2f);
+        starterAssetsInputs.hands = false;
     }
 
     public void SwapToFireExtinguisher()

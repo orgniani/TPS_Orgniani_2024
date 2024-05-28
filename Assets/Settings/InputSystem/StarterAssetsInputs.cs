@@ -15,6 +15,9 @@ namespace StarterAssets
 		public bool aim;
         public bool shoot;
         public bool pause;
+        public bool gun;
+        public bool fireExtinguisher;
+        public bool hands;
 
         [Header("Movement Settings")]
 		public bool analogMovement;
@@ -63,6 +66,21 @@ namespace StarterAssets
             PauseInput(value.isPressed);
         }
 
+        public void OnGun(InputValue value)
+        {
+            GunInput(value.isPressed);
+        }
+
+        public void OnExtinguisher(InputValue value)
+        {
+            ExtinguisherInput(value.isPressed);
+        }
+
+        public void OnHands(InputValue value)
+        {
+            HandsInput(value.isPressed);
+        }
+
 #endif
 
 
@@ -99,6 +117,21 @@ namespace StarterAssets
         public void PauseInput(bool newPauseState)
         {
             pause = newPauseState;
+        }
+
+        public void GunInput(bool newGunState)
+        {
+            gun = newGunState;
+        }
+
+        public void ExtinguisherInput(bool newExtinguisherState)
+        {
+            fireExtinguisher = newExtinguisherState;
+        }
+
+        public void HandsInput(bool newHandsState)
+        {
+            hands = newHandsState;
         }
 
         private void OnApplicationFocus(bool hasFocus)

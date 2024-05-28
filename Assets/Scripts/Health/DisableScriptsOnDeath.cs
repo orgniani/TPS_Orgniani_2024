@@ -5,7 +5,7 @@ public class DisableScriptsOnDeath : MonoBehaviour
     [Header("References")]
     [SerializeField] private HealthController HP;
     [SerializeField] private FirstPersonController FPS;
-    [SerializeField] private GunController gun;
+    [SerializeField] private WeaponController gun;
     [SerializeField] private CharacterController CC;
 
     private void OnEnable()

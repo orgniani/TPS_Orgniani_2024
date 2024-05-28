@@ -1,31 +1,45 @@
-﻿using UnityEngine;
+﻿using StarterAssets;
+using UnityEngine;
 
-public class FireExtinguisherController : MonoBehaviour
+public class FireExtinguisherController : WeaponController
 {
     [Header("References")]
     [SerializeField] private ParticleSystem fireFoam;
-
     [SerializeField] private AudioSource extinguishSound;
 
-    private bool spray = false;
-
-    public void Spray(bool isSpraying)
+    private void Update()
     {
         if (Cursor.lockState != CursorLockMode.Locked) return;
         if (!enabled) return;
 
-        spray = isSpraying;
+        HandlePlayerAiming();
 
-        if (spray)
+        if (starterAssetInputs.shoot)
         {
-            fireFoam.Play();
-            extinguishSound.Play();
+            Shoot();
         }
 
         else
         {
-            fireFoam.Stop();
-            extinguishSound.Stop();
+            StopShoot();
         }
+    }
+
+
+    public override void Shoot()
+    {
+        fireFoam.Play();
+
+        if(fireFoam.isPlaying )
+        {
+            Debug.Log("spraying");
+        }
+        extinguishSound.Play();
+    }
+
+    private void StopShoot()
+    {
+        fireFoam.Stop();
+        extinguishSound.Stop();
     }
 }
