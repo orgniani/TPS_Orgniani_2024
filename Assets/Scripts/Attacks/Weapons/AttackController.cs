@@ -18,12 +18,13 @@ public class AttackController : MonoBehaviour
     [SerializeField] private LayerMask aimColliderLayerMask = new LayerMask();
 
     protected StarterAssetsInputs starterAssetInputs;
-    private ThirdPersonController thirdPersonController;
+    protected ThirdPersonController thirdPersonController;
     protected Animator animator;
 
     // animation IDs
     protected int animIDGun;
     protected int animIDExtinguisher;
+    protected int animIDDrag;
 
     protected bool hasAnimator;
 
@@ -54,7 +55,7 @@ public class AttackController : MonoBehaviour
 
         if (Physics.Raycast(ray, out RaycastHit raycastHit, 999f, aimColliderLayerMask))
         {
-            debugTransform.position = raycastHit.point;
+            if(debugTransform) debugTransform.position = raycastHit.point;
             mouseWorldPosition = raycastHit.point;
         }
 
@@ -71,15 +72,18 @@ public class AttackController : MonoBehaviour
 
     private void Aiming()
     {
-        aimVirtualCamera.gameObject.SetActive(true);
-        thirdPersonController.SetSensitivity(aimSensitivity);
-        thirdPersonController.SetRotateOnMove(false);
-        thirdPersonController.SetSprintOnAimOrDrag(false);
-        thirdPersonController.SetStrafeOnAim(true);
-
         animator.SetLayerWeight(1, Mathf.Lerp(animator.GetLayerWeight(1), 1f, Time.deltaTime * 10f));
         animator.SetLayerWeight(2, Mathf.Lerp(animator.GetLayerWeight(1), 1f, Time.deltaTime * 10f));
         aimRigWeight = 1f;
+
+        thirdPersonController.SetRotateOnMove(false);
+        thirdPersonController.SetSprintOnAim(false);
+        thirdPersonController.SetStrafeOnAim(true);
+
+        if (!aimVirtualCamera) return;
+
+        aimVirtualCamera.gameObject.SetActive(true);
+        thirdPersonController.SetSensitivity(aimSensitivity);
 
         Vector3 worldAimTarget = mouseWorldPosition;
         worldAimTarget.y = transform.position.y;
@@ -90,14 +94,17 @@ public class AttackController : MonoBehaviour
 
     private void StopAiming()
     {
-        aimVirtualCamera.gameObject.SetActive(false);
-        thirdPersonController.SetSensitivity(normalSensitivity);
-        thirdPersonController.SetRotateOnMove(true);
-        thirdPersonController.SetStrafeOnAim(false);
-
         animator.SetLayerWeight(1, Mathf.Lerp(animator.GetLayerWeight(1), 0f, Time.deltaTime * 10f));
         animator.SetLayerWeight(2, Mathf.Lerp(animator.GetLayerWeight(1), 0f, Time.deltaTime * 10f));
         aimRigWeight = 0f;
+
+        thirdPersonController.SetRotateOnMove(true);
+        thirdPersonController.SetStrafeOnAim(false);
+
+        if (!aimVirtualCamera) return;
+
+        aimVirtualCamera.gameObject.SetActive(false);
+        thirdPersonController.SetSensitivity(normalSensitivity);
     }
 
     public virtual void Shoot()
@@ -108,5 +115,6 @@ public class AttackController : MonoBehaviour
     {
         animIDExtinguisher = Animator.StringToHash("Extinguisher");
         animIDGun = Animator.StringToHash("Gun");
+        animIDDrag = Animator.StringToHash("Drag");
     }
 }

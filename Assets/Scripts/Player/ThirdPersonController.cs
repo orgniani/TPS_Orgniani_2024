@@ -439,7 +439,7 @@ namespace StarterAssets
             _rotateOnMove = newRotateOnMove;
         }
 
-        public void SetSprintOnAimOrDrag(bool newSprintOnAim)
+        public void SetSprintOnAim(bool newSprintOnAim)
         {
             _input.sprint = newSprintOnAim;
         }

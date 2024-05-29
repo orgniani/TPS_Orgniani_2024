@@ -37,7 +37,9 @@ public class AttackSwapController : MonoBehaviour
         if(starterAssetsInputs.gun)
         {
             starterAssetsInputs.aim = false;
+
             fireExtinguisherController.HandlePlayerAiming();
+            handController.HandlePlayerAiming();
 
             SwapToGun();
             StartCoroutine(WaitToDisableInput());
@@ -46,7 +48,9 @@ public class AttackSwapController : MonoBehaviour
         if(starterAssetsInputs.fireExtinguisher)
         {
             starterAssetsInputs.aim = false;
+
             gunController.HandlePlayerAiming();
+            handController.HandlePlayerAiming();
 
             SwapToFireExtinguisher();
             StartCoroutine(WaitToDisableInput());

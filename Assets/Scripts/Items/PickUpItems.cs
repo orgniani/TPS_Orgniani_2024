@@ -70,7 +70,6 @@ public class PickUpItems : MonoBehaviour
                 case ItemType.EXTINGUISHER:
 
                     attackSwapController.AquiredExtinguisher = true;
-                    attackSwapController.SwapToFireExtinguisher();
 
                     onPickUp?.Invoke();
 
@@ -80,7 +79,6 @@ public class PickUpItems : MonoBehaviour
                 case ItemType.GUN:
 
                     attackSwapController.AquiredGun = true;
-                    attackSwapController.SwapToGun();
 
                     onPickUp?.Invoke();
 

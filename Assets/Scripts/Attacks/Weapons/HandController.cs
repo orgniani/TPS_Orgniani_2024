@@ -52,10 +52,21 @@ public class HandController : AttackController
     private void Update()
     {
         if (Cursor.lockState != CursorLockMode.Locked) return;
-        if (!enabled) return;
-
-        if (starterAssetInputs.shoot)
+        if (!CanDrag)
         {
+            StopDragging();
+            return;
+        }
+
+        HandlePlayerAiming();
+
+        if (starterAssetInputs.aim)
+        {
+            if (hasAnimator)
+            {
+                animator.SetTrigger(animIDDrag);
+            }
+
             DragEnemy();
         }
 
@@ -64,7 +75,7 @@ public class HandController : AttackController
             StopDragging();
         }
 
-        if (starterAssetInputs.aim)
+        if (starterAssetInputs.shoot)
         {
             HandleTrapGoblin();
         }
@@ -72,8 +83,6 @@ public class HandController : AttackController
 
     private void DragEnemy()
     {
-        if (!CanDrag) return;
-
         Transform nearestEnemy = FindNearestKnockedOutEnemy();
 
         if (nearestEnemy != null)
@@ -87,9 +96,9 @@ public class HandController : AttackController
                 if (enemyAgent != null)
                 {
                     enemyAgent.isStopped = false;
+                    enemyAgent.stoppingDistance = 1;
                     enemyAgent.SetDestination(transform.position);
 
-                    TPSController.SetSprintOnAimOrDrag(false);
                     TPSController.MoveSpeed = dragSpeed;
 
                     isDraggingEnemy = true;
@@ -108,17 +117,23 @@ public class HandController : AttackController
 
     private void RotateTowardsTarget()
     {
-        Vector3 aimDirection = (currentlyDraggedEnemy.position - transform.position).normalized;
+        if (currentlyDraggedEnemy != null)
+        {
+            Vector3 aimDirection = (currentlyDraggedEnemy.position - transform.position).normalized;
+            aimDirection.y = 0;
 
-        transform.forward = Vector3.Lerp(transform.forward, aimDirection, Time.deltaTime * 20f);
+            Quaternion targetRotation = Quaternion.LookRotation(aimDirection);
+
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 20f);
+        }
     }
 
-    private void StopDragging()
+    public void StopDragging()
     {
-
         isDraggingEnemy = false;
-        //TPSController.SetSprintOnAimOrDrag(true);
         TPSController.MoveSpeed = moveSpeed;
+        thirdPersonController.SetRotateOnMove(true);
+        thirdPersonController.SetStrafeOnAim(false);
 
         if (currentlyDraggedEnemy != null) currentlyDraggedEnemy = null;
 
@@ -171,6 +186,6 @@ public class HandController : AttackController
         enemyAgent = null;
         isDraggingEnemy = false;
 
-        starterAssetInputs.aim = false;
+        starterAssetInputs.shoot = false;
     }
 }

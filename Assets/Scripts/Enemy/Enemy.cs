@@ -100,6 +100,7 @@ public class Enemy : MonoBehaviour
         yield return new WaitForSeconds(1);
 
         agent.isStopped = false;
+        agent.stoppingDistance = 2;
 
         if (patrol) patrol.enabled = true;
         if (arsonist) arsonist.enabled = true;
