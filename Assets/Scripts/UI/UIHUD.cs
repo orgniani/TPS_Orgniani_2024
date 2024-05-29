@@ -86,16 +86,17 @@ public class UIHUD : MonoBehaviour
     {
         if (!gunSight) return;
 
-        if (starterAssetInputs.aim)
+        if(!shootController.enabled || !starterAssetInputs.aim)
+        {
+            gunSight.gameObject.SetActive(false);
+        }
+
+        else
         {
             gunSight.gameObject.SetActive(true);
             ChangeGunSightColor();
         }
 
-        else
-        {
-            gunSight.gameObject.SetActive(false);
-        }
     }
 
     private void HandleHPText()

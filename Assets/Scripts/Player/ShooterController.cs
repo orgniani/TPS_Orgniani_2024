@@ -2,7 +2,7 @@ using UnityEngine;
 using StarterAssets;
 using System;
 
-public class ShooterController : WeaponController
+public class ShooterController : AttackController
 {
     [Header("Aiming")]
     [Header("References")]
@@ -22,6 +22,8 @@ public class ShooterController : WeaponController
     [SerializeField] private float ammoAmount = 2f;
     [SerializeField] private float maxAmmoAmount = 5f;
 
+    [Header("Audio")]
+    [SerializeField] private AudioSource shotSound;
 
     private HealthController targetHP;
     private Vector3 hitPoint;
@@ -36,6 +38,11 @@ public class ShooterController : WeaponController
     {
         if (Cursor.lockState != CursorLockMode.Locked) return;
         if (!enabled) return;
+
+        if (hasAnimator)
+        {
+            animator.SetTrigger(animIDGun);
+        }
 
         HandlePlayerAiming();
         CheckIfPointingAtEnemy();
@@ -83,7 +90,7 @@ public class ShooterController : WeaponController
         onAmmoChange?.Invoke();
 
         gunSmoke.Play();
-        //shotSound.Play();
+        shotSound.Play();
 
         ShotFeedback shotFeedback = Instantiate(shotPrefab, gunTip.position, Quaternion.identity);
 

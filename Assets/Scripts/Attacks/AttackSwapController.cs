@@ -1,4 +1,5 @@
 using StarterAssets;
+using System;
 using System.Collections;
 using UnityEngine;
 
@@ -6,16 +7,10 @@ public class AttackSwapController : MonoBehaviour
 {
     [Header("Controllers")]
     [SerializeField] private StarterAssetsInputs starterAssetsInputs;
-    [SerializeField] private WeaponController weaponController;
 
     [SerializeField] private ShooterController gunController;
     [SerializeField] private FireExtinguisherController fireExtinguisherController;
     [SerializeField] private HandController handController;
-
-    [Header("Swap animation parameters")]
-    [SerializeField] private AnimationCurve animationCurve;
-    [SerializeField] private float animationDuration = 2;
-    [SerializeField] private float posYPosition = 2;
 
     [Header("Weapon objects")]
     [SerializeField] private GameObject gun;
@@ -24,20 +19,16 @@ public class AttackSwapController : MonoBehaviour
     [Header("Audio")]
     [SerializeField] private AudioClip swapSound;
     private AudioSource audioSource;
-    
-    private Vector3 gunInitialPosition;
-    private Vector3 extinguisherInitialPosition;
 
     private bool canSwitch = true;
+
+    public event Action onSwap = delegate { };
 
     public bool AquiredExtinguisher { get; set; }
     public bool AquiredGun { get; set; }
 
     private void Awake()
     {
-        gunInitialPosition = gun.transform.localPosition;
-        extinguisherInitialPosition = fireExtinguisher.transform.localPosition;
-
         audioSource = GetComponent<AudioSource>();
     }
 
@@ -45,32 +36,47 @@ public class AttackSwapController : MonoBehaviour
     {
         if(starterAssetsInputs.gun)
         {
+            starterAssetsInputs.aim = false;
+            fireExtinguisherController.HandlePlayerAiming();
+
             SwapToGun();
-            starterAssetsInputs.gun = false;
+            StartCoroutine(WaitToDisableInput());
         }
 
         if(starterAssetsInputs.fireExtinguisher)
         {
+            starterAssetsInputs.aim = false;
+            gunController.HandlePlayerAiming();
+
             SwapToFireExtinguisher();
-            starterAssetsInputs.fireExtinguisher = false;
+            StartCoroutine(WaitToDisableInput());
         }
 
         if (starterAssetsInputs.hands)
         {
             starterAssetsInputs.aim = false;
-            weaponController.HandlePlayerAiming();
+
+            gunController.HandlePlayerAiming();
+            fireExtinguisherController.HandlePlayerAiming();
+
             SwapToHands();
+
             StartCoroutine(WaitToDisableInput());
         }
     }
 
     /// <summary>
-    /// Waiting time so the masks weight in the Animator can reset to their default state properly, masks weight are handled by the WeaponController.
+    /// Waiting time so the masks weight in the Animator can reset to their 
+    /// default state properly, masks weight are handled by the WeaponController.
     /// </summary>
     public IEnumerator WaitToDisableInput()
     {
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(0.5f);
         starterAssetsInputs.hands = false;
+        starterAssetsInputs.fireExtinguisher = false;
+        starterAssetsInputs.gun = false;
+
+        canSwitch = true;
     }
 
     public void SwapToFireExtinguisher()
@@ -82,8 +88,6 @@ public class AttackSwapController : MonoBehaviour
         if (fireExtinguisher.activeSelf) return;
 
         canSwitch = false;
-
-        fireExtinguisher.transform.localPosition -= Vector3.up * posYPosition;
 
         if (gun.activeSelf)
         {
@@ -97,7 +101,7 @@ public class AttackSwapController : MonoBehaviour
             audioSource.PlayOneShot(swapSound);
         }
 
-        StartCoroutine(AnimateSelectSwap(fireExtinguisher, extinguisherInitialPosition));
+        StartCoroutine(AnimateSelectSwap(fireExtinguisher));
     }
 
     public void SwapToGun()
@@ -109,8 +113,6 @@ public class AttackSwapController : MonoBehaviour
         if (gun.activeSelf) return;
 
         canSwitch = false;
-
-        gun.transform.localPosition -= Vector3.up * posYPosition;
 
         if (fireExtinguisher.activeSelf)
         {
@@ -124,7 +126,7 @@ public class AttackSwapController : MonoBehaviour
             audioSource.PlayOneShot(swapSound);
         }
 
-        StartCoroutine(AnimateSelectSwap(gun, gunInitialPosition));
+        StartCoroutine(AnimateSelectSwap(gun));
     }
 
     public void SwapToHands()
@@ -152,44 +154,20 @@ public class AttackSwapController : MonoBehaviour
 
     private IEnumerator AnimateExitSwap(GameObject weapon)
     {
-        float elapsedTime = 0f;
-        Vector3 initialPosition = weapon.transform.localPosition;
-        Vector3 targetPosition = initialPosition - Vector3.up * posYPosition;
-
         audioSource.PlayOneShot(swapSound);
+        //onSwap?.Invoke();
 
-        while (elapsedTime < animationDuration)
-        {
-            float t = elapsedTime / animationDuration;
-            float curveValue = animationCurve.Evaluate(t);
-
-            weapon.transform.localPosition = Vector3.Lerp(initialPosition, targetPosition, curveValue);
-            elapsedTime += Time.deltaTime;
-            yield return null;
-        }
+        yield return new WaitForSeconds(0f);
 
         weapon.SetActive(false);
-
-        if (!gun.activeSelf && !fireExtinguisher.activeSelf) canSwitch = true;
     }
 
-    private IEnumerator AnimateSelectSwap(GameObject weapon, Vector3 weaponInitialPosition)
+    private IEnumerator AnimateSelectSwap(GameObject weapon)
     {
-        float elapsedTime = 0f;
-        Vector3 initialPosition = weapon.transform.localPosition;
-        Vector3 targetPosition = weaponInitialPosition;
-
         weapon.SetActive(true);
+        //onSwap?.Invoke();
 
-        while (elapsedTime < animationDuration)
-        {
-            float t = elapsedTime / animationDuration;
-            float curveValue = animationCurve.Evaluate(t);
-
-            weapon.transform.localPosition = Vector3.Lerp(initialPosition, targetPosition, curveValue);
-            elapsedTime += Time.deltaTime;
-            yield return null;
-        }
+        yield return new WaitForSeconds(0f);
 
         if (weapon == gun)
         {

@@ -1,11 +1,13 @@
+using StarterAssets;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class HandController : MonoBehaviour
+public class HandController : AttackController
 {
     [Header("References")]
+    [SerializeField] private ThirdPersonController TPSController;
     [SerializeField] private AudioSource trapGoblinSound;
 
     [Header("Parameters")]
@@ -17,8 +19,9 @@ public class HandController : MonoBehaviour
 
     private NavMeshAgent enemyAgent;
 
+    private float moveSpeed = 2f;
+
     private Transform currentlyDraggedEnemy;
-    private bool drag = false;
     private bool isDraggingEnemy = false;
 
     public event Action onClick = delegate { };
@@ -29,8 +32,11 @@ public class HandController : MonoBehaviour
 
     public bool IsAtTheDoor { set; get; }
 
+
     private void OnEnable()
     {
+        moveSpeed = TPSController.MoveSpeed;
+
         Enemy.onKnockedOut += AddToEnemiesList;
         Enemy.onWakeUp += RemoveFromEnemiesList;
         Enemy.onTrapped += RemoveFromEnemiesList;
@@ -45,7 +51,10 @@ public class HandController : MonoBehaviour
 
     private void Update()
     {
-        if (drag)
+        if (Cursor.lockState != CursorLockMode.Locked) return;
+        if (!enabled) return;
+
+        if (starterAssetInputs.shoot)
         {
             DragEnemy();
         }
@@ -54,16 +63,11 @@ public class HandController : MonoBehaviour
         {
             StopDragging();
         }
-    }
 
-    public void Drag(bool isDragging)
-    {
-        if (Cursor.lockState != CursorLockMode.Locked) return;
-        if (!enabled) return;
-
-        onClick?.Invoke();
-
-        drag = isDragging;
+        if (starterAssetInputs.aim)
+        {
+            HandleTrapGoblin();
+        }
     }
 
     private void DragEnemy()
@@ -85,11 +89,13 @@ public class HandController : MonoBehaviour
                     enemyAgent.isStopped = false;
                     enemyAgent.SetDestination(transform.position);
 
-                    //FPSController.CanSprint = false;
-                    //FPSController.Speed = dragSpeed;
+                    TPSController.SetSprintOnAimOrDrag(false);
+                    TPSController.MoveSpeed = dragSpeed;
 
                     isDraggingEnemy = true;
                     currentlyDraggedEnemy = nearestEnemy;
+
+                    RotateTowardsTarget();
                 }
             }
         }
@@ -100,11 +106,19 @@ public class HandController : MonoBehaviour
         }
     }
 
+    private void RotateTowardsTarget()
+    {
+        Vector3 aimDirection = (currentlyDraggedEnemy.position - transform.position).normalized;
+
+        transform.forward = Vector3.Lerp(transform.forward, aimDirection, Time.deltaTime * 20f);
+    }
+
     private void StopDragging()
     {
+
         isDraggingEnemy = false;
-        //FPSController.CanSprint = true;
-        //FPSController.Speed = 4f;
+        //TPSController.SetSprintOnAimOrDrag(true);
+        TPSController.MoveSpeed = moveSpeed;
 
         if (currentlyDraggedEnemy != null) currentlyDraggedEnemy = null;
 
@@ -142,7 +156,7 @@ public class HandController : MonoBehaviour
         knockedOutEnemies.Remove(obj.transform);
     }
 
-    public void HandleTrapGoblin()
+    private void HandleTrapGoblin()
     {
         if (!IsAtTheDoor || currentlyDraggedEnemy == null) return;
 
@@ -156,5 +170,7 @@ public class HandController : MonoBehaviour
 
         enemyAgent = null;
         isDraggingEnemy = false;
+
+        starterAssetInputs.aim = false;
     }
 }

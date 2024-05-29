@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 #if ENABLE_INPUT_SYSTEM 
 using UnityEngine.InputSystem;
 #endif
@@ -16,7 +17,7 @@ namespace StarterAssets
     {
         [Header("Player")]
         [Tooltip("Move speed of the character in m/s")]
-        [SerializeField] private float MoveSpeed = 2.0f;
+        public float MoveSpeed = 2.0f;
 
         [Tooltip("Sprint speed of the character in m/s")]
         [SerializeField] private float SprintSpeed = 5.335f;
@@ -76,6 +77,7 @@ namespace StarterAssets
         [Tooltip("For locking the camera position on all axis")]
         [SerializeField] private bool LockCameraPosition = false;
 
+        [Header("Collider")]
         [SerializeField] private Collider playerCollider;
 
         // cinemachine
@@ -125,6 +127,7 @@ namespace StarterAssets
         private const float _threshold = 0.01f;
 
         private bool _hasAnimator;
+        private bool _isHurt;
 
         private bool IsCurrentDeviceMouse
         {
@@ -250,6 +253,8 @@ namespace StarterAssets
 
         private void Move()
         {
+            if (_isHurt) return;
+
             // set target speed based on move speed, sprint speed and if sprint is pressed
             float targetSpeed = _input.sprint ? SprintSpeed : MoveSpeed;
 
@@ -434,7 +439,7 @@ namespace StarterAssets
             _rotateOnMove = newRotateOnMove;
         }
 
-        public void SetSprintOnAim(bool newSprintOnAim)
+        public void SetSprintOnAimOrDrag(bool newSprintOnAim)
         {
             _input.sprint = newSprintOnAim;
         }
@@ -450,6 +455,17 @@ namespace StarterAssets
             {
                 _animator.SetTrigger(_animIDHurt);
             }
+
+            StartCoroutine(StopMovingWhenHit());
+        }
+
+        private IEnumerator StopMovingWhenHit()
+        {
+            _isHurt = true;
+
+            yield return new WaitForSeconds(0.5f);
+
+            _isHurt = false;
         }
 
         private void HandleDeath()

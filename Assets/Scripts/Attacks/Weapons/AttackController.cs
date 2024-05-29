@@ -3,7 +3,7 @@ using StarterAssets;
 using UnityEngine;
 using UnityEngine.Animations.Rigging;
 
-public class WeaponController : MonoBehaviour
+public class AttackController : MonoBehaviour
 {
     [Header("Aiming")]
     [Header("References")]
@@ -19,16 +19,28 @@ public class WeaponController : MonoBehaviour
 
     protected StarterAssetsInputs starterAssetInputs;
     private ThirdPersonController thirdPersonController;
-    private Animator animator;
+    protected Animator animator;
+
+    // animation IDs
+    protected int animIDGun;
+    protected int animIDExtinguisher;
+
+    protected bool hasAnimator;
 
     private Vector3 mouseWorldPosition;
     private float aimRigWeight;
 
-    protected void Awake()
+    private void Awake()
     {
         starterAssetInputs = GetComponent<StarterAssetsInputs>();
         thirdPersonController = GetComponent<ThirdPersonController>();
         animator = GetComponent<Animator>();
+    }
+
+    private void Start()
+    {
+        hasAnimator = TryGetComponent(out animator);
+        AssignAnimationIDs();
     }
 
     public void HandlePlayerAiming()
@@ -62,7 +74,7 @@ public class WeaponController : MonoBehaviour
         aimVirtualCamera.gameObject.SetActive(true);
         thirdPersonController.SetSensitivity(aimSensitivity);
         thirdPersonController.SetRotateOnMove(false);
-        thirdPersonController.SetSprintOnAim(false);
+        thirdPersonController.SetSprintOnAimOrDrag(false);
         thirdPersonController.SetStrafeOnAim(true);
 
         animator.SetLayerWeight(1, Mathf.Lerp(animator.GetLayerWeight(1), 1f, Time.deltaTime * 10f));
@@ -90,5 +102,11 @@ public class WeaponController : MonoBehaviour
 
     public virtual void Shoot()
     {
+    }
+
+    private void AssignAnimationIDs()
+    {
+        animIDExtinguisher = Animator.StringToHash("Extinguisher");
+        animIDGun = Animator.StringToHash("Gun");
     }
 }

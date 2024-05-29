@@ -1,16 +1,23 @@
 ﻿using StarterAssets;
 using UnityEngine;
 
-public class FireExtinguisherController : WeaponController
+public class FireExtinguisherController : AttackController
 {
     [Header("References")]
     [SerializeField] private ParticleSystem fireFoam;
     [SerializeField] private AudioSource extinguishSound;
 
+
     private void Update()
     {
         if (Cursor.lockState != CursorLockMode.Locked) return;
+
         if (!enabled) return;
+
+        if (hasAnimator)
+        {
+            animator.SetTrigger(animIDExtinguisher);
+        }
 
         HandlePlayerAiming();
 
@@ -42,4 +49,5 @@ public class FireExtinguisherController : WeaponController
         fireFoam.Stop();
         extinguishSound.Stop();
     }
+
 }
