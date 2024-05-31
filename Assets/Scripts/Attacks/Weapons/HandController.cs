@@ -77,6 +77,7 @@ public class HandController : AttackController
 
         if (starterAssetInputs.shoot)
         {
+            onClick?.Invoke();
             HandleTrapGoblin();
         }
     }
@@ -149,6 +150,8 @@ public class HandController : AttackController
 
         foreach (Transform enemyTransform in knockedOutEnemies)
         {
+            if (enemyTransform == null) continue;
+
             float distanceToEnemy = Vector3.Distance(transform.position, enemyTransform.position);
 
             if (distanceToEnemy < minDistance)

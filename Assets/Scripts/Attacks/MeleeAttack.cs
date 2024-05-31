@@ -21,7 +21,7 @@ public class MeleeAttack : MonoBehaviour, IAttack
     private AudioSource audioSource;
 
     private Transform playerTransform;
-    private HealthController playerHP;
+    private HealthController targetHP;
 
     private bool shouldAttack = true;
     private Vector3 hitPoint;
@@ -37,7 +37,7 @@ public class MeleeAttack : MonoBehaviour, IAttack
     private void HandleAttack()
     {
         if (!shouldAttack) return;
-        if (playerHP.Health <= 0) return;
+        if (targetHP.Health <= 0) return;
         StartCoroutine(AttackSequence());
     }
 
@@ -70,13 +70,13 @@ public class MeleeAttack : MonoBehaviour, IAttack
         onPunch?.Invoke();
         if (punchSound) audioSource.PlayOneShot(punchSound);
 
-        playerHP.ReceiveDamage(damage, hitPoint);
+        targetHP.ReceiveDamage(damage, hitPoint);
     }
 
     public float AttackNow(Transform target, HealthController targetHP)
     {
         playerTransform = target;
-        playerHP = targetHP;
+        this.targetHP = targetHP;
 
         HandleAttack();
         return occupiedTimeAfterAttack;

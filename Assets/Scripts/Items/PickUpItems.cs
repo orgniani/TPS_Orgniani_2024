@@ -1,3 +1,4 @@
+using StarterAssets;
 using System;
 using System.Collections;
 using UnityEngine;
@@ -8,6 +9,7 @@ public class PickUpItems : MonoBehaviour
     [SerializeField] private HealthController playerHP;
     [SerializeField] private ShooterController playerGun;
     [SerializeField] private AttackSwapController attackSwapController;
+    [SerializeField] private StarterAssetsInputs starterAssetsInputs;
 
     [Header("Types")]
     [SerializeField] private LayerMask playerLayer;
@@ -70,6 +72,7 @@ public class PickUpItems : MonoBehaviour
                 case ItemType.EXTINGUISHER:
 
                     attackSwapController.AquiredExtinguisher = true;
+                    starterAssetsInputs.fireExtinguisher = true;
 
                     onPickUp?.Invoke();
 
@@ -79,6 +82,7 @@ public class PickUpItems : MonoBehaviour
                 case ItemType.GUN:
 
                     attackSwapController.AquiredGun = true;
+                    starterAssetsInputs.gun = true;
 
                     onPickUp?.Invoke();
 

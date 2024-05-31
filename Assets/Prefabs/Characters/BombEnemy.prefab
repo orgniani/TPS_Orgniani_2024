@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6886852608935604497}
   - component: {fileID: 6640505670415305862}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: AudioSource
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -43,7 +43,6 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_Resource: {fileID: 0}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
@@ -138,7 +137,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 369495713901028109}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: BombEnemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -153,7 +152,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1518297301592577442}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0.99255013, z: -0, w: -0.121836856}
+  m_LocalRotation: {x: -0, y: -0.99255043, z: 0, w: -0.12183472}
   m_LocalPosition: {x: 39.31, y: 0, z: 39.28}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -175,7 +174,7 @@ GameObject:
   - component: {fileID: 2357119316751882637}
   - component: {fileID: 6550176557623155216}
   - component: {fileID: 7260925355247167815}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: Collider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -222,8 +221,6 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
   m_RayTraceProcedural: 0
-  m_RayTracingAccelStructBuildFlagsOverride: 0
-  m_RayTracingAccelStructBuildFlags: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -306,9 +303,10 @@ GameObject:
   - component: {fileID: 840374970419355756}
   - component: {fileID: 6869693486217922761}
   - component: {fileID: 6836449196974654245}
+  - component: {fileID: 5499187569235453187}
   - component: {fileID: 4177735755849533631}
   - component: {fileID: 3256144398286351484}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: Explosive
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -357,8 +355,6 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
   m_RayTraceProcedural: 0
-  m_RayTracingAccelStructBuildFlagsOverride: 0
-  m_RayTracingAccelStructBuildFlags: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -412,20 +408,48 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22c4c7bd88c48d14bbd4830420f59372, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  targetHP: {fileID: 0}
+  patrolPoints: []
+  passedOutDuration: 10
+  proximityRadius: 5
+  deathSound: {fileID: 0}
+  wakeUpSound: {fileID: 0}
+  enemyType: 2
+  targetLayer:
+    serializedVersion: 2
+    m_Bits: 8
   explosionPrefab: {fileID: 417761080263594739, guid: 4a3d37bdab21adc4ba2214bd292bad7d,
     type: 3}
-  HP: {fileID: 6869693486217922761}
-  target: {fileID: 0}
   playerLayer:
     serializedVersion: 2
     m_Bits: 8
   explosionForce: 500
-  explosionRadius: 5
   explosionDamage: 50
   countdownDuration: 3
-  audioSource: {fileID: 6640505670415305862}
   explotionSound: {fileID: 8300000, guid: cabfae866cab347928b74b7d0ca6bfa9, type: 3}
   countingDownSound: {fileID: 3256144398286351484}
+--- !u!114 &5499187569235453187
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6959447002161185945}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8dfa45ae4bf881243b33e13d567a4b8f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetHP: {fileID: 0}
+  patrolPoints: []
+  passedOutDuration: 10
+  proximityRadius: 5
+  deathSound: {fileID: 0}
+  wakeUpSound: {fileID: 0}
+  enemyType: 2
+  targetLayer:
+    serializedVersion: 2
+    m_Bits: 8
 --- !u!195 &4177735755849533631
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -459,7 +483,6 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: c5e2a73ad4706440f93bf05df0b465fe, type: 3}
-  m_Resource: {fileID: 8300000, guid: c5e2a73ad4706440f93bf05df0b465fe, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
@@ -554,7 +577,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4508109846754214439}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: Visuals
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -585,9 +608,57 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 4508109846754214439}
     m_Modifications:
+    - target: {fileID: 1046658080973496, guid: 928a1377c1cd4515b208fef3a396b8ea, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1089818287329586, guid: 928a1377c1cd4515b208fef3a396b8ea, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1218190636026622, guid: 928a1377c1cd4515b208fef3a396b8ea, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1240222798952858, guid: 928a1377c1cd4515b208fef3a396b8ea, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1292789949531180, guid: 928a1377c1cd4515b208fef3a396b8ea, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1410927325430386, guid: 928a1377c1cd4515b208fef3a396b8ea, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1547598778423874, guid: 928a1377c1cd4515b208fef3a396b8ea, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1592125234692788, guid: 928a1377c1cd4515b208fef3a396b8ea, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1609119223618932, guid: 928a1377c1cd4515b208fef3a396b8ea, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1672770965465688, guid: 928a1377c1cd4515b208fef3a396b8ea, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1788506250886510, guid: 928a1377c1cd4515b208fef3a396b8ea, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 1931298151966786, guid: 928a1377c1cd4515b208fef3a396b8ea, type: 3}
       propertyPath: m_Name
       value: SlimePBR
+      objectReference: {fileID: 0}
+    - target: {fileID: 1931298151966786, guid: 928a1377c1cd4515b208fef3a396b8ea, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 4047972025199878, guid: 928a1377c1cd4515b208fef3a396b8ea, type: 3}
       propertyPath: m_LocalPosition.x

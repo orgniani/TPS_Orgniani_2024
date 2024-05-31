@@ -36,10 +36,7 @@ public class AttackSwapController : MonoBehaviour
     {
         if(starterAssetsInputs.gun)
         {
-            starterAssetsInputs.aim = false;
-
-            fireExtinguisherController.HandlePlayerAiming();
-            handController.HandlePlayerAiming();
+            StopAiming();
 
             SwapToGun();
             StartCoroutine(WaitToDisableInput());
@@ -47,10 +44,7 @@ public class AttackSwapController : MonoBehaviour
 
         if(starterAssetsInputs.fireExtinguisher)
         {
-            starterAssetsInputs.aim = false;
-
-            gunController.HandlePlayerAiming();
-            handController.HandlePlayerAiming();
+            StopAiming();
 
             SwapToFireExtinguisher();
             StartCoroutine(WaitToDisableInput());
@@ -58,15 +52,21 @@ public class AttackSwapController : MonoBehaviour
 
         if (starterAssetsInputs.hands)
         {
-            starterAssetsInputs.aim = false;
-
-            gunController.HandlePlayerAiming();
-            fireExtinguisherController.HandlePlayerAiming();
+            StopAiming();
 
             SwapToHands();
 
             StartCoroutine(WaitToDisableInput());
         }
+    }
+
+    public void StopAiming()
+    {
+        starterAssetsInputs.aim = false;
+
+        fireExtinguisherController.HandlePlayerAiming();
+        handController.HandlePlayerAiming();
+        gunController.HandlePlayerAiming();
     }
 
     /// <summary>
@@ -76,6 +76,7 @@ public class AttackSwapController : MonoBehaviour
     public IEnumerator WaitToDisableInput()
     {
         yield return new WaitForSeconds(0.5f);
+
         starterAssetsInputs.hands = false;
         starterAssetsInputs.fireExtinguisher = false;
         starterAssetsInputs.gun = false;

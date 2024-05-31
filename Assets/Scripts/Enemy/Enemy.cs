@@ -1,28 +1,36 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
 public class Enemy : MonoBehaviour
 {
     [Header("References")]
-    [SerializeField] private HealthController HP;
-    [SerializeField] private HealthController targetHP;
-
-    [SerializeField] private EnemyPatrol patrol;
-    [SerializeField] private EnemyArsonist arsonist;
+    [SerializeField] protected HealthController targetHP;
+    [SerializeField] protected List<Transform> patrolPoints;
 
     [Header("Parameters")]
     [SerializeField] private float passedOutDuration = 10f;
+    [SerializeField] protected float proximityRadius = 5f;
 
     [Header("Audio")]
     [SerializeField] private AudioClip deathSound;
     [SerializeField] private AudioClip wakeUpSound;
 
-    private AudioSource audioSource;
-    
-    private NavMeshAgent agent;
+    [Header("Type")]
+    [SerializeField] private EnemyType enemyType;
+    [SerializeField] protected LayerMask targetLayer;
+
+    protected AudioSource audioSource;
+    protected NavMeshAgent agent;
+    protected HealthController HP;
+
+    private EnemyArsonist arsonist;
+    private EnemyPatrol patrol;
+
     private bool isAwake = false;
+    protected int currentPatrolPointIndex = 0;
 
     public static event Action<Enemy> onSpawn;
     public static event Action<Enemy> onTrapped;
@@ -34,12 +42,22 @@ public class Enemy : MonoBehaviour
     private Coroutine wakeUpCoroutine;
     private Coroutine enableCoroutine;
 
-    private void Start()
+    private enum EnemyType { PATROL = 0, ARSONIST, BOMB }
+
+    private void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
         audioSource = GetComponent<AudioSource>();
+        HP = GetComponent<HealthController>();
 
-        onSpawn?.Invoke(this);
+        if(enemyType == EnemyType.PATROL)
+            patrol = GetComponent<EnemyPatrol>();
+
+        if (enemyType == EnemyType.ARSONIST)
+            arsonist = GetComponent<EnemyArsonist>();
+
+        if (patrolPoints == null)
+            patrolPoints = new List<Transform>();
     }
 
     private void OnEnable()
@@ -54,7 +72,12 @@ public class Enemy : MonoBehaviour
         targetHP.onDead -= HandleStopMoving;
     }
 
-    private void HandleKnockedOut()
+    private void Start()
+    {
+        onSpawn?.Invoke(this);
+    }
+
+    protected void HandleKnockedOut()
     {
         if (wakeUpCoroutine != null)
             StopCoroutine(wakeUpCoroutine);
@@ -65,10 +88,9 @@ public class Enemy : MonoBehaviour
 
         isAwake = false;
 
-        audioSource.PlayOneShot(deathSound);
+        if (deathSound) audioSource.PlayOneShot(deathSound);
 
-        if (patrol) patrol.enabled = false;
-        if (arsonist) arsonist.enabled = false;
+        EnableAndDisableEnemyType(false);
 
         agent.isStopped = true;
 
@@ -84,7 +106,7 @@ public class Enemy : MonoBehaviour
 
         HP.SetToMaxHealth();
 
-        audioSource.PlayOneShot(wakeUpSound);
+        if (wakeUpSound) audioSource.PlayOneShot(wakeUpSound);
         isAwake = true;
 
         enableCoroutine = StartCoroutine(WaitToEnable());
@@ -102,21 +124,75 @@ public class Enemy : MonoBehaviour
         agent.isStopped = false;
         agent.stoppingDistance = 2;
 
-        if (patrol) patrol.enabled = true;
-        if (arsonist) arsonist.enabled = true;
+        EnableAndDisableEnemyType(true);
     }
 
     public void HandleGetTrapped()
     {
+        EnableAndDisableEnemyType(false);
         onTrapped?.Invoke(this);
-
-        gameObject.SetActive(false);
+        Destroy(gameObject);
     }
 
-    private void HandleStopMoving()
+    protected void HandleStopMoving()
     {
-        if (patrol) patrol.enabled = false;
-        if (arsonist) arsonist.enabled = false;
+        EnableAndDisableEnemyType(false);
         enabled = false;
+    }
+
+    private void EnableAndDisableEnemyType(bool enabled)
+    {
+        switch(enemyType)
+        {
+            case EnemyType.PATROL:
+                patrol.enabled = enabled;
+                break;
+            case EnemyType.ARSONIST:
+                arsonist.enabled = enabled;
+                break;
+        }
+    }
+
+    protected void Patrol()
+    {
+        if (patrolPoints.Count == 0)
+        {
+            agent.isStopped = true;
+            return;
+        }
+
+        agent.isStopped = false;
+
+        Vector3 nextPoint = patrolPoints[currentPatrolPointIndex].transform.position;
+
+        if (agent.remainingDistance <= agent.stoppingDistance)
+        {
+            SetNextPatrolPoint();
+        }
+
+        agent.SetDestination(nextPoint);
+    }
+
+    private void SetNextPatrolPoint()
+    {
+        if (patrolPoints == null || patrolPoints.Count == 0) return;
+
+        if (enemyType != EnemyType.ARSONIST) currentPatrolPointIndex++;
+
+        if (currentPatrolPointIndex >= patrolPoints.Count)
+        {
+            currentPatrolPointIndex = 0;
+        }
+    }
+
+    protected bool PlayerIsTooClose()
+    {
+        return Physics.CheckSphere(transform.position, proximityRadius, targetLayer);
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(transform.position, proximityRadius);
     }
 }
