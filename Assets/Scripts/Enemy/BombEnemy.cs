@@ -14,17 +14,12 @@ public class BombEnemy : Enemy
     [SerializeField] private float countdownDuration = 3f;
 
     [Header("Audio")]
-    [SerializeField] private AudioClip explotionSound;
     [SerializeField] private AudioSource countingDownSound;
+    [SerializeField] private AudioSource explotionSound;
 
     private bool isCountingDown = false;
 
     public event Action onCloseToPlayer = delegate { };
-
-    private void Start()
-    {
-        agent = GetComponent<NavMeshAgent>();
-    }
 
     private void OnEnable()
     {
@@ -51,7 +46,7 @@ public class BombEnemy : Enemy
 
     private void HandleExplosion()
     {
-        audioSource.PlayOneShot(explotionSound);
+        explotionSound.Play();
 
         Instantiate(explosionPrefab, transform.position, transform.rotation);
 

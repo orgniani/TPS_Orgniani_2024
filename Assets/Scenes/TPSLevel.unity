@@ -1227,7 +1227,7 @@ MonoBehaviour:
   animator: {fileID: 99129461}
   attack: {fileID: 354842744}
   arsonist: {fileID: 0}
-  enemy: {fileID: 354842743}
+  enemy: {fileID: 354842746}
   HP: {fileID: 354842741}
   agent: {fileID: 354842742}
   speedParameter: speed
@@ -4720,7 +4720,6 @@ GameObject:
   m_Component:
   - component: {fileID: 354842740}
   - component: {fileID: 354842741}
-  - component: {fileID: 354842743}
   - component: {fileID: 354842746}
   - component: {fileID: 354842744}
   - component: {fileID: 354842742}
@@ -4789,28 +4788,6 @@ NavMeshAgent:
   m_BaseOffset: 0.4
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!114 &354842743
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 354842739}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8dfa45ae4bf881243b33e13d567a4b8f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  targetHP: {fileID: 2079897981}
-  patrolPoints: []
-  passedOutDuration: 15
-  proximityRadius: 5
-  deathSound: {fileID: 8300000, guid: b99da9a57308d4ba1bee1cf1d9038376, type: 3}
-  wakeUpSound: {fileID: 8300000, guid: 2c5292ba5cf254919a6b9e2b18e04f49, type: 3}
-  enemyType: 0
-  targetLayer:
-    serializedVersion: 2
-    m_Bits: 8
 --- !u!114 &354842744
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -21725,7 +21702,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e3c430f382484144e925c097c2d33cfe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Weight: 0.7
+  m_Weight: 1
   m_Data:
     m_ConstrainedObject: {fileID: 1366168401}
     m_SourceObjects:
@@ -24091,6 +24068,12 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!82 &1858946666 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 6640505670415305862, guid: 1325843c0171a5e48938960a76586c17,
+    type: 3}
+  m_PrefabInstance: {fileID: 670501314211206289}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1861009611
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -27530,6 +27513,11 @@ PrefabInstance:
       propertyPath: aimVirtualCamera
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 8563140651222765278, guid: 2c9b81d4632ff3641991a6f05ec02632,
+        type: 3}
+      propertyPath: targetLayer.m_Bits
+      value: 64
+      objectReference: {fileID: 0}
     - target: {fileID: 8567968511754100427, guid: 2c9b81d4632ff3641991a6f05ec02632,
         type: 3}
       propertyPath: CollisionModule.type
@@ -28231,12 +28219,28 @@ PrefabInstance:
       propertyPath: targetHP
       value: 
       objectReference: {fileID: 2079897981}
+    - target: {fileID: 6640505670415305862, guid: 1325843c0171a5e48938960a76586c17,
+        type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: cabfae866cab347928b74b7d0ca6bfa9, type: 3}
     - target: {fileID: 6836449196974654245, guid: 1325843c0171a5e48938960a76586c17,
         type: 3}
       propertyPath: targetHP
       value: 
       objectReference: {fileID: 2079897981}
-    m_RemovedComponents: []
+    - target: {fileID: 6836449196974654245, guid: 1325843c0171a5e48938960a76586c17,
+        type: 3}
+      propertyPath: explotionSound
+      value: 
+      objectReference: {fileID: 1858946666}
+    - target: {fileID: 6869693486217922761, guid: 1325843c0171a5e48938960a76586c17,
+        type: 3}
+      propertyPath: shouldDisappearAfterDeath
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 5499187569235453187, guid: 1325843c0171a5e48938960a76586c17, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -28356,6 +28360,16 @@ PrefabInstance:
       propertyPath: targetHP
       value: 
       objectReference: {fileID: 2079897981}
+    - target: {fileID: 3457433648668269040, guid: 878d2b84b0bc5994ebd3da3d24cc6535,
+        type: 3}
+      propertyPath: enemyType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3457433648668269040, guid: 878d2b84b0bc5994ebd3da3d24cc6535,
+        type: 3}
+      propertyPath: targetLayer.m_Bits
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 4964203438410412475, guid: 878d2b84b0bc5994ebd3da3d24cc6535,
         type: 3}
       propertyPath: m_Name
@@ -28364,14 +28378,25 @@ PrefabInstance:
     - target: {fileID: 4964203438410412475, guid: 878d2b84b0bc5994ebd3da3d24cc6535,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6346370064935310893, guid: 878d2b84b0bc5994ebd3da3d24cc6535,
+        type: 3}
+      propertyPath: enemy
+      value: 
+      objectReference: {fileID: 4844080926198985261}
     - target: {fileID: 9085742883438739507, guid: 878d2b84b0bc5994ebd3da3d24cc6535,
         type: 3}
       propertyPath: targetHP
       value: 
       objectReference: {fileID: 2079897981}
-    m_RemovedComponents: []
+    - target: {fileID: 9085742883438739507, guid: 878d2b84b0bc5994ebd3da3d24cc6535,
+        type: 3}
+      propertyPath: enemyType
+      value: 2
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 9085742883438739507, guid: 878d2b84b0bc5994ebd3da3d24cc6535, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -29013,6 +29038,18 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1429936159894908229}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &4844080926198985261 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3457433648668269040, guid: 878d2b84b0bc5994ebd3da3d24cc6535,
+    type: 3}
+  m_PrefabInstance: {fileID: 1429936159894908229}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8905c5b9fd421bc42981849ec0086f26, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4935283715901339117
 GameObject:
   m_ObjectHideFlags: 0

@@ -74,17 +74,17 @@ public class Enemy : MonoBehaviour
 
     private void Start()
     {
-        onSpawn?.Invoke(this);
+        if(enemyType != EnemyType.BOMB) onSpawn?.Invoke(this);
     }
 
-    protected void HandleKnockedOut()
+    private void HandleKnockedOut()
     {
         if (wakeUpCoroutine != null)
             StopCoroutine(wakeUpCoroutine);
         if (enableCoroutine != null)
             StopCoroutine(enableCoroutine);
 
-        onKnockedOut?.Invoke(this);
+        if (enemyType != EnemyType.BOMB) onKnockedOut?.Invoke(this);
 
         isAwake = false;
 
@@ -134,7 +134,7 @@ public class Enemy : MonoBehaviour
         Destroy(gameObject);
     }
 
-    protected void HandleStopMoving()
+    private void HandleStopMoving()
     {
         EnableAndDisableEnemyType(false);
         enabled = false;
@@ -142,15 +142,7 @@ public class Enemy : MonoBehaviour
 
     private void EnableAndDisableEnemyType(bool enabled)
     {
-        switch(enemyType)
-        {
-            case EnemyType.PATROL:
-                patrol.enabled = enabled;
-                break;
-            case EnemyType.ARSONIST:
-                arsonist.enabled = enabled;
-                break;
-        }
+        this.enabled = enabled;
     }
 
     protected void Patrol()

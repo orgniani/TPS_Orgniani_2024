@@ -37,14 +37,13 @@ public class FireExtinguisherController : AttackController
     {
         fireFoam.Play();
 
-        if(fireFoam.isPlaying )
+        if(!extinguishSound.isPlaying)
         {
-            Debug.Log("spraying");
+            extinguishSound.Play();
         }
-        extinguishSound.Play();
     }
 
-    private void StopShoot()
+    public void StopShoot()
     {
         fireFoam.Stop();
         extinguishSound.Stop();

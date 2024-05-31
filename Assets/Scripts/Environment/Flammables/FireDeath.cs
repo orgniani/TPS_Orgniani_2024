@@ -7,8 +7,6 @@ public class FireDeath : MonoBehaviour
     [SerializeField] private LayerMask fireFoamLayer;
     [SerializeField] private ParticleSystem fireInstance;
 
-    private ParticleSystem.MainModule main;
-
     private AudioSource audioSource;
 
     public event Action onDeath = delegate { };
@@ -17,8 +15,6 @@ public class FireDeath : MonoBehaviour
     {
         audioSource = GetComponent<AudioSource>();
         audioSource.Play();
-
-        main = fireInstance.main;
     }
 
     private void OnParticleCollision(GameObject other)
@@ -31,7 +27,7 @@ public class FireDeath : MonoBehaviour
 
     public void HandleFireDeath()
     {
-        main.loop = false;
+        fireInstance.Stop(true, ParticleSystemStopBehavior.StopEmitting);
     }
 
     private void OnDestroy()

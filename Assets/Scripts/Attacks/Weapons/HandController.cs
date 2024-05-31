@@ -166,7 +166,10 @@ public class HandController : AttackController
 
     private void AddToEnemiesList(Enemy obj)
     {
-        knockedOutEnemies.Add(obj.transform);
+        if (!knockedOutEnemies.Contains(obj.transform))
+        {
+            knockedOutEnemies.Add(obj.transform);
+        }
     }
 
     private void RemoveFromEnemiesList(Enemy obj)

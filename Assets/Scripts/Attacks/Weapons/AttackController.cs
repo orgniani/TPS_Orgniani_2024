@@ -103,6 +103,7 @@ public class AttackController : MonoBehaviour
 
         if (!aimVirtualCamera) return;
 
+        starterAssetInputs.shoot = false;
         aimVirtualCamera.gameObject.SetActive(false);
         thirdPersonController.SetSensitivity(normalSensitivity);
     }

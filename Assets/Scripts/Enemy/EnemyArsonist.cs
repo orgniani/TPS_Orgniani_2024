@@ -52,7 +52,7 @@ public class EnemyArsonist : Enemy
 
     private void Update()
     {
-        if (!enabled || patrolPoints == null) return;
+        if (patrolPoints == null) return;
 
         if (shouldLightFire) Patrol();
         LightOnFire();

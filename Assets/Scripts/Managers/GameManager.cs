@@ -74,7 +74,10 @@ public class GameManager : MonoBehaviour
 
     private void SpawnedEnemy(Enemy obj)
     {
-        enemies.Add(obj);
+        if (!enemies.Contains(obj))
+        {
+            enemies.Add(obj);
+        }
     }
 
     private void SpawnedFlammable(FlammableObject obj)

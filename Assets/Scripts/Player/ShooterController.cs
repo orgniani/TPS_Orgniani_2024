@@ -78,12 +78,6 @@ public class ShooterController : AttackController
 
     public override void Shoot()
     {
-        if (!starterAssetInputs.aim)
-        {
-            starterAssetInputs.shoot = false;
-            return;
-        }
-
         if (ammoAmount <= 0) return;
 
         ammoAmount--;
