@@ -7,30 +7,23 @@ using UnityEngine.AI;
 public class Enemy : MonoBehaviour
 {
     [Header("References")]
-    [SerializeField] protected HealthController targetHP;
-    [SerializeField] protected List<Transform> patrolPoints;
+    [SerializeField] private HealthController HP;
+    [SerializeField] private HealthController targetHP;
+
+    [SerializeField] private PatrolEnemy patrol;
+    [SerializeField] private ArsonistEnemy arsonist;
 
     [Header("Parameters")]
     [SerializeField] private float passedOutDuration = 10f;
-    [SerializeField] protected float proximityRadius = 5f;
 
     [Header("Audio")]
     [SerializeField] private AudioClip deathSound;
     [SerializeField] private AudioClip wakeUpSound;
 
-    [Header("Type")]
-    [SerializeField] private EnemyType enemyType;
-    [SerializeField] protected LayerMask targetLayer;
+    private AudioSource audioSource;
 
-    protected AudioSource audioSource;
-    protected NavMeshAgent agent;
-    protected HealthController HP;
-
-    private EnemyArsonist arsonist;
-    private EnemyPatrol patrol;
-
+    private NavMeshAgent agent;
     private bool isAwake = false;
-    protected int currentPatrolPointIndex = 0;
 
     public static event Action<Enemy> onSpawn;
     public static event Action<Enemy> onTrapped;
@@ -42,22 +35,12 @@ public class Enemy : MonoBehaviour
     private Coroutine wakeUpCoroutine;
     private Coroutine enableCoroutine;
 
-    private enum EnemyType { PATROL = 0, ARSONIST, BOMB }
-
-    private void Awake()
+    private void Start()
     {
         agent = GetComponent<NavMeshAgent>();
         audioSource = GetComponent<AudioSource>();
-        HP = GetComponent<HealthController>();
 
-        if(enemyType == EnemyType.PATROL)
-            patrol = GetComponent<EnemyPatrol>();
-
-        if (enemyType == EnemyType.ARSONIST)
-            arsonist = GetComponent<EnemyArsonist>();
-
-        if (patrolPoints == null)
-            patrolPoints = new List<Transform>();
+        onSpawn?.Invoke(this);
     }
 
     private void OnEnable()
@@ -72,11 +55,6 @@ public class Enemy : MonoBehaviour
         targetHP.onDead -= HandleStopMoving;
     }
 
-    private void Start()
-    {
-        if(enemyType != EnemyType.BOMB) onSpawn?.Invoke(this);
-    }
-
     private void HandleKnockedOut()
     {
         if (wakeUpCoroutine != null)
@@ -84,13 +62,14 @@ public class Enemy : MonoBehaviour
         if (enableCoroutine != null)
             StopCoroutine(enableCoroutine);
 
-        if (enemyType != EnemyType.BOMB) onKnockedOut?.Invoke(this);
+        onKnockedOut?.Invoke(this);
 
         isAwake = false;
 
-        if (deathSound) audioSource.PlayOneShot(deathSound);
+        audioSource.PlayOneShot(deathSound);
 
-        EnableAndDisableEnemyType(false);
+        if (patrol) patrol.enabled = false;
+        if (arsonist) arsonist.enabled = false;
 
         agent.isStopped = true;
 
@@ -106,7 +85,7 @@ public class Enemy : MonoBehaviour
 
         HP.SetToMaxHealth();
 
-        if (wakeUpSound) audioSource.PlayOneShot(wakeUpSound);
+        audioSource.PlayOneShot(wakeUpSound);
         isAwake = true;
 
         enableCoroutine = StartCoroutine(WaitToEnable());
@@ -122,69 +101,22 @@ public class Enemy : MonoBehaviour
         yield return new WaitForSeconds(1);
 
         agent.isStopped = false;
-        agent.stoppingDistance = 2;
 
-        EnableAndDisableEnemyType(true);
+        if (patrol) patrol.enabled = true;
+        if (arsonist) arsonist.enabled = true;
     }
 
     public void HandleGetTrapped()
     {
-        EnableAndDisableEnemyType(false);
         onTrapped?.Invoke(this);
-        Destroy(gameObject);
+
+        gameObject.SetActive(false);
     }
 
     private void HandleStopMoving()
     {
-        EnableAndDisableEnemyType(false);
+        if (patrol) patrol.enabled = false;
+        if (arsonist) arsonist.enabled = false;
         enabled = false;
-    }
-
-    private void EnableAndDisableEnemyType(bool enabled)
-    {
-        this.enabled = enabled;
-    }
-
-    protected void Patrol()
-    {
-        if (patrolPoints.Count == 0)
-        {
-            agent.isStopped = true;
-            return;
-        }
-
-        agent.isStopped = false;
-
-        Vector3 nextPoint = patrolPoints[currentPatrolPointIndex].transform.position;
-
-        if (agent.remainingDistance <= agent.stoppingDistance)
-        {
-            SetNextPatrolPoint();
-        }
-
-        agent.SetDestination(nextPoint);
-    }
-
-    private void SetNextPatrolPoint()
-    {
-        if (patrolPoints == null || patrolPoints.Count == 0) return;
-
-        if (enemyType != EnemyType.ARSONIST) currentPatrolPointIndex++;
-
-        if (currentPatrolPointIndex >= patrolPoints.Count)
-        {
-            currentPatrolPointIndex = 0;
-        }
-    }
-
-    protected bool PlayerIsTooClose()
-    {
-        return Physics.CheckSphere(transform.position, proximityRadius, targetLayer);
-    }
-
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(transform.position, proximityRadius);
     }
 }

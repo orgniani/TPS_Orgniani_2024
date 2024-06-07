@@ -1,18 +1,35 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
-public class EnemyArsonist : Enemy
+public class ArsonistEnemy : MonoBehaviour
 {
+    [Header("References")]
+    [SerializeField] private List<Transform> patrolPoints;
+    [SerializeField] private Transform target;
+
     [Header("Parameters")]
     [SerializeField] private float maxDistanceToTarget = 5f;
 
     [Header("Audio")]
     [SerializeField] private AudioClip lightOnFireSound;
-    
+
+    private AudioSource audioSource;
+
+    private NavMeshAgent agent;
+
     private bool shouldLightFire = true;
+    private int currentPatrolPointIndex = 0;
 
     public event Action onLightFire = delegate { };
+
+    private void Start()
+    {
+        agent = GetComponent<NavMeshAgent>();
+        audioSource = GetComponent<AudioSource>();
+    }
 
     private void OnEnable()
     {
@@ -35,33 +52,34 @@ public class EnemyArsonist : Enemy
 
     private void RemoveFromLightOnFire(FlammableObject obj)
     {
-        if (obj == null || patrolPoints == null) return;
         patrolPoints.Remove(obj.transform);
     }
 
     private void LightOnFireTargets(FlammableObject obj)
     {
-        if (obj == null || patrolPoints == null) return;
+        if (obj == null) return;
         if (!obj.gameObject.activeSelf) return;
-
-        if (!patrolPoints.Contains(obj.transform))
-        {
-            patrolPoints.Add(obj.transform);
-        }
+        patrolPoints.Add(obj.transform);
     }
 
     private void Update()
     {
-        if (patrolPoints == null) return;
-
-        if (shouldLightFire) Patrol();
-        LightOnFire();
+        Patrol();
     }
 
-    private void LightOnFire()
+    private void Patrol()
     {
-        if (!shouldLightFire || patrolPoints == null || patrolPoints.Count == 0) return;
+        if (!shouldLightFire) return;
 
+        if (patrolPoints.Count == 0)
+        {
+            agent.isStopped = true;
+            return;
+        }
+
+        agent.isStopped = false;
+
+        Vector3 nextPoint = patrolPoints[currentPatrolPointIndex].transform.position;
         float distanceToCurrentTarget = Vector3.Distance(transform.position, patrolPoints[currentPatrolPointIndex].position);
 
         if (distanceToCurrentTarget <= maxDistanceToTarget)
@@ -72,7 +90,11 @@ public class EnemyArsonist : Enemy
             flammableObject.HandleGetLitOnFire();
 
             if (lightOnFireSound) audioSource.PlayOneShot(lightOnFireSound);
+
+            SetNextPatrolPoint(distanceToCurrentTarget);
         }
+
+        agent.SetDestination(nextPoint);
     }
 
     private IEnumerator StopAndLight()
@@ -86,5 +108,18 @@ public class EnemyArsonist : Enemy
 
         shouldLightFire = true;
         agent.isStopped = false;
+    }
+
+    private void SetNextPatrolPoint(float distanceToCurrentTarget)
+    {
+        if (distanceToCurrentTarget < maxDistanceToTarget)
+        {
+            currentPatrolPointIndex++;
+
+            if (currentPatrolPointIndex >= patrolPoints.Count)
+            {
+                currentPatrolPointIndex = 0;
+            }
+        }
     }
 }

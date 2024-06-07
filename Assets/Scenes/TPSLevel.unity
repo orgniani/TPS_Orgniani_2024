@@ -494,6 +494,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1896548829}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &33572600 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6869693486217922761, guid: 1325843c0171a5e48938960a76586c17,
+    type: 3}
+  m_PrefabInstance: {fileID: 670501314211206289}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9881ab8a589d9e4aa68a5b3c2ddce13, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &48693230
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1227,7 +1239,7 @@ MonoBehaviour:
   animator: {fileID: 99129461}
   attack: {fileID: 354842744}
   arsonist: {fileID: 0}
-  enemy: {fileID: 354842746}
+  enemy: {fileID: 354842747}
   HP: {fileID: 354842741}
   agent: {fileID: 354842742}
   speedParameter: speed
@@ -4720,6 +4732,7 @@ GameObject:
   m_Component:
   - component: {fileID: 354842740}
   - component: {fileID: 354842741}
+  - component: {fileID: 354842747}
   - component: {fileID: 354842746}
   - component: {fileID: 354842744}
   - component: {fileID: 354842742}
@@ -4917,24 +4930,38 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 936ae2e25e58174469591b507a7a7234, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetHP: {fileID: 2079897981}
+  attack: {fileID: 354842744}
   patrolPoints:
   - {fileID: 1355599091}
   - {fileID: 172576962}
   - {fileID: 1551657763}
-  passedOutDuration: 15
-  proximityRadius: 3
-  deathSound: {fileID: 8300000, guid: b99da9a57308d4ba1bee1cf1d9038376, type: 3}
-  wakeUpSound: {fileID: 8300000, guid: 2c5292ba5cf254919a6b9e2b18e04f49, type: 3}
-  enemyType: 0
-  targetLayer:
+  target: {fileID: 2079897971}
+  playerLayer:
     serializedVersion: 2
     m_Bits: 8
-  attack: {fileID: 354842744}
-  target: {fileID: 2079897971}
   visionRadius: 10
   offset: 8.29
+  proximityRadius: 3
   fieldOfViewAngle: 90
+--- !u!114 &354842747
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 354842739}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8dfa45ae4bf881243b33e13d567a4b8f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  HP: {fileID: 354842741}
+  targetHP: {fileID: 2079897981}
+  patrol: {fileID: 354842746}
+  arsonist: {fileID: 0}
+  passedOutDuration: 10
+  deathSound: {fileID: 8300000, guid: b99da9a57308d4ba1bee1cf1d9038376, type: 3}
+  wakeUpSound: {fileID: 8300000, guid: 2c5292ba5cf254919a6b9e2b18e04f49, type: 3}
 --- !u!1001 &360958465
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -21527,6 +21554,12 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1638782836}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1644769141 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4964203438410412475, guid: 878d2b84b0bc5994ebd3da3d24cc6535,
+    type: 3}
+  m_PrefabInstance: {fileID: 1429936159894908229}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1645495110
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -28226,9 +28259,24 @@ PrefabInstance:
       objectReference: {fileID: 8300000, guid: cabfae866cab347928b74b7d0ca6bfa9, type: 3}
     - target: {fileID: 6836449196974654245, guid: 1325843c0171a5e48938960a76586c17,
         type: 3}
+      propertyPath: HP
+      value: 
+      objectReference: {fileID: 33572600}
+    - target: {fileID: 6836449196974654245, guid: 1325843c0171a5e48938960a76586c17,
+        type: 3}
+      propertyPath: target
+      value: 
+      objectReference: {fileID: 2079897971}
+    - target: {fileID: 6836449196974654245, guid: 1325843c0171a5e48938960a76586c17,
+        type: 3}
       propertyPath: targetHP
       value: 
       objectReference: {fileID: 2079897981}
+    - target: {fileID: 6836449196974654245, guid: 1325843c0171a5e48938960a76586c17,
+        type: 3}
+      propertyPath: audioSource
+      value: 
+      objectReference: {fileID: 1858946666}
     - target: {fileID: 6836449196974654245, guid: 1325843c0171a5e48938960a76586c17,
         type: 3}
       propertyPath: explotionSound
@@ -28362,44 +28410,27 @@ PrefabInstance:
       objectReference: {fileID: 2079897981}
     - target: {fileID: 3457433648668269040, guid: 878d2b84b0bc5994ebd3da3d24cc6535,
         type: 3}
-      propertyPath: enemyType
+      propertyPath: m_Enabled
       value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3457433648668269040, guid: 878d2b84b0bc5994ebd3da3d24cc6535,
-        type: 3}
-      propertyPath: targetLayer.m_Bits
-      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 4964203438410412475, guid: 878d2b84b0bc5994ebd3da3d24cc6535,
         type: 3}
       propertyPath: m_Name
       value: ArsonistEnemy
       objectReference: {fileID: 0}
-    - target: {fileID: 4964203438410412475, guid: 878d2b84b0bc5994ebd3da3d24cc6535,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 6346370064935310893, guid: 878d2b84b0bc5994ebd3da3d24cc6535,
         type: 3}
       propertyPath: enemy
       value: 
-      objectReference: {fileID: 4844080926198985261}
-    - target: {fileID: 9085742883438739507, guid: 878d2b84b0bc5994ebd3da3d24cc6535,
-        type: 3}
-      propertyPath: targetHP
-      value: 
-      objectReference: {fileID: 2079897981}
-    - target: {fileID: 9085742883438739507, guid: 878d2b84b0bc5994ebd3da3d24cc6535,
-        type: 3}
-      propertyPath: enemyType
-      value: 2
-      objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 9085742883438739507, guid: 878d2b84b0bc5994ebd3da3d24cc6535, type: 3}
+      objectReference: {fileID: 4844080926198985266}
+    m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 4964203438410412475, guid: 878d2b84b0bc5994ebd3da3d24cc6535,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4844080926198985266}
   m_SourcePrefab: {fileID: 100100000, guid: 878d2b84b0bc5994ebd3da3d24cc6535, type: 3}
 --- !u!1 &1444911741647084340
 GameObject:
@@ -29044,12 +29075,43 @@ MonoBehaviour:
     type: 3}
   m_PrefabInstance: {fileID: 1429936159894908229}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 1644769141}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8905c5b9fd421bc42981849ec0086f26, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &4844080926198985262 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3283969606273849493, guid: 878d2b84b0bc5994ebd3da3d24cc6535,
+    type: 3}
+  m_PrefabInstance: {fileID: 1429936159894908229}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1644769141}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9881ab8a589d9e4aa68a5b3c2ddce13, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &4844080926198985266
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1644769141}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8dfa45ae4bf881243b33e13d567a4b8f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  HP: {fileID: 4844080926198985262}
+  targetHP: {fileID: 2079897981}
+  patrol: {fileID: 0}
+  arsonist: {fileID: 4844080926198985261}
+  passedOutDuration: 10
+  deathSound: {fileID: 8300000, guid: b99da9a57308d4ba1bee1cf1d9038376, type: 3}
+  wakeUpSound: {fileID: 8300000, guid: 2c5292ba5cf254919a6b9e2b18e04f49, type: 3}
 --- !u!1 &4935283715901339117
 GameObject:
   m_ObjectHideFlags: 0

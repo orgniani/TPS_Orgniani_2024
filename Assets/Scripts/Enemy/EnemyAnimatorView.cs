@@ -6,7 +6,7 @@ public class EnemyAnimatorView : MonoBehaviour
     [Header("References")]
     [SerializeField] private Animator animator;
     [SerializeField] private MeleeAttack attack;
-    [SerializeField] private EnemyArsonist arsonist;
+    [SerializeField] private ArsonistEnemy arsonist;
     [SerializeField] private Enemy enemy;
     [SerializeField] private HealthController HP;
     [SerializeField] private NavMeshAgent agent;
