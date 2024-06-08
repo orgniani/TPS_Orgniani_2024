@@ -34,6 +34,7 @@ public class UIHUD : MonoBehaviour
     [SerializeField] private HealthController playerHP;
     [SerializeField] private GameManager gameManager;
     [SerializeField] private AttackSwapController attackSwapController;
+    [SerializeField] private PlayerObjectPicker playerObjectPicker;
     [SerializeField] private StarterAssetsInputs starterAssetInputs;
 
     private void OnEnable()
@@ -47,7 +48,7 @@ public class UIHUD : MonoBehaviour
 
         shootController.onAmmoChange += HandleAmmoAmountText;
 
-        PickUpItems.onPickUp += HandleAddWeaponIcon;
+        playerObjectPicker.onPickUp += HandleAddWeaponIcon;
 
         HandleAmmoAmountText();
         HandleHealthBar();
@@ -63,7 +64,7 @@ public class UIHUD : MonoBehaviour
         gameManager.onNewDeadTree -= HandleForestHPText;
         gameManager.onNewDeadTree -= HandleForestHealthBar;
 
-        PickUpItems.onPickUp -= HandleAddWeaponIcon;
+        playerObjectPicker.onPickUp -= HandleAddWeaponIcon;
     }
 
     private void Update()

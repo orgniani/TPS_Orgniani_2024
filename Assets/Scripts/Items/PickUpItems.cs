@@ -5,22 +5,11 @@ using UnityEngine;
 
 public class PickUpItems : MonoBehaviour
 {
-    [Header("References")]
-    [SerializeField] private HealthController playerHP;
-    [SerializeField] private ShooterController playerGun;
-    [SerializeField] private AttackSwapController attackSwapController;
-    [SerializeField] private StarterAssetsInputs starterAssetsInputs;
-
-    [Header("Types")]
-    [SerializeField] private LayerMask playerLayer;
+    [Header("Type")]
     [SerializeField] private ItemType itemType;
 
     [Header("Meds Parameters")]
     [SerializeField] private float restoredHP = 10f;
-
-    [Header("Audio")]
-    [SerializeField] private AudioSource audioSource;
-    [SerializeField] private AudioClip pickUpItemSound;
 
     [Header("Arrow animation parameters")]
     [SerializeField] private AnimationCurve animationCurve;
@@ -29,8 +18,6 @@ public class PickUpItems : MonoBehaviour
     [SerializeField] private float posYPosition = 1f;
 
     private Vector3 initialPosition;
-
-    public static event Action onPickUp;
 
     private void Start()
     {
@@ -44,52 +31,14 @@ public class PickUpItems : MonoBehaviour
         StartCoroutine(Float());
     }
 
-    private void OnTriggerEnter(Collider other)
+    public ItemType GetItemType()
     {
-        if (playerLayer == (playerLayer | (1 << other.gameObject.layer)))
-        {
-            switch(itemType)
-            {
-                case ItemType.AMMO:
-                    if (playerGun.AmmoAmount >= playerGun.MaxAmmoAmount || !attackSwapController.AquiredGun) return;
+        return itemType;
+    }
 
-                    audioSource.PlayOneShot(pickUpItemSound);
-
-                    playerGun.ReplenishAmmo();
-                    gameObject.SetActive(false);
-                    break;
-
-                case ItemType.LIFE:
-
-                    if (playerHP.Health >= playerHP.MaxHealth) return;
-
-                    audioSource.PlayOneShot(pickUpItemSound);
-
-                    playerHP.RestoreHP(restoredHP);
-                    gameObject.SetActive(false);
-                    break;
-
-                case ItemType.EXTINGUISHER:
-
-                    attackSwapController.AquiredExtinguisher = true;
-                    starterAssetsInputs.fireExtinguisher = true;
-
-                    onPickUp?.Invoke();
-
-                    gameObject.SetActive(false);
-                    break;
-
-                case ItemType.GUN:
-
-                    attackSwapController.AquiredGun = true;
-                    starterAssetsInputs.gun = true;
-
-                    onPickUp?.Invoke();
-
-                    gameObject.SetActive(false);
-                    break;
-            }
-        }
+    public float GetRestoredHP()
+    {
+        return restoredHP;
     }
 
 

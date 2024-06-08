@@ -69,10 +69,7 @@ public class BombEnemy : MonoBehaviour
                 rb.AddExplosionForce(explosionForce, transform.position, explosionRadius);
             }
 
-            if (flammableObject != null)
-            {
-                flammableObject.HandleGetLitOnFire();
-            }
+            if (flammableObject != null) flammableObject.HandleGetLitOnFire();
 
             if (targetHP != null && hit.CompareTag("Player")) targetHP.ReceiveDamage(explosionDamage, hit.transform.position);
         }
