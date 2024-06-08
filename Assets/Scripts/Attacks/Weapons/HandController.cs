@@ -30,8 +30,6 @@ public class HandController : AttackController
 
     public bool CanDrag { set; get; }
 
-    public bool IsAtTheDoor { set; get; }
-
 
     private void OnEnable()
     {
@@ -76,11 +74,7 @@ public class HandController : AttackController
             StopDragging();
         }
 
-        if (starterAssetInputs.shoot)
-        {
-            onClick?.Invoke();
-            HandleTrapGoblin();
-        }
+        if (starterAssetInputs.shoot) onClick?.Invoke();
     }
 
     private void DragEnemy()
@@ -186,9 +180,9 @@ public class HandController : AttackController
         knockedOutEnemies.Remove(obj.transform);
     }
 
-    private void HandleTrapGoblin()
+    public void TrapGoblin()
     {
-        if (!IsAtTheDoor || currentlyDraggedEnemy == null) return;
+        if (currentlyDraggedEnemy == null) return;
 
         Enemy enemyScript = currentlyDraggedEnemy.GetComponent<Enemy>();
 

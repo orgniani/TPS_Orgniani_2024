@@ -4,8 +4,9 @@ using UnityEngine;
 public class Building : MonoBehaviour
 {
     [Header("References")]
-    [SerializeField] private LayerMask playerLayer;
-    [SerializeField] private HandController handController;
+    [SerializeField] private PlayerEnvironmentInteraction playerEnvironmentInteraction;
+
+    [Header("Animation")]
     [SerializeField] private AnimationCurve curveColor;
     [SerializeField] private Material sharedMaterial;
 
@@ -26,7 +27,7 @@ public class Building : MonoBehaviour
     {
         StartCoroutine(Pulse());
 
-        if (handController.IsDraggingEnemy && handController.IsAtTheDoor)
+        if (playerEnvironmentInteraction.IsAtDropSpot)
         {
             instructionsCanvas.SetActive(true);
         }
@@ -37,36 +38,17 @@ public class Building : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if (playerLayer == (playerLayer | (1 << other.gameObject.layer)))
-        {
-            if (handController.IsDraggingEnemy)
-            {
-                handController.IsAtTheDoor = true;
-            }
-        }
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        if (playerLayer == (playerLayer | (1 << other.gameObject.layer)))
-        {
-            handController.IsAtTheDoor = false;
-        }
-    }
-
     private IEnumerator Pulse()
     {
         float tt = 0;
 
-        if (!handController.IsDraggingEnemy)
+        if (!playerEnvironmentInteraction.IsDraggingEnemy())
         {
             sharedMaterial.color = originalColor;
             yield break;
         }
 
-        while (handController.IsDraggingEnemy)
+        while (playerEnvironmentInteraction.IsDraggingEnemy())
         {
             tt += Time.deltaTime;
             float valorDe0a1 = tt / 1f;
