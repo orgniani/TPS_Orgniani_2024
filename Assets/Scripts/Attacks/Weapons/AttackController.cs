@@ -76,11 +76,11 @@ public class AttackController : MonoBehaviour
         animator.SetLayerWeight(2, Mathf.Lerp(animator.GetLayerWeight(1), 1f, Time.deltaTime * 10f));
         aimRigWeight = 1f;
 
+        if (!aimVirtualCamera) return;
+
         thirdPersonController.SetRotateOnMove(false);
         thirdPersonController.SetSprintOnAim(false);
         thirdPersonController.SetStrafeOnAim(true);
-
-        if (!aimVirtualCamera) return;
 
         aimVirtualCamera.gameObject.SetActive(true);
         thirdPersonController.SetSensitivity(aimSensitivity);
@@ -98,10 +98,10 @@ public class AttackController : MonoBehaviour
         animator.SetLayerWeight(2, Mathf.Lerp(animator.GetLayerWeight(1), 0f, Time.deltaTime * 10f));
         aimRigWeight = 0f;
 
+        if (!aimVirtualCamera) return;
+
         thirdPersonController.SetRotateOnMove(true);
         thirdPersonController.SetStrafeOnAim(false);
-
-        if (!aimVirtualCamera) return;
 
         starterAssetInputs.shoot = false;
         aimVirtualCamera.gameObject.SetActive(false);

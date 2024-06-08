@@ -315,8 +315,20 @@ namespace StarterAssets
             _controller.Move(targetDirection.normalized * (_speed * Time.deltaTime) +
                              new Vector3(0.0f, _verticalVelocity, 0.0f) * Time.deltaTime);
 
-            _animationInputXBlend = Mathf.Lerp(_animationInputXBlend, inputDirection.x, Time.deltaTime * SpeedChangeRate);
-            _animationInputZBlend = Mathf.Lerp(_animationInputZBlend, inputDirection.z, Time.deltaTime * SpeedChangeRate);
+            // Calculate local movement direction
+            Vector3 localMoveDirection = transform.InverseTransformDirection(targetDirection);
+
+            // Smoothly transition animation input blends based on local movement direction
+            if (_input.move == Vector2.zero)
+            {
+                _animationInputXBlend = Mathf.Lerp(_animationInputXBlend, 0, Time.deltaTime * SpeedChangeRate);
+                _animationInputZBlend = Mathf.Lerp(_animationInputZBlend, 0, Time.deltaTime * SpeedChangeRate);
+            }
+            else
+            {
+                _animationInputXBlend = Mathf.Lerp(_animationInputXBlend, localMoveDirection.x, Time.deltaTime * SpeedChangeRate);
+                _animationInputZBlend = Mathf.Lerp(_animationInputZBlend, localMoveDirection.z, Time.deltaTime * SpeedChangeRate);
+            }
 
             // update animator if using character
             if (_hasAnimator)

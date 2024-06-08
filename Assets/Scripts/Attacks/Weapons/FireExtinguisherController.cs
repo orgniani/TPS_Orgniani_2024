@@ -35,10 +35,9 @@ public class FireExtinguisherController : AttackController
 
     public override void Shoot()
     {
-        fireFoam.Play();
-
-        if(!extinguishSound.isPlaying)
+        if(!extinguishSound.isPlaying && !fireFoam.isPlaying)
         {
+            fireFoam.Play();
             extinguishSound.Play();
         }
     }

@@ -13164,7 +13164,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1750451603
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -21356,6 +21356,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Colors.m_FadeDuration
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7941777723398838399, guid: e7d3cf7f9f55fb646ade7ee06751a3d8,
+        type: 3}
+      propertyPath: m_SortingOrder
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

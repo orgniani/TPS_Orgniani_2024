@@ -52,6 +52,7 @@ public class HandController : AttackController
     private void Update()
     {
         if (Cursor.lockState != CursorLockMode.Locked) return;
+
         if (!CanDrag)
         {
             StopDragging();
@@ -100,6 +101,10 @@ public class HandController : AttackController
                     enemyAgent.stoppingDistance = 1;
                     enemyAgent.SetDestination(transform.position);
 
+                    thirdPersonController.SetRotateOnMove(false);
+                    thirdPersonController.SetSprintOnAim(false);
+                    thirdPersonController.SetStrafeOnAim(true);
+
                     TPSController.MoveSpeed = dragSpeed;
 
                     isDraggingEnemy = true;
@@ -133,8 +138,12 @@ public class HandController : AttackController
     {
         isDraggingEnemy = false;
         TPSController.MoveSpeed = moveSpeed;
-        thirdPersonController.SetRotateOnMove(true);
-        thirdPersonController.SetStrafeOnAim(false);
+
+        if(CanDrag)
+        {
+            thirdPersonController.SetRotateOnMove(true);
+            thirdPersonController.SetStrafeOnAim(false);
+        }
 
         if (currentlyDraggedEnemy != null) currentlyDraggedEnemy = null;
 
