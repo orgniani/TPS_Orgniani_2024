@@ -26,6 +26,7 @@ public class BombEnemy : MonoBehaviour
     private bool isCountingDown = false;
 
     public event Action onCloseToPlayer = delegate { };
+    public static event Action onExplode;
 
     private void Start()
     {
@@ -50,8 +51,8 @@ public class BombEnemy : MonoBehaviour
 
     private void HandleExplosion()
     {
+        onExplode?.Invoke();
         audioSource.Play();
-
         Instantiate(explosionPrefab, transform.position, transform.rotation);
 
         Collider[] colliders = Physics.OverlapSphere(transform.position, explosionRadius);

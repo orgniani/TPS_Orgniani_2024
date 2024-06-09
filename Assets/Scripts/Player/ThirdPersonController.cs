@@ -123,6 +123,7 @@ namespace StarterAssets
 
         private bool _rotateOnMove = true;
         private bool _strafeOnAim = false;
+        private bool _stopLookInputOnShake = false;
 
         private const float _threshold = 0.01f;
 
@@ -198,6 +199,7 @@ namespace StarterAssets
 
         private void LateUpdate()
         {
+            if(_stopLookInputOnShake) return;
             CameraRotation();
         }
 
@@ -459,6 +461,11 @@ namespace StarterAssets
         public void SetStrafeOnAim(bool newStrafeOnAim)
         {
             _strafeOnAim = newStrafeOnAim;
+        }
+
+        public void SetStopLookInputOnShake(bool newStopLookInputOnShake)
+        {
+            _stopLookInputOnShake = newStopLookInputOnShake;
         }
 
         private void HandleHurt()
