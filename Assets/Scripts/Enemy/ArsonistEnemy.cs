@@ -8,7 +8,6 @@ public class ArsonistEnemy : MonoBehaviour
 {
     [Header("References")]
     [SerializeField] private List<Transform> patrolPoints;
-    [SerializeField] private Transform target;
 
     [Header("Parameters")]
     [SerializeField] private float maxDistanceToTarget = 5f;

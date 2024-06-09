@@ -158,12 +158,14 @@ namespace StarterAssets
         {
             _HP.onHurt += HandleHurt;
             _HP.onDead += HandleDeath;
+            BombEnemy.onExplode += HandleHurt;
         }
 
         private void OnDisable()
         {
             _HP.onHurt -= HandleHurt;
             _HP.onDead -= HandleDeath;
+            BombEnemy.onExplode -= HandleHurt;
         }
 
         private void Start()

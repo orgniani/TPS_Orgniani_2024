@@ -10,6 +10,9 @@ public class PlayerEnvironmentInteraction : MonoBehaviour
     [SerializeField] private string buildingTag = "Building";
     [SerializeField] private string wellTag = "Well";
 
+    [Header("Text")]
+    [SerializeField] private GameObject instructionsCanvas;
+
     private HandController handController;
 
     private bool isPlayerCloseToWell = false;
@@ -17,11 +20,22 @@ public class PlayerEnvironmentInteraction : MonoBehaviour
 
     public event Action onSplash = delegate { };
 
-    public bool IsAtDropSpot => isAtDropSpot;
-
     private void Awake()
     {
         handController = GetComponent<HandController>();   
+    }
+
+    private void Update()
+    {
+        if (handController.IsDraggingEnemy && isAtDropSpot)
+        {
+            instructionsCanvas.SetActive(true);
+        }
+
+        else
+        {
+            instructionsCanvas.SetActive(false);
+        }
     }
 
     private void OnEnable()
@@ -38,36 +52,30 @@ public class PlayerEnvironmentInteraction : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (triggerLayer == (triggerLayer | (1 << other.gameObject.layer)))
+        if (other.gameObject.CompareTag(buildingTag))
         {
-            if (other.gameObject.CompareTag(buildingTag))
+            if (handController.IsDraggingEnemy)
             {
-                if (handController.IsDraggingEnemy)
-                {
-                    isAtDropSpot = true;
-                }
+                isAtDropSpot = true;
             }
+        }
 
-            else if (other.gameObject.CompareTag(wellTag))
-            {
-                isPlayerCloseToWell = true;
-            }
+        else if (other.gameObject.CompareTag(wellTag))
+        {
+            isPlayerCloseToWell = true;
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (triggerLayer == (triggerLayer | (1 << other.gameObject.layer)))
+        if (other.gameObject.CompareTag(buildingTag))
         {
-            if (other.gameObject.CompareTag(buildingTag))
-            {
-                isAtDropSpot = false;
-            }
+            isAtDropSpot = false;
+        }
 
-            else if (other.gameObject.CompareTag(wellTag))
-            {
-                isPlayerCloseToWell = false;
-            }
+        else if (other.gameObject.CompareTag(wellTag))
+        {
+            isPlayerCloseToWell = false;
         }
     }
 

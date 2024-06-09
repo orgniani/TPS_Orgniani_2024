@@ -10,7 +10,7 @@ public class BombEnemy : MonoBehaviour
     [SerializeField] private HealthController HP;
 
     [SerializeField] private Transform target;
-    [SerializeField] private LayerMask playerLayer;
+    [SerializeField] private LayerMask targetLayer;
 
     [Header("Parameters")]
     [SerializeField] private float explosionForce = 1000f;
@@ -78,7 +78,7 @@ public class BombEnemy : MonoBehaviour
 
     private void CheckIfPlayerClose()
     {
-        bool playerIsCloseEnough = Physics.CheckSphere(transform.position, explosionRadius, playerLayer);
+        bool playerIsCloseEnough = Physics.CheckSphere(transform.position, explosionRadius, targetLayer);
 
         if (playerIsCloseEnough && !isCountingDown)
         {

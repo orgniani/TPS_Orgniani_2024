@@ -108,9 +108,7 @@ public class AttackController : MonoBehaviour
         thirdPersonController.SetSensitivity(normalSensitivity);
     }
 
-    public virtual void Shoot()
-    {
-    }
+    public virtual void Shoot() { }
 
     private void AssignAnimationIDs()
     {

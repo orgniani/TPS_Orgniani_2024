@@ -14,11 +14,10 @@ public class Building : MonoBehaviour
     [SerializeField] private Color originalColor;
     [SerializeField] private Color pulseColor;
 
-    [Header("Text")]
-    [SerializeField] private GameObject instructionsCanvas;
-
     private void Awake()
     {
+        if(!playerEnvironmentInteraction) enabled = false;
+
         sharedMaterial = GetComponent<Renderer>().material;
         originalColor = sharedMaterial.color;
     }
@@ -26,16 +25,6 @@ public class Building : MonoBehaviour
     private void Update()
     {
         StartCoroutine(Pulse());
-
-        if (playerEnvironmentInteraction.IsAtDropSpot)
-        {
-            instructionsCanvas.SetActive(true);
-        }
-
-        else
-        {
-            instructionsCanvas.SetActive(false);
-        }
     }
 
     private IEnumerator Pulse()

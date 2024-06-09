@@ -278,7 +278,7 @@ GameObject:
   - component: {fileID: 1804128463065801894}
   - component: {fileID: 3283969606273849493}
   - component: {fileID: 3457433648668269040}
-  - component: {fileID: 3082555143066484527}
+  - component: {fileID: 536487392535319990}
   - component: {fileID: 5300352891813659653}
   - component: {fileID: 8842847676556365528}
   m_Layer: 6
@@ -335,19 +335,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8905c5b9fd421bc42981849ec0086f26, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetHP: {fileID: 0}
   patrolPoints: []
-  passedOutDuration: 15
-  proximityRadius: 5
-  deathSound: {fileID: 8300000, guid: b99da9a57308d4ba1bee1cf1d9038376, type: 3}
-  wakeUpSound: {fileID: 8300000, guid: 2c5292ba5cf254919a6b9e2b18e04f49, type: 3}
-  enemyType: 1
-  targetLayer:
-    serializedVersion: 2
-    m_Bits: 8
   maxDistanceToTarget: 3
   lightOnFireSound: {fileID: 8300000, guid: 5fdb13d3756c84fecac96f5a2d124370, type: 3}
---- !u!114 &3082555143066484527
+--- !u!114 &536487392535319990
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -356,18 +347,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 4964203438410412475}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a30a7782f68012642aa1389a90446487, type: 3}
+  m_Script: {fileID: 11500000, guid: 8dfa45ae4bf881243b33e13d567a4b8f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 10
-  attackCooldown: 1
-  attackProximity: 2
-  fieldOfAttackAngle: 90
-  offset: 0.5
-  playerLayer:
-    serializedVersion: 2
-    m_Bits: 8
-  punchSound: {fileID: 8300000, guid: 23b9773ee8518494b9e5737cdb1ab970, type: 3}
+  HP: {fileID: 3283969606273849493}
+  targetHP: {fileID: 0}
+  patrol: {fileID: 0}
+  arsonist: {fileID: 3457433648668269040}
+  passedOutDuration: 10
+  deathSound: {fileID: 8300000, guid: b99da9a57308d4ba1bee1cf1d9038376, type: 3}
+  wakeUpSound: {fileID: 8300000, guid: 2c5292ba5cf254919a6b9e2b18e04f49, type: 3}
 --- !u!195 &5300352891813659653
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -1026,9 +1015,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 8201661511677838743}
-  attack: {fileID: 3082555143066484527}
+  attack: {fileID: 0}
   arsonist: {fileID: 3457433648668269040}
-  enemy: {fileID: 3457433648668269040}
+  enemy: {fileID: 536487392535319990}
   HP: {fileID: 3283969606273849493}
   agent: {fileID: 5300352891813659653}
   speedParameter: speed

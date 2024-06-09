@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -19,6 +20,7 @@ public class GameManager : MonoBehaviour
     [Header("Screens")]
     [SerializeField] private GameObject gameOverScreen;
     [SerializeField] private GameObject levelCompletedScreen;
+    [SerializeField] private float waitForLoseScreen = 3f;
 
     [Header("Text")]
     [SerializeField] private UITimeCounter timeCounter;
@@ -56,7 +58,7 @@ public class GameManager : MonoBehaviour
 
         if (enemies.Count == 0)
         {
-            StopGameAndOpenScreens(levelCompletedScreen, winGameSoundEffect);
+            StartCoroutine(StopGameAndOpenScreens(levelCompletedScreen, winGameSoundEffect, 0f));
         }
     }
 
@@ -67,7 +69,7 @@ public class GameManager : MonoBehaviour
 
         if (flammables.Count == 0)
         {
-            LoseGame();
+            StartCoroutine(StopGameAndOpenScreens(gameOverScreen, loseGameSoundEffect, 0f));
             gameOverText.text = "THE FOREST WAS DESTROYED!";
         }
     }
@@ -88,19 +90,20 @@ public class GameManager : MonoBehaviour
 
     private void LoseGame()
     {
-        StopGameAndOpenScreens(gameOverScreen, loseGameSoundEffect);
+        StartCoroutine(StopGameAndOpenScreens(gameOverScreen, loseGameSoundEffect, waitForLoseScreen));
         gameOverText.text = "YOU DIED!";
     }
 
-    private void StopGameAndOpenScreens(GameObject screen, AudioSource soundEffect)
+    private IEnumerator StopGameAndOpenScreens(GameObject screen, AudioSource soundEffect, float waitForScreen)
     {
         Cursor.lockState = CursorLockMode.None;
 
         soundEffect.Play();
-        screen.SetActive(true);
-
         timeCounter.StopCounting();
 
+        yield return new WaitForSeconds(waitForScreen);
+
+        screen.SetActive(true);
         enabled = false;
     }
 }

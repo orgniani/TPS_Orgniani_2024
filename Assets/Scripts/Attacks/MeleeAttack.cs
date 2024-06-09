@@ -13,14 +13,14 @@ public class MeleeAttack : MonoBehaviour, IAttack
     [SerializeField] private float fieldOfAttackAngle = 90f;
     [SerializeField] private float offset = 0.5f;
 
-    [SerializeField] private LayerMask playerLayer;
+    [SerializeField] private LayerMask targetLayer;
 
     [Header("Audio")]
     [SerializeField] private AudioClip punchSound;
 
     private AudioSource audioSource;
 
-    private Transform playerTransform;
+    private Transform targetTransform;
     private HealthController targetHP;
 
     private bool shouldAttack = true;
@@ -37,7 +37,6 @@ public class MeleeAttack : MonoBehaviour, IAttack
     private void HandleAttack()
     {
         if (!shouldAttack) return;
-        if (targetHP.Health <= 0) return;
         StartCoroutine(AttackSequence());
     }
 
@@ -46,9 +45,9 @@ public class MeleeAttack : MonoBehaviour, IAttack
         shouldAttack = false;
 
         Vector3 spherePosition = transform.position + transform.forward * offset;
-        bool playerIsInAttackRange = Physics.CheckSphere(spherePosition, attackProximity, playerLayer);
+        bool playerIsInAttackRange = Physics.CheckSphere(spherePosition, attackProximity, targetLayer);
 
-        Vector3 directionToPlayer = playerTransform.position - transform.position;
+        Vector3 directionToPlayer = targetTransform.position - transform.position;
         float angleToPlayer = Vector3.Angle(transform.forward, directionToPlayer);
 
         if (angleToPlayer < fieldOfAttackAngle && playerIsInAttackRange)
@@ -64,7 +63,7 @@ public class MeleeAttack : MonoBehaviour, IAttack
         RaycastHit hit;
         Vector3 sourcePos = transform.position;
 
-        Physics.Raycast(sourcePos, transform.forward, out hit, attackProximity, playerLayer);
+        Physics.Raycast(sourcePos, transform.forward, out hit, attackProximity, targetLayer);
         hitPoint = hit.point;
 
         onPunch?.Invoke();
@@ -75,7 +74,7 @@ public class MeleeAttack : MonoBehaviour, IAttack
 
     public float AttackNow(Transform target, HealthController targetHP)
     {
-        playerTransform = target;
+        targetTransform = target;
         this.targetHP = targetHP;
 
         HandleAttack();

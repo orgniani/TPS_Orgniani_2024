@@ -9,7 +9,7 @@ public class PatrolEnemy : MonoBehaviour
     [SerializeField] private Transform[] patrolPoints;
     [SerializeField] private Transform target;
 
-    [SerializeField] private LayerMask playerLayer;
+    [SerializeField] private LayerMask targetLayer;
 
     [Header("Parameters")]
     [SerializeField] private float visionRadius = 5f;
@@ -19,7 +19,7 @@ public class PatrolEnemy : MonoBehaviour
     [SerializeField] private float fieldOfViewAngle = 90f;
 
     private NavMeshAgent agent;
-    private HealthController playerHP;
+    private HealthController targetHP;
 
     private int currentPatrolPointIndex = 0;
 
@@ -29,7 +29,7 @@ public class PatrolEnemy : MonoBehaviour
     private void Start()
     {
         agent = GetComponent<NavMeshAgent>();
-        playerHP = target.gameObject.GetComponent<HealthController>();
+        targetHP = target.gameObject.GetComponent<HealthController>();
 
         movementState = MovementState.PATROL;
     }
@@ -46,9 +46,7 @@ public class PatrolEnemy : MonoBehaviour
                 break;
 
             case MovementState.FOLLOWTARGET:
-                if (playerHP.Health <= 0) return;
-
-                attack.AttackNow(target, playerHP);
+                attack.AttackNow(target, targetHP);
                 agent.SetDestination(target.position);
                 break;
 
@@ -61,10 +59,10 @@ public class PatrolEnemy : MonoBehaviour
     {
         agent.isStopped = false;
 
-        bool playerIsTooClose = Physics.CheckSphere(transform.position, proximityRadius, playerLayer);
+        bool playerIsTooClose = Physics.CheckSphere(transform.position, proximityRadius, targetLayer);
 
         Vector3 spherePosition = transform.position + transform.forward * offset;
-        bool playerIsInVisionRange = Physics.CheckSphere(spherePosition, visionRadius, playerLayer);
+        bool playerIsInVisionRange = Physics.CheckSphere(spherePosition, visionRadius, targetLayer);
 
         Vector3 directionToPlayer = target.position - transform.position;
         float angleToPlayer = Vector3.Angle(transform.forward, directionToPlayer);
@@ -81,7 +79,7 @@ public class PatrolEnemy : MonoBehaviour
 
             if (movementState == MovementState.PATROL)
             {
-                if (Physics.Raycast(transform.position, directionToPlayer, out hit, visionRadius * 2f, ~playerLayer))
+                if (Physics.Raycast(transform.position, directionToPlayer, out hit, visionRadius * 2f, ~targetLayer))
                 {
                     movementState = MovementState.PATROL;
                 }
