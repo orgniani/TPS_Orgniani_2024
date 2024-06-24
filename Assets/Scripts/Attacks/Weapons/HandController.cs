@@ -14,14 +14,10 @@ public class HandController : AttackController
     [SerializeField] private float proximityRadius = 5f;
     [SerializeField] private float dragSpeed = 2f;
 
-    [Header("Enemies")]
-    [SerializeField] private List<Transform> knockedOutEnemies;
-
     private NavMeshAgent enemyAgent;
 
     private float moveSpeed = 2f;
-
-    private Transform currentlyDraggedEnemy;
+    private Transform currentlyDraggedObject;
     private bool isDraggingEnemy = false;
 
     public event Action onClick = delegate { };
@@ -34,17 +30,11 @@ public class HandController : AttackController
     private void OnEnable()
     {
         moveSpeed = TPSController.MoveSpeed;
-
-        Enemy.onKnockedOut += AddToEnemiesList;
-        Enemy.onWakeUp += RemoveFromEnemiesList;
-        Enemy.onTrapped += RemoveFromEnemiesList;
     }
 
     private void OnDisable()
     {
-        Enemy.onKnockedOut -= AddToEnemiesList;
-        Enemy.onWakeUp -= RemoveFromEnemiesList;
-        Enemy.onTrapped -= RemoveFromEnemiesList;
+        StopDragging();
     }
 
     private void Update()
@@ -66,7 +56,7 @@ public class HandController : AttackController
                 animator.SetTrigger(animIDDrag);
             }
 
-            DragEnemy();
+            DragObject();
         }
 
         else
@@ -77,35 +67,38 @@ public class HandController : AttackController
         if (starterAssetInputs.shoot) onClick?.Invoke();
     }
 
-    private void DragEnemy()
+    private void DragObject()
     {
-        Transform nearestEnemy = FindNearestKnockedOutEnemy();
+        Transform nearestObject = FindNearestObject();
 
-        if (nearestEnemy != null)
+        if (nearestObject != null)
         {
-            float distanceToNearestEnemy = Vector3.Distance(transform.position, nearestEnemy.position);
+            float distanceToNearestObject = Vector3.Distance(transform.position, nearestObject.position);
 
-            if (distanceToNearestEnemy <= proximityRadius)
+            if (distanceToNearestObject <= proximityRadius)
             {
-                enemyAgent = nearestEnemy.GetComponent<NavMeshAgent>();
+                enemyAgent = nearestObject.GetComponent<NavMeshAgent>();
 
                 if (enemyAgent != null)
                 {
+                    Debug.Log("ENEMY IS BEING DRAGGED!");
+
                     enemyAgent.isStopped = false;
                     enemyAgent.stoppingDistance = 1;
                     enemyAgent.SetDestination(transform.position);
 
-                    thirdPersonController.SetRotateOnMove(false);
-                    thirdPersonController.SetSprintOnAim(false);
-                    thirdPersonController.SetStrafeOnAim(true);
-
-                    TPSController.MoveSpeed = dragSpeed;
-
                     isDraggingEnemy = true;
-                    currentlyDraggedEnemy = nearestEnemy;
-
-                    RotateTowardsTarget();
                 }
+
+                thirdPersonController.SetRotateOnMove(false);
+                thirdPersonController.SetSprintOnAim(false);
+                thirdPersonController.SetStrafeOnAim(true);
+
+                TPSController.MoveSpeed = dragSpeed;
+
+                currentlyDraggedObject = nearestObject;
+
+                RotateTowardsTarget();
             }
         }
 
@@ -117,9 +110,9 @@ public class HandController : AttackController
 
     private void RotateTowardsTarget()
     {
-        if (currentlyDraggedEnemy != null)
+        if (currentlyDraggedObject != null)
         {
-            Vector3 aimDirection = (currentlyDraggedEnemy.position - transform.position).normalized;
+            Vector3 aimDirection = (currentlyDraggedObject.position - transform.position).normalized;
             aimDirection.y = 0;
 
             Quaternion targetRotation = Quaternion.LookRotation(aimDirection);
@@ -139,52 +132,48 @@ public class HandController : AttackController
             thirdPersonController.SetStrafeOnAim(false);
         }
 
-        if (currentlyDraggedEnemy != null) currentlyDraggedEnemy = null;
+        if (currentlyDraggedObject != null) currentlyDraggedObject = null;
 
         if (enemyAgent == null) return;
         enemyAgent.isStopped = true;
 
     }
 
-    private Transform FindNearestKnockedOutEnemy()
+    private Transform FindNearestObject()
     {
-        Transform nearestEnemy = null;
+        Collider[] hitColliders = Physics.OverlapSphere(transform.position, proximityRadius);
+        Transform nearestObject = null;
         float minDistance = Mathf.Infinity;
 
-        foreach (Transform enemyTransform in knockedOutEnemies)
+        foreach (Collider hitCollider in hitColliders)
         {
-            if (enemyTransform == null) continue;
+            Transform parentTransform = hitCollider.transform.parent;
 
-            float distanceToEnemy = Vector3.Distance(transform.position, enemyTransform.position);
-
-            if (distanceToEnemy < minDistance)
+            if (parentTransform != null)
             {
-                nearestEnemy = enemyTransform;
-                minDistance = distanceToEnemy;
+                IDraggable draggableInParent = parentTransform.GetComponent<IDraggable>();
+
+                if (draggableInParent != null && draggableInParent.CanBeDragged())
+                {
+                    float distanceToObject = Vector3.Distance(transform.position, parentTransform.position);
+
+                    if (distanceToObject < minDistance)
+                    {
+                        nearestObject = parentTransform;
+                        minDistance = distanceToObject;
+                    }
+                }
             }
         }
 
-        return nearestEnemy;
-    }
-
-    private void AddToEnemiesList(Enemy obj)
-    {
-        if (!knockedOutEnemies.Contains(obj.transform))
-        {
-            knockedOutEnemies.Add(obj.transform);
-        }
-    }
-
-    private void RemoveFromEnemiesList(Enemy obj)
-    {
-        knockedOutEnemies.Remove(obj.transform);
+        return nearestObject;
     }
 
     public void TrapGoblin()
     {
-        if (currentlyDraggedEnemy == null) return;
+        if (currentlyDraggedObject == null) return;
 
-        Enemy enemyScript = currentlyDraggedEnemy.GetComponent<Enemy>();
+        Enemy enemyScript = currentlyDraggedObject.GetComponent<Enemy>();
 
         if (enemyScript != null)
         {

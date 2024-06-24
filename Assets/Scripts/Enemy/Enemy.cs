@@ -1,10 +1,9 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class Enemy : MonoBehaviour
+public class Enemy : MonoBehaviour, IDraggable
 {
     [Header("References")]
     [SerializeField] private HealthController HP;
@@ -27,8 +26,6 @@ public class Enemy : MonoBehaviour
 
     public static event Action<Enemy> onSpawn;
     public static event Action<Enemy> onTrapped;
-    public static event Action<Enemy> onKnockedOut;
-    public static event Action<Enemy> onWakeUp;
 
     public event Action onWakeUpAnimation;
 
@@ -62,8 +59,6 @@ public class Enemy : MonoBehaviour
         if (enableCoroutine != null)
             StopCoroutine(enableCoroutine);
 
-        onKnockedOut?.Invoke(this);
-
         isAwake = false;
 
         audioSource.PlayOneShot(deathSound);
@@ -80,7 +75,6 @@ public class Enemy : MonoBehaviour
     {
         yield return new WaitForSeconds(passedOutDuration);
 
-        onWakeUp?.Invoke(this);
         onWakeUpAnimation?.Invoke();
 
         HP.SetToMaxHealth();
@@ -118,5 +112,10 @@ public class Enemy : MonoBehaviour
         if (patrol) patrol.enabled = false;
         if (arsonist) arsonist.enabled = false;
         enabled = false;
+    }
+
+    public bool CanBeDragged()
+    {
+        return !isAwake;
     }
 }
