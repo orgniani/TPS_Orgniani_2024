@@ -2186,9 +2186,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   starterAssetsInputs: {fileID: 2079897985}
-  gunController: {fileID: 2079897975}
   fireExtinguisherController: {fileID: 2079897993}
+  shooterController: {fileID: 2079897975}
   handController: {fileID: 2079897992}
+  activeAttackSetter: {fileID: 2079898020}
   gun: {fileID: 1140924553}
   fireExtinguisher: {fileID: 1486929416}
   swapSound: {fileID: 8300000, guid: d46323e22e74e46baa241cbf48c85671, type: 3}
@@ -2939,6 +2940,10 @@ PrefabInstance:
     - target: {fileID: 1369031296425274, guid: 22a3fd8d3e59a1149bdcd775c0e87241, type: 3}
       propertyPath: m_Layer
       value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 1369031296425274, guid: 22a3fd8d3e59a1149bdcd775c0e87241, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4252784401376168, guid: 22a3fd8d3e59a1149bdcd775c0e87241, type: 3}
       propertyPath: m_RootOrder
@@ -9523,7 +9528,11 @@ PrefabInstance:
         type: 3}
       insertIndex: 0
       addedObject: {fileID: 236322956}
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 3474909060761105495, guid: 6aa240baa69830248bf69be300ed65c3,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1326844915}
   m_SourcePrefab: {fileID: 100100000, guid: 6aa240baa69830248bf69be300ed65c3, type: 3}
 --- !u!1001 &646769828
 PrefabInstance:
@@ -9674,6 +9683,12 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4548539680920072, guid: 6fc2010b5899cfd488a0ddf205679e2b,
     type: 3}
   m_PrefabInstance: {fileID: 648900220}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &655715258 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3474909060761105495, guid: 6aa240baa69830248bf69be300ed65c3,
+    type: 3}
+  m_PrefabInstance: {fileID: 646437587}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &660838533
 PrefabInstance:
@@ -11260,11 +11275,6 @@ MonoBehaviour:
   flammables: []
   winGameSoundEffect: {fileID: 697553586}
   loseGameSoundEffect: {fileID: 697553585}
-  gameOverScreen: {fileID: 2091283290295934702}
-  levelCompletedScreen: {fileID: 104294591}
-  waitForLoseScreen: 3
-  timeCounter: {fileID: 697553589}
-  gameOverText: {fileID: 573295541}
   flammablesTotal: 0
 --- !u!4 &697553588
 Transform:
@@ -19635,6 +19645,24 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 646437587}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1326844915
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 655715258}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 796a446e8c269084595abc4d868d3e06, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameManager: {fileID: 697553587}
+  gameOverScreen: {fileID: 2091283290295934702}
+  levelCompletedScreen: {fileID: 104294591}
+  waitForLoseScreen: 3
+  timeCounter: {fileID: 697553589}
+  gameOverText: {fileID: 573295541}
 --- !u!4 &1329073901 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3015028309780796019, guid: 2c9b81d4632ff3641991a6f05ec02632,
@@ -20305,6 +20333,10 @@ PrefabInstance:
     - target: {fileID: 1369031296425274, guid: 22a3fd8d3e59a1149bdcd775c0e87241, type: 3}
       propertyPath: m_Layer
       value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 1369031296425274, guid: 22a3fd8d3e59a1149bdcd775c0e87241, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4252784401376168, guid: 22a3fd8d3e59a1149bdcd775c0e87241, type: 3}
       propertyPath: m_RootOrder
@@ -28588,6 +28620,11 @@ PrefabInstance:
       objectReference: {fileID: 1012404753}
     - target: {fileID: 2310314421587181713, guid: 2c9b81d4632ff3641991a6f05ec02632,
         type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2310314421587181713, guid: 2c9b81d4632ff3641991a6f05ec02632,
+        type: 3}
       propertyPath: debugTransform
       value: 
       objectReference: {fileID: 1807392578}
@@ -28722,6 +28759,11 @@ PrefabInstance:
       value: SecondHandGrabGun
       objectReference: {fileID: 0}
     - target: {fileID: 5405937007516689981, guid: 2c9b81d4632ff3641991a6f05ec02632,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6094253154538429244, guid: 2c9b81d4632ff3641991a6f05ec02632,
         type: 3}
       propertyPath: m_Enabled
       value: 1
@@ -28880,6 +28922,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 2079898006}
+    - targetCorrespondingSourceObject: {fileID: 4193631166918686573, guid: 2c9b81d4632ff3641991a6f05ec02632,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2079898020}
   m_SourcePrefab: {fileID: 100100000, guid: 2c9b81d4632ff3641991a6f05ec02632, type: 3}
 --- !u!4 &2079897970 stripped
 Transform:
@@ -28900,7 +28946,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 2079897969}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 167527242}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 449045bab120dc346894925ed3540c61, type: 3}
   m_Name: 
@@ -28948,7 +28994,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 2079897969}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 167527242}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7dce25875389d0c4fa82ee5589769377, type: 3}
   m_Name: 
@@ -29019,6 +29065,18 @@ Animator:
     type: 3}
   m_PrefabInstance: {fileID: 2079897969}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2079898020
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 167527242}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ca47784084e04c44ac8aae8a0f24a52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &2093274053 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 9014108537977547421, guid: 2c9b81d4632ff3641991a6f05ec02632,
@@ -31644,6 +31702,10 @@ PrefabInstance:
     - target: {fileID: 1369031296425274, guid: 22a3fd8d3e59a1149bdcd775c0e87241, type: 3}
       propertyPath: m_Layer
       value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 1369031296425274, guid: 22a3fd8d3e59a1149bdcd775c0e87241, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4252784401376168, guid: 22a3fd8d3e59a1149bdcd775c0e87241, type: 3}
       propertyPath: m_RootOrder

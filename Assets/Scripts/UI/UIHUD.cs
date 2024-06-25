@@ -87,7 +87,7 @@ public class UIHUD : MonoBehaviour
     {
         if (!gunSight) return;
 
-        if(!shootController.enabled || !starterAssetInputs.aim)
+        if(shootController.GetActiveWeapon() != ActiveAttackSetter.ActiveWeapon.GUN || !starterAssetInputs.aim)
         {
             gunSight.gameObject.SetActive(false);
         }

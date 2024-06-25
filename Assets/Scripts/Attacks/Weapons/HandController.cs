@@ -1,6 +1,5 @@
 using StarterAssets;
 using System;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -81,8 +80,6 @@ public class HandController : AttackController
 
                 if (enemyAgent != null)
                 {
-                    Debug.Log("ENEMY IS BEING DRAGGED!");
-
                     enemyAgent.isStopped = false;
                     enemyAgent.stoppingDistance = 1;
                     enemyAgent.SetDestination(transform.position);

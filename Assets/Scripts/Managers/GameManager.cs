@@ -1,7 +1,5 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -17,18 +15,13 @@ public class GameManager : MonoBehaviour
     [SerializeField] private AudioSource winGameSoundEffect;
     [SerializeField] private AudioSource loseGameSoundEffect;
 
-    [Header("Screens")]
-    [SerializeField] private GameObject gameOverScreen;
-    [SerializeField] private GameObject levelCompletedScreen;
-    [SerializeField] private float waitForLoseScreen = 3f;
-
-    [Header("Text")]
-    [SerializeField] private UITimeCounter timeCounter;
-    [SerializeField] private TextMeshProUGUI gameOverText;
-
     public int flammablesTotal;
 
     public event Action onNewDeadTree = delegate { };
+
+    public enum GameEndedReason { WIN = 0, PLAYER_KILLED, FOREST_KILLED }
+
+    public event Action<GameEndedReason> onLevelEnded;
 
     private void OnEnable()
     {
@@ -58,7 +51,8 @@ public class GameManager : MonoBehaviour
 
         if (enemies.Count == 0)
         {
-            StartCoroutine(StopGameAndOpenScreens(levelCompletedScreen, winGameSoundEffect, 0f));
+            onLevelEnded?.Invoke(GameEndedReason.WIN);
+            winGameSoundEffect.Play();
         }
     }
 
@@ -69,8 +63,8 @@ public class GameManager : MonoBehaviour
 
         if (flammables.Count == 0)
         {
-            StartCoroutine(StopGameAndOpenScreens(gameOverScreen, loseGameSoundEffect, 0f));
-            gameOverText.text = "THE FOREST WAS DESTROYED!";
+            loseGameSoundEffect.Play();
+            onLevelEnded?.Invoke(GameEndedReason.FOREST_KILLED);
         }
     }
 
@@ -90,20 +84,7 @@ public class GameManager : MonoBehaviour
 
     private void LoseGame()
     {
-        StartCoroutine(StopGameAndOpenScreens(gameOverScreen, loseGameSoundEffect, waitForLoseScreen));
-        gameOverText.text = "YOU DIED!";
-    }
-
-    private IEnumerator StopGameAndOpenScreens(GameObject screen, AudioSource soundEffect, float waitForScreen)
-    {
-        Cursor.lockState = CursorLockMode.None;
-
-        soundEffect.Play();
-        timeCounter.StopCounting();
-
-        yield return new WaitForSeconds(waitForScreen);
-
-        screen.SetActive(true);
-        enabled = false;
+        loseGameSoundEffect.Play();
+        onLevelEnded?.Invoke(GameEndedReason.PLAYER_KILLED);
     }
 }

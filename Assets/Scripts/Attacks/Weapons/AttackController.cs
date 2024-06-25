@@ -2,6 +2,8 @@ using Cinemachine;
 using StarterAssets;
 using UnityEngine;
 using UnityEngine.Animations.Rigging;
+using static ActiveAttackSetter;
+using static AttackSwapController;
 
 public class AttackController : MonoBehaviour
 {
@@ -30,6 +32,8 @@ public class AttackController : MonoBehaviour
 
     private Vector3 mouseWorldPosition;
     private float aimRigWeight;
+
+    protected ActiveWeapon activeWeapon;
 
     private void Awake()
     {
@@ -115,5 +119,15 @@ public class AttackController : MonoBehaviour
         animIDExtinguisher = Animator.StringToHash("Extinguisher");
         animIDGun = Animator.StringToHash("Gun");
         animIDDrag = Animator.StringToHash("Drag");
+    }
+
+    public void SetActiveWeapon(ActiveWeapon currentActiveWeapon)
+    {
+        activeWeapon = currentActiveWeapon;
+    }
+
+    public ActiveWeapon GetActiveWeapon()
+    {
+        return activeWeapon;
     }
 }

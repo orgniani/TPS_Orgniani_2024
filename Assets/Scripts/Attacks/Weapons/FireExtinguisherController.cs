@@ -1,5 +1,5 @@
-﻿using StarterAssets;
-using UnityEngine;
+﻿using UnityEngine;
+using static AttackSwapController;
 
 public class FireExtinguisherController : AttackController
 {
@@ -12,7 +12,7 @@ public class FireExtinguisherController : AttackController
     {
         if (Cursor.lockState != CursorLockMode.Locked) return;
 
-        if (!enabled) return;
+        if (activeWeapon != ActiveAttackSetter.ActiveWeapon.EXTINGUISHER) return;
 
         if (hasAnimator)
         {

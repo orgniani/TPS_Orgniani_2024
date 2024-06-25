@@ -8,9 +8,11 @@ public class AttackSwapController : MonoBehaviour
     [Header("Controllers")]
     [SerializeField] private StarterAssetsInputs starterAssetsInputs;
 
-    [SerializeField] private ShooterController gunController;
     [SerializeField] private FireExtinguisherController fireExtinguisherController;
+    [SerializeField] private ShooterController shooterController;
     [SerializeField] private HandController handController;
+
+    [SerializeField] private ActiveAttackSetter activeAttackSetter;
 
     [Header("Weapon objects")]
     [SerializeField] private GameObject gun;
@@ -26,6 +28,7 @@ public class AttackSwapController : MonoBehaviour
 
     public bool AquiredExtinguisher { get; set; }
     public bool AquiredGun { get; set; }
+
 
     private void Awake()
     {
@@ -65,8 +68,8 @@ public class AttackSwapController : MonoBehaviour
         starterAssetsInputs.aim = false;
 
         fireExtinguisherController.HandlePlayerAiming();
+        shooterController.HandlePlayerAiming();
         handController.HandlePlayerAiming();
-        gunController.HandlePlayerAiming();
     }
 
     /// <summary>
@@ -96,7 +99,8 @@ public class AttackSwapController : MonoBehaviour
 
         if (gun.activeSelf)
         {
-            gunController.enabled = false;
+            activeAttackSetter.HandleChangeActiveWeapon(ActiveAttackSetter.ActiveWeapon.EXTINGUISHER);
+            //gunController.enabled = false;
             StartCoroutine(AnimateExitSwap(gun));
         }
 
@@ -121,7 +125,9 @@ public class AttackSwapController : MonoBehaviour
 
         if (fireExtinguisher.activeSelf)
         {
-            fireExtinguisherController.enabled = false;
+            activeAttackSetter.HandleChangeActiveWeapon(ActiveAttackSetter.ActiveWeapon.GUN);
+
+            //fireExtinguisherController.enabled = false;
             StartCoroutine(AnimateExitSwap(fireExtinguisher));
         }
 
@@ -144,15 +150,17 @@ public class AttackSwapController : MonoBehaviour
 
         if (gun.activeSelf)
         {
-            gunController.enabled = false;
+            //gunController.enabled = false;
             StartCoroutine(AnimateExitSwap(gun));
         }
 
         else
         {
-            fireExtinguisherController.enabled = false;
+            //fireExtinguisherController.enabled = false;
             StartCoroutine(AnimateExitSwap(fireExtinguisher));
         }
+
+        activeAttackSetter.HandleChangeActiveWeapon(ActiveAttackSetter.ActiveWeapon.HANDS);
 
         handController.CanDrag = true;
     }
@@ -176,12 +184,16 @@ public class AttackSwapController : MonoBehaviour
 
         if (weapon == gun)
         {
-            gunController.enabled = true;
+            activeAttackSetter.HandleChangeActiveWeapon(ActiveAttackSetter.ActiveWeapon.GUN);
+
+            //gunController.enabled = true;
         }
 
         else
         {
-            fireExtinguisherController.enabled = true;
+            activeAttackSetter.HandleChangeActiveWeapon(ActiveAttackSetter.ActiveWeapon.EXTINGUISHER);
+
+            //fireExtinguisherController.enabled = true;
         }
 
         canSwitch = true;
