@@ -1,16 +1,11 @@
 using System;
 using System.Collections;
 using UnityEngine;
-using UnityEngine.AI;
 
-public class BombEnemy : MonoBehaviour
+public class BombEnemy : Enemy
 {
     [Header("References")]
     [SerializeField] private ParticleSystem explosionPrefab;
-    [SerializeField] private HealthController HP;
-
-    [SerializeField] private Transform target;
-    [SerializeField] private LayerMask targetLayer;
 
     [Header("Parameters")]
     [SerializeField] private float explosionForce = 1000f;
@@ -19,40 +14,34 @@ public class BombEnemy : MonoBehaviour
     [SerializeField] private float countdownDuration = 3f;
 
     [Header("Audio")]
-    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioSource explotionSound;
     [SerializeField] private AudioSource countingDownSound;
 
-    private NavMeshAgent agent;
     private bool isCountingDown = false;
 
     public event Action onCloseToPlayer = delegate { };
     public static event Action onExplode;
 
-    private void Start()
-    {
-        agent = GetComponent<NavMeshAgent>();
-    }
-
-    private void OnEnable()
+    protected override void OnEnable()
     {
         HP.onDead += HandleExplosion;
     }
 
-    private void OnDisable()
+    protected override void OnDisable()
     {
         HP.onDead -= HandleExplosion;
     }
 
     private void Update()
     {
-        agent.SetDestination(target.position);
+        ChaseTarget();
         CheckIfPlayerClose();
     }
 
     private void HandleExplosion()
     {
         onExplode?.Invoke();
-        audioSource.Play();
+        explotionSound.Play();
         Instantiate(explosionPrefab, transform.position, transform.rotation);
 
         Collider[] colliders = Physics.OverlapSphere(transform.position, explosionRadius);
@@ -74,13 +63,13 @@ public class BombEnemy : MonoBehaviour
 
             if (targetHP != null && hit.CompareTag("Player")) targetHP.ReceiveDamage(explosionDamage, hit.transform.position);
         }
+
+        HandleGetTrapped();
     }
 
     private void CheckIfPlayerClose()
     {
-        bool playerIsCloseEnough = Physics.CheckSphere(transform.position, explosionRadius, targetLayer);
-
-        if (playerIsCloseEnough && !isCountingDown)
+        if (PlayerIsTooClose() && !isCountingDown)
         {
             countingDownSound.Play();
             onCloseToPlayer?.Invoke();
@@ -103,11 +92,5 @@ public class BombEnemy : MonoBehaviour
 
         countingDownSound.Stop();
         HP.ReceiveDamage(HP.Health, Vector3.zero);
-    }
-
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(transform.position, explosionRadius);
     }
 }

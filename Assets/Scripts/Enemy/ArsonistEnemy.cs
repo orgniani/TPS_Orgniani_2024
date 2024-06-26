@@ -1,45 +1,33 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.AI;
 
-public class ArsonistEnemy : MonoBehaviour
+public class ArsonistEnemy : Enemy
 {
-    [Header("References")]
-    [SerializeField] private List<Transform> patrolPoints;
-
     [Header("Parameters")]
     [SerializeField] private float maxDistanceToTarget = 5f;
 
     [Header("Audio")]
     [SerializeField] private AudioClip lightOnFireSound;
 
-    private AudioSource audioSource;
-
-    private NavMeshAgent agent;
-
     private bool shouldLightFire = true;
-    private int currentPatrolPointIndex = 0;
 
     public event Action onLightFire = delegate { };
 
-    private void Start()
+    protected override void OnEnable()
     {
-        agent = GetComponent<NavMeshAgent>();
-        audioSource = GetComponent<AudioSource>();
-    }
+        base.OnEnable();
 
-    private void OnEnable()
-    {
         FlammableObject.onSpawn += LightOnFireTargets;
         FlammableObject.onExtinguished += LightOnFireTargets;
         FlammableObject.onFire += RemoveFromLightOnFire;
         FlammableObject.onDeath += RemoveFromLightOnFire;
     }
 
-    private void OnDisable()
+    protected override void OnDisable()
     {
+        base.OnDisable();
+
         foreach (Transform point in patrolPoints)
         {
             FlammableObject.onSpawn -= LightOnFireTargets;
@@ -56,17 +44,20 @@ public class ArsonistEnemy : MonoBehaviour
 
     private void LightOnFireTargets(FlammableObject obj)
     {
-        if (obj == null) return;
-        if (!obj.gameObject.activeSelf) return;
+        if (obj == null || !obj.gameObject.activeSelf) return;
+        if (patrolPoints.Contains(obj.transform)) return;
+
         patrolPoints.Add(obj.transform);
     }
 
     private void Update()
     {
+        if (!isAwake) return;
+
         Patrol();
     }
 
-    private void Patrol()
+    protected override void Patrol()
     {
         if (!shouldLightFire) return;
 
@@ -75,8 +66,6 @@ public class ArsonistEnemy : MonoBehaviour
             agent.isStopped = true;
             return;
         }
-
-        agent.isStopped = false;
 
         Vector3 nextPoint = patrolPoints[currentPatrolPointIndex].transform.position;
         float distanceToCurrentTarget = Vector3.Distance(transform.position, patrolPoints[currentPatrolPointIndex].position);
@@ -92,8 +81,9 @@ public class ArsonistEnemy : MonoBehaviour
 
             SetNextPatrolPoint(distanceToCurrentTarget);
         }
-
-        agent.SetDestination(nextPoint);
+        
+        else
+            agent.SetDestination(nextPoint);
     }
 
     private IEnumerator StopAndLight()

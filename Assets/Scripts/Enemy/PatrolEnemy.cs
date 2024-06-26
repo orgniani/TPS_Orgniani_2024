@@ -1,34 +1,25 @@
 using UnityEngine;
-using UnityEngine.AI;
 
-public class PatrolEnemy : MonoBehaviour
+public class PatrolEnemy : Enemy
 {
     [Header("References")]
     [SerializeField] private MeleeAttack attack;
-
-    [SerializeField] private Transform[] patrolPoints;
-    [SerializeField] private Transform target;
-
-    [SerializeField] private LayerMask targetLayer;
 
     [Header("Parameters")]
     [SerializeField] private float visionRadius = 5f;
     [SerializeField] private float offset = 0.5f;
 
-    [SerializeField] private float proximityRadius = 5f;
     [SerializeField] private float fieldOfViewAngle = 90f;
 
-    private NavMeshAgent agent;
     private HealthController targetHP;
 
-    private int currentPatrolPointIndex = 0;
 
     private enum MovementState { PATROL = 0, FOLLOWTARGET }
     private MovementState movementState;
 
-    private void Start()
+    protected override void Awake()
     {
-        agent = GetComponent<NavMeshAgent>();
+        base.Awake();
         targetHP = target.gameObject.GetComponent<HealthController>();
 
         movementState = MovementState.PATROL;
@@ -36,6 +27,8 @@ public class PatrolEnemy : MonoBehaviour
 
     private void Update()
     {
+        if (!isAwake) return;
+
         CheckIfPlayerSpotted();
 
         switch (movementState)
@@ -59,15 +52,13 @@ public class PatrolEnemy : MonoBehaviour
     {
         agent.isStopped = false;
 
-        bool playerIsTooClose = Physics.CheckSphere(transform.position, proximityRadius, targetLayer);
-
         Vector3 spherePosition = transform.position + transform.forward * offset;
         bool playerIsInVisionRange = Physics.CheckSphere(spherePosition, visionRadius, targetLayer);
 
         Vector3 directionToPlayer = target.position - transform.position;
         float angleToPlayer = Vector3.Angle(transform.forward, directionToPlayer);
 
-        if (playerIsTooClose)
+        if (PlayerIsTooClose())
         {
             movementState = MovementState.FOLLOWTARGET;
             return;
@@ -96,18 +87,6 @@ public class PatrolEnemy : MonoBehaviour
         {
             movementState = MovementState.PATROL;
         }
-    }
-
-    private void Patrol()
-    {
-        if (agent.remainingDistance <= agent.stoppingDistance)
-            SetNextPatrolPoint();
-    }
-
-    private void SetNextPatrolPoint()
-    {
-        agent.SetDestination(patrolPoints[currentPatrolPointIndex].position);
-        currentPatrolPointIndex = (currentPatrolPointIndex + 1) % patrolPoints.Length;
     }
 
     private void OnDrawGizmos()

@@ -3,7 +3,6 @@ using StarterAssets;
 using UnityEngine;
 using UnityEngine.Animations.Rigging;
 using static ActiveAttackSetter;
-using static AttackSwapController;
 
 public class AttackController : MonoBehaviour
 {
