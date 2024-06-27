@@ -4,15 +4,17 @@ using UnityEngine;
 public class DisableScriptsOnDeath : MonoBehaviour
 {
     [Header("References")]
+    [Header("Player Collider")]
+    [SerializeField] private Collider playerCollider;
+
     [Header("Enemies")]
     [SerializeField] private ArsonistEnemy arsonist;
     [SerializeField] private PatrolEnemy patrol;
 
     private StarterAssetsInputs starterAssetsInputs;
+    private ThirdPersonController thirdPersonController;
     private HealthController playerHP;
-    private ThirdPersonController TPS;
 
-    private ShooterController gun;
     private HandController hands;
     private FireExtinguisherController fireExtinguisher;
 
@@ -21,10 +23,9 @@ public class DisableScriptsOnDeath : MonoBehaviour
     private void Awake()
     {
         starterAssetsInputs = GetComponent<StarterAssetsInputs>();
+        thirdPersonController = GetComponent<ThirdPersonController>();
         playerHP = GetComponent<HealthController>();
-        TPS = GetComponent<ThirdPersonController>();
 
-        gun = GetComponent<ShooterController>();
         hands = GetComponent<HandController>();
         fireExtinguisher = GetComponent<FireExtinguisherController>();
 
@@ -44,18 +45,19 @@ public class DisableScriptsOnDeath : MonoBehaviour
     private void HandlePlayerDeath()
     {
         playerHP.enabled = false;
-        TPS.enabled = false;
+        thirdPersonController.enabled = false;
 
         starterAssetsInputs.aim = false;
         starterAssetsInputs.hands = true;
 
-        gun.enabled = false;
         hands.enabled = false;
 
         fireExtinguisher.StopShoot();
         fireExtinguisher.enabled = false;
 
         CC.enabled = false;
+
+        playerCollider.enabled = false;
 
         HandleStopEnemies();
     }

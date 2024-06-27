@@ -2,6 +2,7 @@ using StarterAssets;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class MenuManager : MonoBehaviour
 {
@@ -10,12 +11,16 @@ public class MenuManager : MonoBehaviour
     [SerializeField] private GameObject pauseScreen;
     [SerializeField] private Slider loadBar;
     [SerializeField] private HealthController playerHP;
+    [SerializeField] private EventSystem eventSystem;
 
     [SerializeField] private StarterAssetsInputs starterAssetInputs;
 
     [Header("Screen Animation Parameters")]
     [SerializeField] private string animatorParameterClose = "close";
     [SerializeField] private float screenAnimationDuration = 1.5f;
+
+    [Header("Main Button")]
+    [SerializeField] private GameObject continueGameButton;
 
     [Header("Audio")]
     [SerializeField] private AudioSource openScreenSound;
@@ -88,6 +93,8 @@ public class MenuManager : MonoBehaviour
         else
         {
             Cursor.lockState = CursorLockMode.None;
+            eventSystem.SetSelectedGameObject(continueGameButton);
+
             pauseScreen.SetActive(true);
 
             StartCoroutine(PlayAndPauseGame());

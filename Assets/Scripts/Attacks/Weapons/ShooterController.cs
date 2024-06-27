@@ -35,8 +35,6 @@ public class ShooterController : AttackController
 
     private void Update()
     {
-        if (Cursor.lockState != CursorLockMode.Locked) return;
-
         if (activeWeapon != ActiveAttackSetter.ActiveWeapon.GUN) return;
 
         if (hasAnimator)

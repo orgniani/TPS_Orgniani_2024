@@ -10,8 +10,6 @@ public class FireExtinguisherController : AttackController
 
     private void Update()
     {
-        if (Cursor.lockState != CursorLockMode.Locked) return;
-
         if (activeWeapon != ActiveAttackSetter.ActiveWeapon.EXTINGUISHER) return;
 
         if (hasAnimator)

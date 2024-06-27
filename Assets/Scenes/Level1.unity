@@ -3174,9 +3174,11 @@ MonoBehaviour:
   pauseScreen: {fileID: 396960262}
   loadBar: {fileID: 1512860106}
   playerHP: {fileID: 2079897981}
+  eventSystem: {fileID: 803141041}
   starterAssetInputs: {fileID: 2079897985}
   animatorParameterClose: close
   screenAnimationDuration: 1.5
+  continueGameButton: {fileID: 923408344}
   openScreenSound: {fileID: 236166783}
 --- !u!4 &236166782
 Transform:
@@ -4338,7 +4340,7 @@ MonoBehaviour:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_SelectedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
@@ -4453,6 +4455,22 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
+  - eventID: 15
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 318996824}
+          m_TargetAssemblyTypeName: UIButton, Assembly-CSharp
+          m_MethodName: ClickSound
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!114 &318996824
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4465,6 +4483,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e23c91751fbdc44e8460d4f3d26f0fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  eventSystem: {fileID: 0}
   audioSource: {fileID: 318996825}
   hoverButton: {fileID: 8300000, guid: 19f89c6e740e7447f9e12a8310d3e973, type: 3}
   clickButton: {fileID: 8300000, guid: ffb159a21c8a04135a5616979c828fab, type: 3}
@@ -8563,7 +8582,7 @@ MonoBehaviour:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_SelectedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
@@ -8678,6 +8697,22 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
+  - eventID: 15
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 633016743}
+          m_TargetAssemblyTypeName: UIButton, Assembly-CSharp
+          m_MethodName: ClickSound
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!114 &633016743
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8690,6 +8725,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e23c91751fbdc44e8460d4f3d26f0fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  eventSystem: {fileID: 0}
   audioSource: {fileID: 633016744}
   hoverButton: {fileID: 8300000, guid: 19f89c6e740e7447f9e12a8310d3e973, type: 3}
   clickButton: {fileID: 8300000, guid: ffb159a21c8a04135a5616979c828fab, type: 3}
@@ -12614,7 +12650,7 @@ MonoBehaviour:
     type: 3}
   m_PointAction: {fileID: -1654692200621890270, guid: ca9f5fa95ffab41fb9a615ab714db018,
     type: 3}
-  m_MoveAction: {fileID: -8784545083839296357, guid: ca9f5fa95ffab41fb9a615ab714db018,
+  m_MoveAction: {fileID: -1680190386980627800, guid: ca9f5fa95ffab41fb9a615ab714db018,
     type: 3}
   m_SubmitAction: {fileID: 392368643174621059, guid: ca9f5fa95ffab41fb9a615ab714db018,
     type: 3}
@@ -12632,7 +12668,7 @@ MonoBehaviour:
     type: 3}
   m_TrackedDeviceOrientationAction: {fileID: 7970375526676320489, guid: ca9f5fa95ffab41fb9a615ab714db018,
     type: 3}
-  m_DeselectOnBackgroundClick: 1
+  m_DeselectOnBackgroundClick: 0
   m_PointerBehavior: 0
   m_CursorLockBehavior: 0
 --- !u!114 &803141041
@@ -12647,7 +12683,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76c392e42b5098c458856cdf6ecaaaa1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_FirstSelected: {fileID: 0}
+  m_FirstSelected: {fileID: 923408344}
   m_sendNavigationEvents: 1
   m_DragThreshold: 10
 --- !u!4 &803141042
@@ -14182,7 +14218,7 @@ MonoBehaviour:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_SelectedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
@@ -14281,6 +14317,22 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
+  - eventID: 15
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 923408350}
+          m_TargetAssemblyTypeName: UIButton, Assembly-CSharp
+          m_MethodName: HoverSound
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!114 &923408350
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14293,6 +14345,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e23c91751fbdc44e8460d4f3d26f0fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  eventSystem: {fileID: 0}
   audioSource: {fileID: 923408351}
   hoverButton: {fileID: 8300000, guid: 19f89c6e740e7447f9e12a8310d3e973, type: 3}
   clickButton: {fileID: 8300000, guid: ffb159a21c8a04135a5616979c828fab, type: 3}
@@ -17120,7 +17173,7 @@ MonoBehaviour:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_SelectedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
@@ -17235,6 +17288,22 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
+  - eventID: 15
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1166859422}
+          m_TargetAssemblyTypeName: UIButton, Assembly-CSharp
+          m_MethodName: ClickSound
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!114 &1166859422
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17247,6 +17316,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e23c91751fbdc44e8460d4f3d26f0fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  eventSystem: {fileID: 0}
   audioSource: {fileID: 1166859423}
   hoverButton: {fileID: 8300000, guid: 19f89c6e740e7447f9e12a8310d3e973, type: 3}
   clickButton: {fileID: 8300000, guid: ffb159a21c8a04135a5616979c828fab, type: 3}
@@ -17863,7 +17933,7 @@ MonoBehaviour:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_SelectedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
@@ -17978,6 +18048,22 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
+  - eventID: 15
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1195397533}
+          m_TargetAssemblyTypeName: UIButton, Assembly-CSharp
+          m_MethodName: ClickSound
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!114 &1195397533
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17990,6 +18076,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e23c91751fbdc44e8460d4f3d26f0fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  eventSystem: {fileID: 0}
   audioSource: {fileID: 1195397534}
   hoverButton: {fileID: 8300000, guid: 19f89c6e740e7447f9e12a8310d3e973, type: 3}
   clickButton: {fileID: 8300000, guid: ffb159a21c8a04135a5616979c828fab, type: 3}
@@ -19610,11 +19697,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameManager: {fileID: 697553587}
+  eventSystem: {fileID: 803141041}
   gameOverScreen: {fileID: 2091283290295934702}
   levelCompletedScreen: {fileID: 104294591}
   waitForLoseScreen: 3
   timeCounter: {fileID: 697553589}
   gameOverText: {fileID: 573295541}
+  winScreenMainMenuButton: {fileID: 633016737}
+  loseScreenMainMenuButton: {fileID: 1444911741647084340}
 --- !u!4 &1329073901 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3015028309780796019, guid: 2c9b81d4632ff3641991a6f05ec02632,
@@ -28104,7 +28194,7 @@ MonoBehaviour:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_SelectedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
@@ -28219,6 +28309,22 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
+  - eventID: 15
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 2074026134}
+          m_TargetAssemblyTypeName: UIButton, Assembly-CSharp
+          m_MethodName: ClickSound
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!114 &2074026134
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -28231,6 +28337,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e23c91751fbdc44e8460d4f3d26f0fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  eventSystem: {fileID: 0}
   audioSource: {fileID: 2074026135}
   hoverButton: {fileID: 8300000, guid: 19f89c6e740e7447f9e12a8310d3e973, type: 3}
   clickButton: {fileID: 8300000, guid: ffb159a21c8a04135a5616979c828fab, type: 3}
@@ -29045,8 +29152,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8211287d3fc3b864e8963088b9154cf3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerCollider: {fileID: 2080575275}
   arsonist: {fileID: 4844080926198985261}
   patrol: {fileID: 354842746}
+--- !u!136 &2080575275 stripped
+CapsuleCollider:
+  m_CorrespondingSourceObject: {fileID: 5191582219252785028, guid: 2c9b81d4632ff3641991a6f05ec02632,
+    type: 3}
+  m_PrefabInstance: {fileID: 2079897969}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &2093274053 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 9014108537977547421, guid: 2c9b81d4632ff3641991a6f05ec02632,
@@ -31087,7 +31201,7 @@ MonoBehaviour:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_SelectedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
@@ -31233,7 +31347,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 3
+    m_Mode: 2
     m_WrapAround: 0
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
@@ -31244,7 +31358,7 @@ MonoBehaviour:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_SelectedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
@@ -32195,6 +32309,22 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
+  - eventID: 15
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 9020699349989066180}
+          m_TargetAssemblyTypeName: UIButton, Assembly-CSharp
+          m_MethodName: ClickSound
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!114 &9020699349989066180
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -32207,6 +32337,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e23c91751fbdc44e8460d4f3d26f0fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  eventSystem: {fileID: 0}
   audioSource: {fileID: 9020699349989066181}
   hoverButton: {fileID: 8300000, guid: 19f89c6e740e7447f9e12a8310d3e973, type: 3}
   clickButton: {fileID: 8300000, guid: ffb159a21c8a04135a5616979c828fab, type: 3}

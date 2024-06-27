@@ -495,12 +495,6 @@ namespace StarterAssets
             {
                 _animator.SetTrigger(_animIDDeath);
             }
-
-            _input.aim = false;
-
-            playerCollider.enabled = false;
-            _playerInput.enabled = false;
-            enabled = false;
         }
 
         private void OnFootstep(AnimationEvent animationEvent)

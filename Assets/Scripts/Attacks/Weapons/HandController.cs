@@ -38,8 +38,6 @@ public class HandController : AttackController
 
     private void Update()
     {
-        if (Cursor.lockState != CursorLockMode.Locked) return;
-
         if (!CanDrag)
         {
             StopDragging();

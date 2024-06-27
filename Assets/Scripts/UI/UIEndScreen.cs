@@ -1,11 +1,13 @@
 using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class UIEndScreen : MonoBehaviour
 {
+    [Header("References")]
     [SerializeField] private GameManager gameManager;
+    [SerializeField] private EventSystem eventSystem;
 
     [Header("Screens")]
     [SerializeField] private GameObject gameOverScreen;
@@ -15,6 +17,10 @@ public class UIEndScreen : MonoBehaviour
     [Header("Text")]
     [SerializeField] private UITimeCounter timeCounter;
     [SerializeField] private TextMeshProUGUI gameOverText;
+
+    [Header("Buttons")]
+    [SerializeField] private GameObject winScreenMainMenuButton;
+    [SerializeField] private GameObject loseScreenMainMenuButton;
 
     private void OnEnable()
     {
@@ -31,26 +37,28 @@ public class UIEndScreen : MonoBehaviour
         switch(gameEndedReason)
         {
             case GameManager.GameEndedReason.WIN:
-                StartCoroutine(StopGameAndOpenScreens(levelCompletedScreen, 0f));
+                StartCoroutine(StopGameAndOpenScreens(levelCompletedScreen, 0f, winScreenMainMenuButton));
                 break;
             case GameManager.GameEndedReason.FOREST_KILLED:
-                StartCoroutine(StopGameAndOpenScreens(gameOverScreen, 0f));
+                StartCoroutine(StopGameAndOpenScreens(gameOverScreen, 0f, loseScreenMainMenuButton));
                 gameOverText.text = "THE FOREST WAS DESTROYED!";
                 break;
             case GameManager.GameEndedReason.PLAYER_KILLED:
-                StartCoroutine(StopGameAndOpenScreens(gameOverScreen, waitForLoseScreen));
+                StartCoroutine(StopGameAndOpenScreens(gameOverScreen, waitForLoseScreen, loseScreenMainMenuButton));
                 gameOverText.text = "YOU DIED!";
                 break;
         }
     }
 
-    private IEnumerator StopGameAndOpenScreens(GameObject screen, float waitForScreen)
+    private IEnumerator StopGameAndOpenScreens(GameObject screen, float waitForScreen, GameObject button)
     {
         Cursor.lockState = CursorLockMode.None;
 
         timeCounter.StopCounting();
 
         yield return new WaitForSeconds(waitForScreen);
+
+        eventSystem.SetSelectedGameObject(button);
 
         screen.SetActive(true);
         enabled = false;
