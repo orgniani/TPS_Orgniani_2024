@@ -16238,6 +16238,8 @@ PlayableDirector:
     value: {fileID: 99129461}
   - key: {fileID: -4020992575506811680, guid: 104221a860652cf419a7ea5c840b33a3, type: 2}
     value: {fileID: 1000692787}
+  - key: {fileID: -5905491877789817109, guid: 104221a860652cf419a7ea5c840b33a3, type: 2}
+    value: {fileID: 0}
   m_ExposedReferences:
     m_References: []
 --- !u!4 &1219690934
@@ -26374,6 +26376,86 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 2011065881215060898, guid: 2c9b81d4632ff3641991a6f05ec02632,
+        type: 3}
+      propertyPath: PainAudioVolume
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2011065881215060898, guid: 2c9b81d4632ff3641991a6f05ec02632,
+        type: 3}
+      propertyPath: PainAudioClips.Array.size
+      value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 2011065881215060898, guid: 2c9b81d4632ff3641991a6f05ec02632,
+        type: 3}
+      propertyPath: PainAudioClips.Array.data[0]
+      value: 
+      objectReference: {fileID: 8300000, guid: 3131f7a0b99979043a0f06667e64df0c, type: 3}
+    - target: {fileID: 2011065881215060898, guid: 2c9b81d4632ff3641991a6f05ec02632,
+        type: 3}
+      propertyPath: PainAudioClips.Array.data[1]
+      value: 
+      objectReference: {fileID: 8300000, guid: 74faeb9fc857c254ab31c13cd8022cde, type: 3}
+    - target: {fileID: 2011065881215060898, guid: 2c9b81d4632ff3641991a6f05ec02632,
+        type: 3}
+      propertyPath: PainAudioClips.Array.data[2]
+      value: 
+      objectReference: {fileID: 8300000, guid: 906c342be030656489a2062ec5df086d, type: 3}
+    - target: {fileID: 2011065881215060898, guid: 2c9b81d4632ff3641991a6f05ec02632,
+        type: 3}
+      propertyPath: PainAudioClips.Array.data[3]
+      value: 
+      objectReference: {fileID: 8300000, guid: 321a4db06d7b7534b912f92e6796b2b3, type: 3}
+    - target: {fileID: 2011065881215060898, guid: 2c9b81d4632ff3641991a6f05ec02632,
+        type: 3}
+      propertyPath: PainAudioClips.Array.data[4]
+      value: 
+      objectReference: {fileID: 8300000, guid: 43453f6fb2aea1b44b9d6a0983abdf0b, type: 3}
+    - target: {fileID: 2011065881215060898, guid: 2c9b81d4632ff3641991a6f05ec02632,
+        type: 3}
+      propertyPath: PainAudioClips.Array.data[5]
+      value: 
+      objectReference: {fileID: 8300000, guid: 5f9df87a8f323ec4799fe5de329f2d09, type: 3}
+    - target: {fileID: 2011065881215060898, guid: 2c9b81d4632ff3641991a6f05ec02632,
+        type: 3}
+      propertyPath: PainAudioClips.Array.data[6]
+      value: 
+      objectReference: {fileID: 8300000, guid: c8678acd331bd334a93c25c717c929c7, type: 3}
+    - target: {fileID: 2011065881215060898, guid: 2c9b81d4632ff3641991a6f05ec02632,
+        type: 3}
+      propertyPath: PainAudioClips.Array.data[7]
+      value: 
+      objectReference: {fileID: 8300000, guid: 4779423a704b07b4f85f1c086e20a787, type: 3}
+    - target: {fileID: 2011065881215060898, guid: 2c9b81d4632ff3641991a6f05ec02632,
+        type: 3}
+      propertyPath: PainAudioClips.Array.data[8]
+      value: 
+      objectReference: {fileID: 8300000, guid: 1d0561cfeabd3e540bd6f68bdcea8340, type: 3}
+    - target: {fileID: 2011065881215060898, guid: 2c9b81d4632ff3641991a6f05ec02632,
+        type: 3}
+      propertyPath: PainAudioClips.Array.data[9]
+      value: 
+      objectReference: {fileID: 8300000, guid: 710c608dfc0fa51438c497efe68ce6a0, type: 3}
+    - target: {fileID: 2011065881215060898, guid: 2c9b81d4632ff3641991a6f05ec02632,
+        type: 3}
+      propertyPath: PainAudioClips.Array.data[10]
+      value: 
+      objectReference: {fileID: 8300000, guid: 1ea85401d3bf8bf468d07d41dd4be64f, type: 3}
+    - target: {fileID: 2011065881215060898, guid: 2c9b81d4632ff3641991a6f05ec02632,
+        type: 3}
+      propertyPath: PainAudioClips.Array.data[11]
+      value: 
+      objectReference: {fileID: 8300000, guid: a8a522b0cc4e2fe42a0c22ed17237781, type: 3}
+    - target: {fileID: 2011065881215060898, guid: 2c9b81d4632ff3641991a6f05ec02632,
+        type: 3}
+      propertyPath: PainAudioClips.Array.data[12]
+      value: 
+      objectReference: {fileID: 8300000, guid: 8e8aefe0272f13941879eee6f9a66714, type: 3}
+    - target: {fileID: 2011065881215060898, guid: 2c9b81d4632ff3641991a6f05ec02632,
+        type: 3}
+      propertyPath: PainAudioClips.Array.data[13]
+      value: 
+      objectReference: {fileID: 8300000, guid: 99a7c379af5df874cb136ab9f107397c, type: 3}
     - target: {fileID: 2050513131534206865, guid: 2c9b81d4632ff3641991a6f05ec02632,
         type: 3}
       propertyPath: m_Layer
@@ -26814,6 +26896,16 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 7824538489067950124, guid: 2c9b81d4632ff3641991a6f05ec02632,
+        type: 3}
+      propertyPath: m_WarningMessage
+      value: "\nBinding warning: Some generic clip(s) animate transforms that are
+        already bound by a Humanoid avatar. These transforms can only be changed
+        by Humanoid clips.\n\tTransform 'mixamorig:Spine1'\n\tTransform 'mixamorig:RightArm'\n\tTransform
+        'mixamorig:RightHand'\n\tTransform 'mixamorig:Hips'\n\tTransform 'mixamorig:LeftForeArm'\n\tTransform
+        'mixamorig:RightForeArm'\n\tTransform 'mixamorig:Spine'\n\tTransform 'mixamorig:LeftHand'\n\tTransform
+        'mixamorig:Spine1'\n\tTransform 'mixamorig:RightArm'\n\tand more ..."
+      objectReference: {fileID: 0}
     - target: {fileID: 7890890640017725648, guid: 2c9b81d4632ff3641991a6f05ec02632,
         type: 3}
       propertyPath: m_Layer
@@ -26853,6 +26945,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Layer
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8464576876668522468, guid: 2c9b81d4632ff3641991a6f05ec02632,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8674610009787558663, guid: 2c9b81d4632ff3641991a6f05ec02632,
         type: 3}
@@ -29304,6 +29401,26 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2404512984752480941, guid: 25c974d658089a94ea728bf26964025c,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.00000059881137
+      objectReference: {fileID: 0}
+    - target: {fileID: 2404512984752480941, guid: 25c974d658089a94ea728bf26964025c,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.0007638037
+      objectReference: {fileID: 0}
+    - target: {fileID: 2404512984752480941, guid: 25c974d658089a94ea728bf26964025c,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.06159225
+      objectReference: {fileID: 0}
+    - target: {fileID: 2404512984752480941, guid: 25c974d658089a94ea728bf26964025c,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.061592273
       objectReference: {fileID: 0}
     - target: {fileID: 4090286214136912372, guid: 25c974d658089a94ea728bf26964025c,
         type: 3}

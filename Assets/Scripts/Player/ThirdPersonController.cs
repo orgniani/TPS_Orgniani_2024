@@ -32,7 +32,9 @@ namespace StarterAssets
 
         [SerializeField] private AudioClip LandingAudioClip;
         [SerializeField] private AudioClip[] FootstepAudioClips;
+        [SerializeField] private AudioClip[] PainAudioClips;
         [Range(0, 1)] public float FootstepAudioVolume = 0.5f;
+        [Range(0, 1)] public float PainAudioVolume = 0.5f;
 
         [Space(10)]
         [Tooltip("The height the player can jump")]
@@ -475,6 +477,12 @@ namespace StarterAssets
             if (_hasAnimator)
             {
                 _animator.SetTrigger(_animIDHurt);
+            }
+
+            if (PainAudioClips.Length > 0)
+            {
+                var index = Random.Range(0, PainAudioClips.Length);
+                AudioSource.PlayClipAtPoint(PainAudioClips[index], transform.TransformPoint(_controller.center), PainAudioVolume);
             }
 
             StartCoroutine(StopMovingWhenHit());

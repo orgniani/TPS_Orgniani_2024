@@ -1695,7 +1695,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: -92.3}
-  m_SizeDelta: {x: 888.3, y: 385.08}
+  m_SizeDelta: {x: 983.28, y: 385.08}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &153547948
 MonoBehaviour:
@@ -1731,10 +1731,11 @@ MonoBehaviour:
     MUSIC                    
     mk.matheusklein
 
-    SOUND EFFECTS     B.G.M
+    SOUND EFFECTS     B.G.M, iwanplays
 
 
-    USER INTERFACE    Prinbles'
+    USER INTERFACE   
+    Prinbles'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 660389a5ae24ccd45b715d2ebc7b1367, type: 2}
   m_sharedMaterial: {fileID: 7997187975269471476, guid: 660389a5ae24ccd45b715d2ebc7b1367,
