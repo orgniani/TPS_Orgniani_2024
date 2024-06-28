@@ -1,15 +1,25 @@
 ﻿using UnityEngine;
+using UnityEngine.Animations.Rigging;
 
 public class FireExtinguisherController : AttackController
 {
     [Header("References")]
+    [SerializeField] private Rig casualHoldRig;
     [SerializeField] private ParticleSystem fireFoam;
     [SerializeField] private AudioSource extinguishSound;
 
+    private float casualHoldRigWeight;
 
     private void Update()
     {
-        if (activeWeapon != ActiveAttackSetter.ActiveWeapon.EXTINGUISHER) return;
+        casualHoldRig.weight = Mathf.Lerp(casualHoldRig.weight, casualHoldRigWeight, Time.deltaTime * 20f);
+
+        if (activeWeapon != ActiveAttackSetter.ActiveWeapon.EXTINGUISHER)
+        {
+            StopShoot();
+            casualHoldRigWeight = 0;
+            return;
+        }
 
         if (hasAnimator)
         {
@@ -17,6 +27,16 @@ public class FireExtinguisherController : AttackController
         }
 
         HandlePlayerAiming();
+
+        if(starterAssetInputs.aim)
+        {
+            casualHoldRigWeight = 0;
+        }
+
+        else
+        {
+            casualHoldRigWeight = 1;
+        }
 
         if (starterAssetInputs.shoot)
         {
