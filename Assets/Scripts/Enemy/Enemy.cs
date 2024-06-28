@@ -134,7 +134,7 @@ public class Enemy : MonoBehaviour, IDraggable
         return Physics.CheckSphere(transform.position, proximityRadius, targetLayer);
     }
 
-    private void OnDrawGizmos()
+    protected virtual void OnDrawGizmos()
     {
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(transform.position, proximityRadius);

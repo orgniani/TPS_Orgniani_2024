@@ -13,7 +13,6 @@ public class PatrolEnemy : Enemy
 
     private HealthController targetHP;
 
-
     private enum MovementState { PATROL = 0, FOLLOWTARGET }
     private MovementState movementState;
 
@@ -40,7 +39,7 @@ public class PatrolEnemy : Enemy
 
             case MovementState.FOLLOWTARGET:
                 attack.AttackNow(target, targetHP);
-                agent.SetDestination(target.position);
+                ChaseTarget();
                 break;
 
             default:
@@ -52,33 +51,31 @@ public class PatrolEnemy : Enemy
     {
         agent.isStopped = false;
 
+        bool targetIsTooClose = Physics.CheckSphere(transform.position, proximityRadius, targetLayer);
+
         Vector3 spherePosition = transform.position + transform.forward * offset;
-        bool playerIsInVisionRange = Physics.CheckSphere(spherePosition, visionRadius, targetLayer);
+        bool targetIsInVisionRange = Physics.CheckSphere(spherePosition, visionRadius, targetLayer);
 
-        Vector3 directionToPlayer = target.position - transform.position;
-        float angleToPlayer = Vector3.Angle(transform.forward, directionToPlayer);
+        Vector3 directionToTarget = target.position - transform.position;
+        float angleToTarget = Vector3.Angle(transform.forward, directionToTarget);
 
-        if (PlayerIsTooClose())
+        if (targetIsTooClose)
         {
             movementState = MovementState.FOLLOWTARGET;
             return;
         }
 
-        if (playerIsInVisionRange && angleToPlayer < fieldOfViewAngle * 0.5f)
+        if (targetIsInVisionRange)
         {
             RaycastHit hit;
 
-            if (movementState == MovementState.PATROL)
-            {
-                if (Physics.Raycast(transform.position, directionToPlayer, out hit, visionRadius * 2f, ~targetLayer))
-                {
-                    movementState = MovementState.PATROL;
-                }
+            bool targetIsInVisionAngle = Physics.Raycast(transform.position, directionToTarget, out hit, visionRadius * 2f);
 
-                else
+            if (angleToTarget < fieldOfViewAngle * 0.5f && targetIsInVisionAngle)
+            {
+                if (((1 << hit.collider.gameObject.layer) & targetLayer) != 0)
                 {
                     movementState = MovementState.FOLLOWTARGET;
-
                 }
             }
         }
@@ -89,11 +86,23 @@ public class PatrolEnemy : Enemy
         }
     }
 
-    private void OnDrawGizmos()
+    protected override void OnDrawGizmos()
     {
+        base.OnDrawGizmos();
+
         Gizmos.color = (movementState == MovementState.FOLLOWTARGET) ? Color.red : Color.green;
         Gizmos.DrawWireSphere(transform.position + transform.forward * offset, visionRadius);
 
-        Gizmos.DrawWireSphere(transform.position, proximityRadius);
+        //VISION ANGLE
+        Gizmos.color = Color.yellow;
+        Vector3 forward = transform.forward * visionRadius * 2;
+        Quaternion leftRayRotation = Quaternion.AngleAxis(-fieldOfViewAngle * 0.5f, Vector3.up);
+        Quaternion rightRayRotation = Quaternion.AngleAxis(fieldOfViewAngle * 0.5f, Vector3.up);
+
+        Vector3 leftRayDirection = leftRayRotation * forward;
+        Vector3 rightRayDirection = rightRayRotation * forward;
+
+        Gizmos.DrawLine(transform.position, transform.position + leftRayDirection);
+        Gizmos.DrawLine(transform.position, transform.position + rightRayDirection);
     }
 }

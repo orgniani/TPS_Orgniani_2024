@@ -45,12 +45,12 @@ public class MeleeAttack : MonoBehaviour, IAttack
         shouldAttack = false;
 
         Vector3 spherePosition = transform.position + transform.forward * offset;
-        bool playerIsInAttackRange = Physics.CheckSphere(spherePosition, attackProximity, targetLayer);
+        bool targetIsInAttackRange = Physics.CheckSphere(spherePosition, attackProximity, targetLayer);
 
-        Vector3 directionToPlayer = targetTransform.position - transform.position;
-        float angleToPlayer = Vector3.Angle(transform.forward, directionToPlayer);
+        Vector3 directionToTarget = targetTransform.position - transform.position;
+        float angleToTarget = Vector3.Angle(transform.forward, directionToTarget);
 
-        if (angleToPlayer < fieldOfAttackAngle && playerIsInAttackRange)
+        if (angleToTarget < fieldOfAttackAngle && targetIsInAttackRange)
             Punch();
 
         yield return new WaitForSeconds(attackCooldown);
