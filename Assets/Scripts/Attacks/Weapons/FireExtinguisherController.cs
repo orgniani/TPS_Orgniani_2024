@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using static AttackSwapController;
 
 public class FireExtinguisherController : AttackController
 {
