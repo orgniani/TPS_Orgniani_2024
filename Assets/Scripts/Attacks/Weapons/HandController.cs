@@ -131,6 +131,7 @@ public class HandController : AttackController
 
         if (enemyAgent == null) return;
         enemyAgent.isStopped = true;
+        enemyAgent = null;
 
     }
 
