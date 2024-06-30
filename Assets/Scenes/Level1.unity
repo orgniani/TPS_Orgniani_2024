@@ -27194,7 +27194,7 @@ PrefabInstance:
     - target: {fileID: 8183407495412578992, guid: 2c9b81d4632ff3641991a6f05ec02632,
         type: 3}
       propertyPath: m_Layer
-      value: 3
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 8350128289461149668, guid: 2c9b81d4632ff3641991a6f05ec02632,
         type: 3}
@@ -29595,7 +29595,7 @@ PrefabInstance:
         type: 3}
       propertyPath: patrolPoints.Array.data[0]
       value: 
-      objectReference: {fileID: 1355599091}
+      objectReference: {fileID: 1551657763}
     - target: {fileID: 833964577549816793, guid: 25c974d658089a94ea728bf26964025c,
         type: 3}
       propertyPath: patrolPoints.Array.data[1]
@@ -29605,7 +29605,7 @@ PrefabInstance:
         type: 3}
       propertyPath: patrolPoints.Array.data[2]
       value: 
-      objectReference: {fileID: 1551657763}
+      objectReference: {fileID: 1355599091}
     - target: {fileID: 833964577549816793, guid: 25c974d658089a94ea728bf26964025c,
         type: 3}
       propertyPath: patrolPoints.Array.data[3]
@@ -29625,6 +29625,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: PatrolEnemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 1070194840268442707, guid: 25c974d658089a94ea728bf26964025c,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1963959480616091846, guid: 25c974d658089a94ea728bf26964025c,
         type: 3}
