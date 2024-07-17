@@ -3,7 +3,8 @@ using UnityEngine;
 public class LevelManager : MonoBehaviour
 {
     [Header("Scene indexes")]
-    [SerializeField] private int levelBuildIndex = 1;
+    [SerializeField] private int currentLevelBuildIndex = 1;
+    [SerializeField] private int nextLevelBuildIndex = 2;
     [SerializeField] private int mainMenuBuildIndex = 0;
 
     [Header("Loading")]
@@ -20,9 +21,13 @@ public class LevelManager : MonoBehaviour
     }
     public void StartLevel()
     {
-        LoadAndOpen(levelBuildIndex);
+        LoadAndOpen(currentLevelBuildIndex);
     }
 
+    public void StartNextLevel()
+    {
+        LoadAndOpen(nextLevelBuildIndex);
+    }
     public void BackToMenu()
     {
         LoadAndOpen(mainMenuBuildIndex);

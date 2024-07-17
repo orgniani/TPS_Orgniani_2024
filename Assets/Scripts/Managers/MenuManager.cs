@@ -58,6 +58,13 @@ public class MenuManager : MonoBehaviour
         levelManager.BackToMenu();
     }
 
+    public void GoToNextLevel(GameObject screen)
+    {
+        loadBar.value = 0;
+        OpenScreen(screen);
+        levelManager.StartNextLevel();
+    }
+
     public void OpenScreen(GameObject screen)
     {
         screen.SetActive(true);
