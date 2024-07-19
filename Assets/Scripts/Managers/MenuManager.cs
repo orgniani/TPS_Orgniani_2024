@@ -73,7 +73,7 @@ public class MenuManager : MonoBehaviour
     public void CloseScreen(GameObject screen)
     {
         Animator screenAnimator = screen.GetComponent<Animator>();
-        screenAnimator.SetTrigger(animatorParameterClose);
+        if(screenAnimator) screenAnimator.SetTrigger(animatorParameterClose);
 
         StartCoroutine(PlayAndDeactivate(screen));
     }
