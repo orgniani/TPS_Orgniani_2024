@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 9128072199858457076}
   - component: {fileID: 3537650309539113090}
   - component: {fileID: 176757757355630765}
+  - component: {fileID: 8656174505089200702}
   m_Layer: 5
   m_Name: LevelButton
   m_TagString: Untagged
@@ -125,19 +126,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1494594555892349542}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: MenuInputReader, Assembly-CSharp
-        m_MethodName: CloseScreen
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!82 &9128072199858457076
 AudioSource:
   m_ObjectHideFlags: 0
@@ -311,6 +300,21 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
+--- !u!114 &8656174505089200702
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1133181479652883230}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a6959e37feb198b419dce3175cd7fc27, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  levelIndex: 1
+  lockImage: {fileID: 1801675311918287036}
+  levelText: {fileID: 3709597744996287350}
 --- !u!1 &1466736632136974634
 GameObject:
   m_ObjectHideFlags: 0
@@ -781,7 +785,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 100
+  m_fontSize: 0
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1

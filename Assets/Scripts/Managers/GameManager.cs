@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -14,6 +15,9 @@ public class GameManager : MonoBehaviour
     [Header("Audio")]
     [SerializeField] private AudioSource winGameSoundEffect;
     [SerializeField] private AudioSource loseGameSoundEffect;
+
+    [Header("Parameters")]
+    [SerializeField] private bool isLastLevel = false;
 
     public int flammablesTotal;
 
@@ -53,6 +57,8 @@ public class GameManager : MonoBehaviour
         {
             onLevelEnded?.Invoke(GameEndedReason.WIN);
             winGameSoundEffect.Play();
+
+            UnlockNewLevel();
         }
     }
 
@@ -86,5 +92,15 @@ public class GameManager : MonoBehaviour
     {
         loseGameSoundEffect.Play();
         onLevelEnded?.Invoke(GameEndedReason.PLAYER_KILLED);
+    }
+
+    private void UnlockNewLevel()
+    {
+        if (SceneManager.GetActiveScene().buildIndex >= PlayerPrefs.GetInt("ReachedLevelIndex") && !isLastLevel)
+        {
+            PlayerPrefs.SetInt("ReachedLevelIndex", SceneManager.GetActiveScene().buildIndex + 1);
+            PlayerPrefs.SetInt("UnlockedLevel", PlayerPrefs.GetInt("UnlockedLevel", 2) + 1);
+            PlayerPrefs.Save();
+        }
     }
 }

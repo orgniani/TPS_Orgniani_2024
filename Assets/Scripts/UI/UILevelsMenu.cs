@@ -1,10 +1,14 @@
 using System.Collections;
+using Unity.Burst.CompilerServices;
 using UnityEngine;
 
 public class UILevelsMenu : MonoBehaviour
 {
-    [Header("References")]
+    [Header("Canvases")]
     [SerializeField] private GameObject[] levelCanvases;
+    [SerializeField] private GameObject loadingScreen;
+
+    [Header("Managers")]
     [SerializeField] private MenuManager menuManager;
 
     [Header("Parameters")]
@@ -19,6 +23,12 @@ public class UILevelsMenu : MonoBehaviour
     {
         UpdateLevelCanvas(0);
         UpdateLevelCanvas(currentLevelsCanvasIndex);
+    }
+
+    public void StartSpecificLevel(UILevelButton levelButton, int levelIndex)
+    {
+        if (!levelButton.IsClickable) return;
+        menuManager.StartSpecificLevel(loadingScreen, levelIndex);
     }
 
     public void OnNextPage()

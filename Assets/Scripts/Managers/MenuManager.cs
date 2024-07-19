@@ -49,6 +49,13 @@ public class MenuManager : MonoBehaviour
         levelManager.StartLevel();
     }
 
+    public void StartSpecificLevel(GameObject screen, int levelIndex)
+    {
+        loadBar.value = 0;
+        OpenScreen(screen);
+        levelManager.StartSpecificLevel(levelIndex);
+    }
+
     public void GoBackToMenu(GameObject screen)
     {
         PauseAndUnpauseGame();

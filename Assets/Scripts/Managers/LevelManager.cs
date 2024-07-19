@@ -19,6 +19,12 @@ public class LevelManager : MonoBehaviour
 
         Cursor.lockState = CursorLockMode.None;
     }
+
+    public void StartSpecificLevel(int levelIndex)
+    {
+        LoadAndOpen(levelIndex);
+    }
+
     public void StartLevel()
     {
         LoadAndOpen(currentLevelBuildIndex);

@@ -9371,6 +9371,7 @@ MonoBehaviour:
   flammables: []
   winGameSoundEffect: {fileID: 697553586}
   loseGameSoundEffect: {fileID: 697553585}
+  isLastLevel: 1
   flammablesTotal: 0
 --- !u!4 &697553588
 Transform:
