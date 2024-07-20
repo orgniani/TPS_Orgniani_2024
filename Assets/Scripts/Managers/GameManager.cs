@@ -100,6 +100,7 @@ public class GameManager : MonoBehaviour
         {
             PlayerPrefs.SetInt("ReachedLevelIndex", SceneManager.GetActiveScene().buildIndex + 1);
             PlayerPrefs.SetInt("UnlockedLevel", PlayerPrefs.GetInt("UnlockedLevel", 2) + 1);
+
             PlayerPrefs.Save();
         }
     }

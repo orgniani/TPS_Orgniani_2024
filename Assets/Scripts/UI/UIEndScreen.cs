@@ -2,6 +2,7 @@ using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 
 public class UIEndScreen : MonoBehaviour
 {
@@ -17,6 +18,9 @@ public class UIEndScreen : MonoBehaviour
     [Header("Text")]
     [SerializeField] private UITimeCounter timeCounter;
     [SerializeField] private TextMeshProUGUI gameOverText;
+
+    [Header("Stars")]
+    [SerializeField] private UIStarCounter starCounter;
 
     [Header("Buttons")]
     [SerializeField] private GameObject winScreenMainMenuButton;
@@ -37,16 +41,35 @@ public class UIEndScreen : MonoBehaviour
         switch(gameEndedReason)
         {
             case GameManager.GameEndedReason.WIN:
+                int totalStars = timeCounter.CalculateStars();
+                SaveStars(SceneManager.GetActiveScene().buildIndex, totalStars);
+
                 StartCoroutine(StopGameAndOpenScreens(levelCompletedScreen, 0f, winScreenMainMenuButton));
                 break;
+
             case GameManager.GameEndedReason.FOREST_KILLED:
                 StartCoroutine(StopGameAndOpenScreens(gameOverScreen, 0f, loseScreenMainMenuButton));
                 gameOverText.text = "THE FOREST WAS DESTROYED!";
                 break;
+
             case GameManager.GameEndedReason.PLAYER_KILLED:
                 StartCoroutine(StopGameAndOpenScreens(gameOverScreen, waitForLoseScreen, loseScreenMainMenuButton));
                 gameOverText.text = "YOU DIED!";
                 break;
+        }
+    }
+
+    private void SaveStars(int levelIndex, int stars)
+    {
+        starCounter.SetStars(stars);
+
+        string key = $"Level_{levelIndex}_Stars";
+        int savedStars = PlayerPrefs.GetInt(key);
+
+        if(stars > savedStars)
+        {
+            PlayerPrefs.SetInt(key, stars);
+            PlayerPrefs.Save();
         }
     }
 
