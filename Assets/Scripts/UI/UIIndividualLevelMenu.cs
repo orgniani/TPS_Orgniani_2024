@@ -1,10 +1,13 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class UIIndividualLevelMenu : MonoBehaviour
 {
     [SerializeField] private UILevelButton[] buttons;
     [SerializeField] private UILevelsMenu levelsMenu;
+
+    [SerializeField] private EventSystem eventSystem;
 
     private void Awake()
     {
@@ -23,6 +26,8 @@ public class UIIndividualLevelMenu : MonoBehaviour
 
             buttons[i].GetComponent<Button>().onClick.RemoveAllListeners();
             buttons[i].GetComponent<Button>().onClick.AddListener(() => OnButtonClicked(buttonIndex, levelIndex));
+
+            if(buttons[i].IsClickable) eventSystem.SetSelectedGameObject(buttons[i].gameObject);
         }
     }
 

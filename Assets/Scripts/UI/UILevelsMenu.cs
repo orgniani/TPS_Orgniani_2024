@@ -7,7 +7,7 @@ public class UILevelsMenu : MonoBehaviour
     [SerializeField] private GameObject[] levelCanvases;
     [SerializeField] private GameObject loadingScreen;
 
-    [Header("Managers")]
+    [Header("References")]
     [SerializeField] private MenuManager menuManager;
 
     [Header("Parameters")]
@@ -89,6 +89,10 @@ public class UILevelsMenu : MonoBehaviour
         menuManager.CloseScreen(levelCanvases[previousLevelCanvasIndex]);
     }
 
+    /// <summary>
+    /// The canvas that will open when the play button is pressed will always be 
+    /// the canvas containing the button for the last unlocked level.
+    /// </summary>
     private int GetCanvasIndexForLevel(int level)
     {
         int levelsPerCanvas = 9;

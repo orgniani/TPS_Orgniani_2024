@@ -82,7 +82,6 @@ public class AttackController : MonoBehaviour
         if (!aimVirtualCamera) return;
 
         thirdPersonController.SetRotateOnMove(false);
-        thirdPersonController.SetSprintOnAim(false);
         thirdPersonController.SetStrafeOnAim(true);
 
         aimVirtualCamera.gameObject.SetActive(true);

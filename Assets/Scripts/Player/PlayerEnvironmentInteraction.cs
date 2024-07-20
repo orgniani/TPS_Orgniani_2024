@@ -53,10 +53,7 @@ public class PlayerEnvironmentInteraction : MonoBehaviour
     {
         if (other.gameObject.CompareTag(buildingTag))
         {
-            if (handController.IsDraggingEnemy)
-            {
-                isAtDropSpot = true;
-            }
+            isAtDropSpot = true;
         }
 
         else if (other.gameObject.CompareTag(wellTag))
@@ -86,7 +83,7 @@ public class PlayerEnvironmentInteraction : MonoBehaviour
 
     private void HandleTrapGoblin()
     {
-        if (!isAtDropSpot) return;
+        if (!handController.IsDraggingEnemy || !isAtDropSpot) return;
         handController.TrapGoblin();
     }
 

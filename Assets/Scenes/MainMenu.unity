@@ -579,6 +579,7 @@ MonoBehaviour:
   - {fileID: 599764424}
   - {fileID: 1477573658}
   levelsMenu: {fileID: 1404168625}
+  eventSystem: {fileID: 667991318}
 --- !u!1001 &48693230
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6107,6 +6108,7 @@ MonoBehaviour:
   - {fileID: 1960561836}
   - {fileID: 1172603177}
   levelsMenu: {fileID: 1404168625}
+  eventSystem: {fileID: 667991318}
 --- !u!1 &426064805
 GameObject:
   m_ObjectHideFlags: 0
@@ -23371,6 +23373,7 @@ MonoBehaviour:
   - {fileID: 1670139454}
   - {fileID: 1181923864}
   levelsMenu: {fileID: 1404168625}
+  eventSystem: {fileID: 667991318}
 --- !u!1 &2142781956
 GameObject:
   m_ObjectHideFlags: 0

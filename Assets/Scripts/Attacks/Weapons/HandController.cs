@@ -86,7 +86,6 @@ public class HandController : AttackController
                 }
 
                 thirdPersonController.SetRotateOnMove(false);
-                thirdPersonController.SetSprintOnAim(false);
                 thirdPersonController.SetStrafeOnAim(true);
 
                 TPSController.MoveSpeed = dragSpeed;

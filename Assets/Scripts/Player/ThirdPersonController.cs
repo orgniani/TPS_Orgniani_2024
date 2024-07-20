@@ -131,6 +131,7 @@ namespace StarterAssets
 
         private bool _hasAnimator;
         private bool _isHurt;
+        private bool _isAiming = false;
 
         private bool IsCurrentDeviceMouse
         {
@@ -263,6 +264,9 @@ namespace StarterAssets
 
             // set target speed based on move speed, sprint speed and if sprint is pressed
             float targetSpeed = _input.sprint ? SprintSpeed : MoveSpeed;
+
+            // if the player is aiming, they should move at normal speed
+            if (_isAiming) targetSpeed = MoveSpeed;
 
             // a simplistic acceleration and deceleration designed to be easy to remove, replace, or iterate upon
 
@@ -457,14 +461,10 @@ namespace StarterAssets
             _rotateOnMove = newRotateOnMove;
         }
 
-        public void SetSprintOnAim(bool newSprintOnAim)
-        {
-            _input.sprint = newSprintOnAim;
-        }
-
         public void SetStrafeOnAim(bool newStrafeOnAim)
         {
             _strafeOnAim = newStrafeOnAim;
+            _isAiming = newStrafeOnAim;
         }
 
         public void SetStopLookInputOnShake(bool newStopLookInputOnShake)
