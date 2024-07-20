@@ -15896,7 +15896,7 @@ MonoBehaviour:
   - {fileID: 47010019}
   loadingScreen: {fileID: 775640847}
   menuManager: {fileID: 1522062540}
-  switchPageCooldown: 2
+  switchPageCooldown: 1.6
 --- !u!114 &1405901547 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8656174505089200702, guid: 89f45ad600ee999408be9a16d1955d4d,
@@ -17175,7 +17175,7 @@ MonoBehaviour:
   eventSystem: {fileID: 0}
   starterAssetInputs: {fileID: 0}
   animatorParameterClose: close
-  screenAnimationDuration: 2
+  screenAnimationDuration: 1.6
   continueGameButton: {fileID: 0}
   openScreenSound: {fileID: 0}
 --- !u!1 &1522434853

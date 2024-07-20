@@ -28,7 +28,7 @@ public class UIIndividualLevelMenu : MonoBehaviour
 
     private void OnButtonClicked(int buttonIndex, int levelIndex)
     {
-        Debug.Log($"Button: {buttonIndex} clicked for level index: {levelIndex}");
+        //Debug.Log($"Button: {buttonIndex} clicked for level index: {levelIndex}");
 
         if (levelIndex >= 0 && levelsMenu != null)
         {

@@ -1,5 +1,4 @@
 using System.Collections;
-using Unity.Burst.CompilerServices;
 using UnityEngine;
 
 public class UILevelsMenu : MonoBehaviour
@@ -22,6 +21,11 @@ public class UILevelsMenu : MonoBehaviour
     private void OnEnable()
     {
         UpdateLevelCanvas(0);
+
+        int unlockedLevel = PlayerPrefs.GetInt("UnlockedLevel", 1);
+        currentLevelsCanvasIndex = GetCanvasIndexForLevel(unlockedLevel);
+
+        //Debug.Log($"OnEnable - Unlocked Level: {unlockedLevel}, Canvas Index: {currentLevelsCanvasIndex}");
         UpdateLevelCanvas(currentLevelsCanvasIndex);
     }
 
@@ -34,7 +38,6 @@ public class UILevelsMenu : MonoBehaviour
     public void OnNextPage()
     {
         if (!canSwitchPage) return;
-        canSwitchPage = false;
 
         DeactivatePreviousLevelCanvas(true, false);
 
@@ -48,7 +51,6 @@ public class UILevelsMenu : MonoBehaviour
     public void OnBackPage()
     {
         if (!canSwitchPage) return;
-        canSwitchPage = false;
 
         DeactivatePreviousLevelCanvas(false, true);
 
@@ -62,6 +64,7 @@ public class UILevelsMenu : MonoBehaviour
     {
         for (int i = 0; i < levelCanvases.Length; i++)
         {
+            if (!levelCanvases[i].activeSelf) continue;
             menuManager.CloseScreen(levelCanvases[i]);
         }
 
@@ -80,7 +83,20 @@ public class UILevelsMenu : MonoBehaviour
         if (previousLevelCanvasIndex == 1 && !shouldDeactivateFirstCanvas) return;
         if (previousLevelCanvasIndex == levelCanvases.Length - 1 && !shouldDeactivateLastCanvas) return;
 
+        StopAllCoroutines();
+        canSwitchPage = false;
+
         menuManager.CloseScreen(levelCanvases[previousLevelCanvasIndex]);
+    }
+
+    private int GetCanvasIndexForLevel(int level)
+    {
+        int levelsPerCanvas = 9;
+        int canvasIndex = ((level - 1) / levelsPerCanvas) + 1;
+
+        //Debug.Log($"Level: {level}, Canvas Index: {canvasIndex}");
+
+        return Mathf.Clamp(canvasIndex, 0, levelCanvases.Length - 1);
     }
 
     private IEnumerator WaitToSwitchPage()
