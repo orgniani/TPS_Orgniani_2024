@@ -1,4 +1,3 @@
-using System.Runtime.CompilerServices;
 using UnityEngine;
 
 public class UILevelButton : MonoBehaviour
@@ -26,7 +25,7 @@ public class UILevelButton : MonoBehaviour
 
     private int LoadStars()
     {
-        string key = $"Level_{levelIndex}_Stars";
+        string key = PrefsKeys.GetLevelStarsKey(levelIndex);
         return PlayerPrefs.GetInt(key, 0);
     }
 

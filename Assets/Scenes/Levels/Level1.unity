@@ -13645,6 +13645,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 7
       objectReference: {fileID: 0}
+    - target: {fileID: 1783979763778466, guid: bd1a894f239d58d4dbf63f27e28096bd, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4105805283940168, guid: bd1a894f239d58d4dbf63f27e28096bd, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -22832,6 +22836,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6094253154538429244, guid: 2c9b81d4632ff3641991a6f05ec02632,
+        type: 3}
+      propertyPath: ammoAmount
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6094253154538429244, guid: 2c9b81d4632ff3641991a6f05ec02632,
         type: 3}

@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class ShotFeedback : MonoBehaviour
@@ -16,7 +17,5 @@ public class ShotFeedback : MonoBehaviour
         float distance = Vector3.Distance(transform.position, endPosition);
 
         lineRenderer.SetPosition(1, transform.InverseTransformPoint(transform.position + Vector3.ClampMagnitude(endPosition - transform.position, distance)));
-
-        Destroy(gameObject,0.1f);
     }
 }

@@ -30,7 +30,7 @@ public class FireDeath : MonoBehaviour
         fireInstance.Stop(true, ParticleSystemStopBehavior.StopEmitting);
     }
 
-    private void OnDestroy()
+    private void OnDisable()
     {
         onDeath?.Invoke();
     }

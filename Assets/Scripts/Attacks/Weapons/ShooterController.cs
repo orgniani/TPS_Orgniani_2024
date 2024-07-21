@@ -1,5 +1,8 @@
 using UnityEngine;
 using System;
+using System.Collections.Generic;
+using UnityEngine.Pool;
+using System.Collections;
 
 public class ShooterController : AttackController
 {
@@ -26,6 +29,9 @@ public class ShooterController : AttackController
 
     private HealthController targetHP;
     private Vector3 hitPoint;
+
+    private List<ShotFeedback> activeShotFeedback = new List<ShotFeedback>();
+    private List<ShotFeedback> shotFeedbackPool = new List<ShotFeedback>();
 
     public event Action onAmmoChange = delegate { };
 
@@ -84,7 +90,7 @@ public class ShooterController : AttackController
         gunSmoke.Play();
         shotSound.Play();
 
-        ShotFeedback shotFeedback = Instantiate(shotPrefab, gunTip.position, Quaternion.identity);
+        ShotFeedback shotFeedback = GetShotFeedbackFromPool();
 
         if (IsPointingAtEnemy)
         {
@@ -98,6 +104,46 @@ public class ShooterController : AttackController
         }
 
         starterAssetInputs.shoot = false;
+    }
+
+    private ShotFeedback GetShotFeedbackFromPool()
+    {
+        ShotFeedback shotFeedback;
+
+        if (shotFeedbackPool.Count == 0)
+        {
+            shotFeedback = Instantiate(shotPrefab, gunTip.position, Quaternion.identity);
+            activeShotFeedback.Add(shotFeedback);
+
+            StartCoroutine(WaitToDeactivateFeedback(shotFeedback));
+            return shotFeedback;
+        }
+
+        else
+        {
+            ShotFeedback reusedShotFeedback = shotFeedbackPool[0];
+
+            reusedShotFeedback.transform.position = gunTip.position;
+            reusedShotFeedback.transform.rotation = Quaternion.identity;
+
+            reusedShotFeedback.gameObject.SetActive(true);
+
+            activeShotFeedback.Add(reusedShotFeedback);
+            shotFeedbackPool.Remove(reusedShotFeedback);
+
+            StartCoroutine(WaitToDeactivateFeedback(reusedShotFeedback));
+            return reusedShotFeedback;
+        }
+    }
+
+    private IEnumerator WaitToDeactivateFeedback(ShotFeedback shotFeedback)
+    {
+        yield return new WaitForSeconds(0.1f);
+
+        activeShotFeedback.Remove(shotFeedback);
+        shotFeedbackPool.Add(shotFeedback);
+
+        shotFeedback.gameObject.SetActive(false);
     }
 
     public void ReplenishAmmo()

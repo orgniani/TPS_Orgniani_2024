@@ -67,6 +67,11 @@ public class ArsonistEnemy : Enemy
             return;
         }
 
+        else
+        {
+            agent.isStopped = false;
+        }
+
         Vector3 nextPoint = patrolPoints[currentPatrolPointIndex].transform.position;
         float distanceToCurrentTarget = Vector3.Distance(transform.position, patrolPoints[currentPatrolPointIndex].position);
 

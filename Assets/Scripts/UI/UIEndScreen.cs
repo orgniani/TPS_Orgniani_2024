@@ -63,7 +63,7 @@ public class UIEndScreen : MonoBehaviour
     {
         starCounter.SetStars(stars);
 
-        string key = $"Level_{levelIndex}_Stars";
+        string key = PrefsKeys.GetLevelStarsKey(levelIndex);
         int savedStars = PlayerPrefs.GetInt(key);
 
         if(stars > savedStars)

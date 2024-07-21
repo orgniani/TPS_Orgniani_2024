@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class FlammableObject : MonoBehaviour, IFlammable
@@ -53,15 +54,29 @@ public class FlammableObject : MonoBehaviour, IFlammable
 
     public void HandleGetLitOnFire()
     {
-        Vector3 firePosition = new Vector3(transform.position.x, transform.position.y + fireYOffset, transform.position.z);
-        instantiatedFire = Instantiate(fireParticleSystemPrefab, firePosition, Quaternion.identity);
+        CreateFire();
 
-        fireDeath = instantiatedFire.GetComponent<FireDeath>();
         fireDeath.onDeath += StopBeingOnFire;
 
         IsOnFire = true;
 
         onFire?.Invoke(this);
+    }
+
+    private void CreateFire()
+    {
+        if (instantiatedFire == null)
+        {
+            Vector3 firePosition = new Vector3(transform.position.x, transform.position.y + fireYOffset, transform.position.z);
+            instantiatedFire = Instantiate(fireParticleSystemPrefab, firePosition, Quaternion.identity);
+
+            fireDeath = instantiatedFire.GetComponent<FireDeath>();
+        }
+
+        else
+        {
+            instantiatedFire.gameObject.SetActive(true);
+        }
     }
 
     private IEnumerator LoseHealthWhileOnFire()

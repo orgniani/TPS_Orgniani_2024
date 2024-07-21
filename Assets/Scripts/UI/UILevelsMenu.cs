@@ -22,7 +22,7 @@ public class UILevelsMenu : MonoBehaviour
     {
         UpdateLevelCanvas(0);
 
-        int unlockedLevel = PlayerPrefs.GetInt("UnlockedLevel", 1);
+        int unlockedLevel = PlayerPrefs.GetInt(PrefsKeys.UnlockedLevelKey, 1);
         currentLevelsCanvasIndex = GetCanvasIndexForLevel(unlockedLevel);
 
         //Debug.Log($"OnEnable - Unlocked Level: {unlockedLevel}, Canvas Index: {currentLevelsCanvasIndex}");
