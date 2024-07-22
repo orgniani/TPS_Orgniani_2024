@@ -1,4 +1,5 @@
 using UnityEngine;
+using TMPro;
 
 public class UILevelButton : MonoBehaviour
 {
@@ -7,20 +8,24 @@ public class UILevelButton : MonoBehaviour
 
     [Header("References")]
     [SerializeField] private GameObject lockImage;
-    [SerializeField] private GameObject levelText;
+    [SerializeField] private TMP_Text levelText;
     [SerializeField] private GameObject[] starFills;
 
     public int LevelIndex => levelIndex;
 
     public GameObject LockImage => lockImage;
-    public GameObject LevelText => levelText;
+    public GameObject LevelText => levelText.gameObject;
 
     public bool IsClickable { get; set; }
 
-    private void OnEnable()
+    public void Setup(int buttonNumber, int levelIndex)
     {
+        this.levelIndex = levelIndex;
+
         int stars = LoadStars();
         DisplayStars(stars);
+
+        levelText.text = $"{buttonNumber}";
     }
 
     private int LoadStars()

@@ -314,7 +314,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levelIndex: 1
   lockImage: {fileID: 1801675311918287036}
-  levelText: {fileID: 3709597744996287350}
+  levelText: {fileID: 6564055049715355788}
   starFills:
   - {fileID: 1466736632136974634}
   - {fileID: 1853935480635932377}
