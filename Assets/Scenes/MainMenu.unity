@@ -15898,6 +15898,7 @@ MonoBehaviour:
   - {fileID: 47010019}
   loadingScreen: {fileID: 775640847}
   menuManager: {fileID: 1522062540}
+  starsCountText: {fileID: 523906105}
   switchPageCooldown: 1.6
 --- !u!114 &1405901547 stripped
 MonoBehaviour:

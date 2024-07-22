@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using TMPro;
 
 public class UILevelsMenu : MonoBehaviour
 {
@@ -9,6 +10,7 @@ public class UILevelsMenu : MonoBehaviour
 
     [Header("References")]
     [SerializeField] private MenuManager menuManager;
+    [SerializeField] private TMP_Text starsCountText;
 
     [Header("Parameters")]
     [SerializeField] private float switchPageCooldown = 1f;
@@ -16,10 +18,14 @@ public class UILevelsMenu : MonoBehaviour
     private int currentLevelsCanvasIndex = 1;
     private int previousLevelCanvasIndex = 1;
 
+    private int maxStars = 9;
+
     private bool canSwitchPage = true;
 
     private void OnEnable()
     {
+        UpdateStarsCount();
+
         UpdateLevelCanvas(0);
 
         int unlockedLevel = PlayerPrefs.GetInt(PrefsKeys.UnlockedLevelKey, 1);
@@ -87,6 +93,12 @@ public class UILevelsMenu : MonoBehaviour
         canSwitchPage = false;
 
         menuManager.CloseScreen(levelCanvases[previousLevelCanvasIndex]);
+    }
+
+    private void UpdateStarsCount()
+    {
+        int totalStars = PlayerPrefs.GetInt(PrefsKeys.TotalStarsKey, 0);
+        starsCountText.text = $"{totalStars}/{maxStars}";
     }
 
     /// <summary>
