@@ -18,4 +18,18 @@ public class AudioManager : MonoBehaviour
             return;
         }
     }
+
+    private void OnEnable()
+    {
+        if (!PlayerPrefs.HasKey(PrefsKeys.VolumeKey))
+        {
+            PlayerPrefs.SetFloat(PrefsKeys.VolumeKey, 1);
+            AudioListener.volume = 1;
+        }
+
+        else
+        {
+            AudioListener.volume = PlayerPrefs.GetFloat(PrefsKeys.VolumeKey);
+        }
+    }
 }

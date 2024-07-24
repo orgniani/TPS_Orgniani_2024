@@ -10,28 +10,32 @@ public class UILevelsMenu : MonoBehaviour
     [SerializeField] private GameObject menuScreen;
     [SerializeField] private UIIndividualLevelMenu levelCanvasPrefab;
     [SerializeField] private GameObject loadingScreen;
+    [SerializeField] private GameObject comingSoonScreen;
+
+    [Header("Text")]
+    [SerializeField] private TMP_Text starsCountText;
 
     [Header("References")]
+    [SerializeField] private LevelManager levelManager;
     [SerializeField] private MenuManager menuManager;
-    [SerializeField] private TMP_Text starsCountText;
     [SerializeField] private EventSystem eventSystem;
 
     [Header("Parameters")]
     [SerializeField] private int totalLevels = 3;
+    [SerializeField] private int currentAvailableLevels = 3;
+
+    [SerializeField] private int maxButtonsPerCanvas = 9;
+    [SerializeField] private int maxStarsPerLevel = 3;
+
     [SerializeField] private float switchPageCooldown = 1f;
 
-    public List<UIIndividualLevelMenu> levelCanvases;
+    private List<UIIndividualLevelMenu> levelCanvases = new List<UIIndividualLevelMenu>();
 
     private int currentLevelsCanvasIndex = 1;
-    private int previousLevelCanvasIndex = 1;
 
     private bool canSwitchPage = true;
 
-    private void Awake()
-    {
-        levelCanvases = new List<UIIndividualLevelMenu>(); 
-    }
-
+    public int CurrentAvailableLevels => currentAvailableLevels;
 
     private void OnEnable()
     {
@@ -39,23 +43,27 @@ public class UILevelsMenu : MonoBehaviour
 
         if(levelCanvases.Count == 0) CreateLevelMenus();
 
-        foreach(var levelCanvas in levelCanvases)
-        {
-            levelCanvas.UpdateButtons();
-        }
-
         menuScreen.SetActive(true);
 
-        int unlockedLevel = PlayerPrefs.GetInt(PrefsKeys.UnlockedLevelKey, 1);
+        PrefsKeys.InitializeUnlockedLevelKey(levelManager.NextLevelBuildIndex);
+        int unlockedLevel = PlayerPrefs.GetInt(PrefsKeys.UnlockedLevelKey);
+
         currentLevelsCanvasIndex = GetCanvasIndexForLevel(unlockedLevel);
 
-        //Debug.Log($"OnEnable - Unlocked Level: {unlockedLevel}, Canvas Index: {currentLevelsCanvasIndex}");
         UpdateLevelCanvas(currentLevelsCanvasIndex);
     }
 
+
     public void StartSpecificLevel(UILevelButton levelButton, int levelIndex)
     {
+        if (!levelButton.IsAvailable)
+        {
+            comingSoonScreen.SetActive(true);
+            return;
+        }
+
         if (!levelButton.IsClickable) return;
+
         menuManager.StartSpecificLevel(loadingScreen, levelIndex);
     }
 
@@ -63,12 +71,7 @@ public class UILevelsMenu : MonoBehaviour
     {
         if (!canSwitchPage) return;
 
-        DeactivatePreviousLevelCanvas(true, false);
-
-        currentLevelsCanvasIndex = Mathf.Min(currentLevelsCanvasIndex + 1, levelCanvases.Count - 1);
-        UpdateLevelCanvas(currentLevelsCanvasIndex);
-
-        StartCoroutine(WaitToSwitchPage());
+        SwitchPage(currentLevelsCanvasIndex + 1);
     }
 
 
@@ -76,22 +79,17 @@ public class UILevelsMenu : MonoBehaviour
     {
         if (!canSwitchPage) return;
 
-        DeactivatePreviousLevelCanvas(false, true);
-
-        currentLevelsCanvasIndex = Mathf.Max(currentLevelsCanvasIndex - 1, 0);
-        UpdateLevelCanvas(currentLevelsCanvasIndex);
-
-        StartCoroutine(WaitToSwitchPage());
+        SwitchPage(currentLevelsCanvasIndex - 1);
     }
 
     public void OnBackToMenu()
     {
         menuManager.CloseScreen(menuScreen);
 
-        for (int i = 0; i < levelCanvases.Count; i++)
+        foreach (var canvas in levelCanvases)
         {
-            if (!levelCanvases[i].gameObject.activeSelf) continue;
-            menuManager.CloseScreen(levelCanvases[i].gameObject);
+            if (!canvas.gameObject.activeSelf) continue;
+            menuManager.CloseScreen(canvas.gameObject);
         }
 
         menuManager.CloseScreen(gameObject);
@@ -113,11 +111,23 @@ public class UILevelsMenu : MonoBehaviour
             UIIndividualLevelMenu individualLevelMenu = Instantiate(levelCanvasPrefab, transform);
             levelCanvases.Add(individualLevelMenu);
 
-            int startLevel = i == 0 ? i * levelsPerCanvas + 2 : i * levelsPerCanvas + 1;
-            int endLevel = Mathf.Min((i + 1) * levelsPerCanvas + 1, totalLevels);
+            int startLevel = i * levelsPerCanvas + levelManager.NextLevelBuildIndex;
+            int endLevel = Mathf.Min((i + 1) * levelsPerCanvas, totalLevels);
 
-            individualLevelMenu.Setup(startLevel, endLevel, eventSystem, this, i == 0);
+            individualLevelMenu.Setup(startLevel, endLevel, eventSystem, this);
         }
+    }
+
+    private void SwitchPage(int newIndex)
+    {
+        if (newIndex < 0 || newIndex >= levelCanvases.Count) return;
+
+        menuManager.CloseScreen(levelCanvases[currentLevelsCanvasIndex].gameObject);
+
+        currentLevelsCanvasIndex = newIndex;
+        UpdateLevelCanvas(currentLevelsCanvasIndex);
+
+        StartCoroutine(WaitToSwitchPage());
     }
 
     private void UpdateLevelCanvas(int index)
@@ -132,22 +142,9 @@ public class UILevelsMenu : MonoBehaviour
         levelCanvases[index].UpdateButtons();
     }
 
-    private void DeactivatePreviousLevelCanvas(bool shouldDeactivateFirstCanvas, bool shouldDeactivateLastCanvas)
-    {
-        previousLevelCanvasIndex = currentLevelsCanvasIndex;
-
-        if (previousLevelCanvasIndex == 0 && !shouldDeactivateFirstCanvas) return;
-        if (previousLevelCanvasIndex == levelCanvases.Count - 1 && !shouldDeactivateLastCanvas) return;
-
-        StopAllCoroutines();
-        canSwitchPage = false;
-
-        menuManager.CloseScreen(levelCanvases[previousLevelCanvasIndex].gameObject);
-    }
-
     private void UpdateStarsCount()
     {
-        int maxStars = totalLevels * 3;
+        int maxStars = totalLevels * maxStarsPerLevel;
 
         int totalStars = PlayerPrefs.GetInt(PrefsKeys.TotalStarsKey, 0);
         starsCountText.text = $"{totalStars}/{maxStars}";
@@ -157,18 +154,18 @@ public class UILevelsMenu : MonoBehaviour
     /// The canvas that will open when the play button is pressed will always be 
     /// the canvas containing the button for the last unlocked level.
     /// </summary>
-    private int GetCanvasIndexForLevel(int level)
+    private int GetCanvasIndexForLevel(int levelSceneIndex)
     {
-        int levelsPerCanvas = 9;
-        int canvasIndex = ((level) / levelsPerCanvas);
-
-        //Debug.Log($"Level: {level}, Canvas Index: {canvasIndex}");
+        int levelsPerCanvas = maxButtonsPerCanvas;
+        int canvasIndex = ((levelSceneIndex - levelManager.NextLevelBuildIndex) / levelsPerCanvas);
 
         return Mathf.Clamp(canvasIndex, 0, levelCanvases.Count - 1);
     }
 
     private IEnumerator WaitToSwitchPage()
     {
+        canSwitchPage = false;
+
         yield return new WaitForSeconds(switchPageCooldown);
 
         canSwitchPage = true;

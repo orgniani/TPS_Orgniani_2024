@@ -3,24 +3,23 @@ using TMPro;
 
 public class UILevelButton : MonoBehaviour
 {
-    [Header("Parameters")]
-    [SerializeField] private int levelIndex = 1;
-
     [Header("References")]
     [SerializeField] private GameObject lockImage;
     [SerializeField] private TMP_Text levelText;
     [SerializeField] private GameObject[] starFills;
 
-    public int LevelIndex => levelIndex;
-
     public GameObject LockImage => lockImage;
     public GameObject LevelText => levelText.gameObject;
 
+    public int LevelIndex { get; set; }
+
     public bool IsClickable { get; set; }
+
+    public bool IsAvailable { get; set; }
 
     public void Setup(int buttonNumber, int levelIndex)
     {
-        this.levelIndex = levelIndex;
+        LevelIndex = levelIndex;
 
         int stars = LoadStars();
         DisplayStars(stars);
@@ -30,7 +29,7 @@ public class UILevelButton : MonoBehaviour
 
     private int LoadStars()
     {
-        string key = PrefsKeys.GetLevelStarsKey(levelIndex);
+        string key = PrefsKeys.GetLevelStarsKey(LevelIndex);
         return PlayerPrefs.GetInt(key, 0);
     }
 

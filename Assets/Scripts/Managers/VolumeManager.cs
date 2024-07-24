@@ -5,7 +5,6 @@ public class VolumeManager : MonoBehaviour
 {
     [Header("Volume")]
     [SerializeField] private Slider volumeSlider;
-    [SerializeField] private string volumeName = "musicVolume";
 
     [Header("Sound On/Off Icon")]
     [SerializeField] private Sprite soundOnIcon;
@@ -14,18 +13,9 @@ public class VolumeManager : MonoBehaviour
 
     private void Start()
     {
-        if(!PlayerPrefs.HasKey(volumeName))
-        {
-            PlayerPrefs.SetFloat(volumeName, 1);
-            AudioListener.volume = 1;
-            volumeSlider.value = 1; 
-        }
-
-        else
-        {
-            Load();
-        }
+        Load();
     }
+
     public void ChangeVolume()
     {
         AudioListener.volume = volumeSlider.value;
@@ -36,12 +26,12 @@ public class VolumeManager : MonoBehaviour
 
     private void Load()
     {
-        volumeSlider.value = PlayerPrefs.GetFloat(volumeName);
+        volumeSlider.value = PlayerPrefs.GetFloat(PrefsKeys.VolumeKey);
     }
 
     private void Save()
     {
-        PlayerPrefs.SetFloat(volumeName, volumeSlider.value);
+        PlayerPrefs.SetFloat(PrefsKeys.VolumeKey, volumeSlider.value);
     }
 
     private void UpdateSoundIcon(float volume)

@@ -1,7 +1,6 @@
 using UnityEngine;
 using System;
 using System.Collections.Generic;
-using UnityEngine.Pool;
 using System.Collections;
 
 public class ShooterController : AttackController

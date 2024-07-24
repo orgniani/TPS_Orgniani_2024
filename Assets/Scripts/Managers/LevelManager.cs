@@ -10,9 +10,11 @@ public class LevelManager : MonoBehaviour
     [Header("Loading")]
     [SerializeField] private int fakeLoadingTime = 2;
 
+    public int NextLevelBuildIndex => nextLevelBuildIndex;
+
     private void Awake()
     {
-        if(Time.timeScale == 0)
+        if (Time.timeScale == 0)
         {
             Time.timeScale = 1;
         }

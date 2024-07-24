@@ -99,7 +99,7 @@ public class GameManager : MonoBehaviour
         if (SceneManager.GetActiveScene().buildIndex >= PlayerPrefs.GetInt(PrefsKeys.ReachedLevelIndexKey) && !isLastLevel)
         {
             PlayerPrefs.SetInt(PrefsKeys.ReachedLevelIndexKey, SceneManager.GetActiveScene().buildIndex + 1);
-            PlayerPrefs.SetInt(PrefsKeys.UnlockedLevelKey, PlayerPrefs.GetInt(PrefsKeys.UnlockedLevelKey, 2) + 1);
+            PlayerPrefs.SetInt(PrefsKeys.UnlockedLevelKey, PlayerPrefs.GetInt(PrefsKeys.UnlockedLevelKey) + 1);
 
             PlayerPrefs.Save();
         }

@@ -9,20 +9,22 @@ public class UIIndividualLevelMenu : MonoBehaviour
     private EventSystem eventSystem;
     private UILevelsMenu levelsMenu;
 
-    public void Setup(int startLevel, int endLevel, EventSystem getEventSystem, UILevelsMenu menu, bool isFirstCanvas)
+    public void Setup(int startLevel, int endLevel, EventSystem eventSystem, UILevelsMenu levelsMenu)
     {
-        levelsMenu = menu;
-        eventSystem = getEventSystem;
+        this.levelsMenu = levelsMenu;
+        this.eventSystem = eventSystem;
 
         for (int i = 0; i < buttons.Length; i++)
         {
             if (i <= endLevel - startLevel + 1)
             {
                 int buttonLevelIndex = startLevel + i;
-                int displayLevelNumber = isFirstCanvas ? i + 1 : buttonLevelIndex;
+                int displayLevelNumber = buttonLevelIndex - 1;
 
                 buttons[i].gameObject.SetActive(true);
                 buttons[i].Setup(displayLevelNumber, buttonLevelIndex);
+
+                buttons[i].IsAvailable = displayLevelNumber <= levelsMenu.CurrentAvailableLevels;
 
                 int buttonIndex = i;
                 buttons[i].GetComponent<Button>().onClick.RemoveAllListeners();
@@ -40,23 +42,22 @@ public class UIIndividualLevelMenu : MonoBehaviour
 
     public void UpdateButtons()
     {
-        int unlockedLevel = PlayerPrefs.GetInt(PrefsKeys.UnlockedLevelKey, 2);
+        int unlockedLevel = PlayerPrefs.GetInt(PrefsKeys.UnlockedLevelKey);
 
-        for (int i = 0; i < buttons.Length; i++)
+        foreach (var button in buttons)
         {
-            bool isUnlocked = buttons[i].LevelIndex <= unlockedLevel;
-            buttons[i].IsClickable = isUnlocked;
+            bool isUnlocked = button.LevelIndex <= unlockedLevel;
+            button.IsClickable = isUnlocked;
 
-            buttons[i].LockImage.SetActive(!isUnlocked);
-            buttons[i].LevelText.SetActive(isUnlocked);
+            button.LockImage.SetActive(!isUnlocked);
+            button.LevelText.SetActive(isUnlocked);
 
-            if (buttons[i].IsClickable) eventSystem.SetSelectedGameObject(buttons[i].gameObject);
+            if (button.IsClickable) eventSystem.SetSelectedGameObject(button.gameObject);
         }
-    }      
+    }
+
     private void OnButtonClicked(int buttonIndex, int levelIndex)
     {
-        //Debug.Log($"Button: {buttonIndex} clicked for level index: {levelIndex}");
-
         if (levelIndex >= 0 && levelsMenu != null)
         {
             levelsMenu.StartSpecificLevel(buttons[buttonIndex], levelIndex);
