@@ -19,11 +19,7 @@ public class PickUpItems : MonoBehaviour
 
     private void Start()
     {
-        if(arrow == null)
-        {
-            enabled = false;
-            return;
-        }
+        if(arrow == null) return;
 
         initialPosition = arrow.transform.position;
         StartCoroutine(Float());
